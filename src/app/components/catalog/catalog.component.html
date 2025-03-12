@@ -1,0 +1,42 @@
+<div class="container mt-4">
+    <div class="row">
+      <!-- Left Sidebar: Filters -->
+      <div class="col-md-3">
+        <div class="p-3 bg-light rounded shadow-sm">
+          <h5 class="text-primary">Filters</h5>
+          <div class="mb-3">
+            <label class="form-label">Brand:</label>
+            <input type="text" [(ngModel)]="filter.make" class="form-control" placeholder="Enter make...">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Vehicle Type:</label>
+            <select [(ngModel)]="filter.type" class="form-control">
+              <option value="">All</option>
+              <option value="SUV">SUV</option>
+              <option value="Sedan">Sedan</option>
+              <option value="Truck">Truck</option>
+            </select>
+          </div>
+          <button class="btn btn-primary w-100">Apply Filters</button>
+        </div>
+      </div>
+  
+      <!-- Right Content: Catalog -->
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-4 mb-4" *ngFor="let vehicle of vehicles">
+            <div class="card">
+              <img [src]="vehicle.image" class="card-img-top" alt="Vehicle Image">
+              <div class="card-body">
+                <h5 class="card-title">{{ vehicle.make }} {{ vehicle.model }}</h5>
+                <p class="card-text">{{ vehicle.type }}</p>
+                <button class="btn btn-outline-primary">View Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
