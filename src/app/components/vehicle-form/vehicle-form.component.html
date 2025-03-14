@@ -1,16 +1,4 @@
-<!-- <h1>New Vehicle</h1>
-<form>
-    <div class="form-group">
-        <label for="make">Make</label>
-        <select id="make" class="form-control"></select>
-    </div>
-    <div class="form-group">
-        <label for="model">Modal</label>
-        <select id="model" class="form-control"></select>
-    </div>
-</form> -->
-
-<div class="container mt-5">
+<div class="container mt-5 vh-100"> <!-- vh100 helped to unstick footer -->
     <h2 class="text-primary">Add New Vehicle</h2>
     <form class="p-4 border rounded bg-light">
       <div class="mb-3">
@@ -19,11 +7,17 @@
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Brand:</label>
-        <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
+        <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.make" (change)=onBrandChange()>
+          <option value=""></option>
+          <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Model:</label>
-        <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
+        <select id="vehicle" name="vehicle" type="text" class="form-select">
+          <option value=""></option>
+          <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
