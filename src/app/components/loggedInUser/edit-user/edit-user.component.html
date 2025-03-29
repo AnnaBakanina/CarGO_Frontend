@@ -1,1 +1,17 @@
-<p>edit-user works!</p>
+<div class="container mt-4">
+    <h2>Редагування профілю</h2>
+    <!-- <form (ngSubmit)="saveChanges()"> -->
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Ім'я</label>
+        <!-- <input type="text" class="form-control" [(ngModel)]="user.name" name="name"> -->
+        <input type="text" class="form-control" name="name">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email">
+      </div>
+      <button type="submit" class="btn btn-success">Зберегти</button>
+    </form>
+  </div>
+  

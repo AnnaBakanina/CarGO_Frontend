@@ -1,1 +1,12 @@
-<p>user-profile works!</p>
+<div class="container mt-4">
+    <h2>Профіль користувача</h2>
+    <div class="card p-3">
+      <p><strong>Ім'я:</strong> {{ userName }}</p>
+      <p><strong>Email:</strong> {{ userEmail }}</p>
+      <a class="btn btn-primary" routerLink="/profile/edit">Редагувати</a>
+    </div>
+  
+    <h3 class="mt-4">Мої оголошення</h3>
+    <app-user-listing></app-user-listing>
+  </div>
+  

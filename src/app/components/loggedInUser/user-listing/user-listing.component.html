@@ -1,1 +1,7 @@
-<p>user-listing works!</p>
+<div class="list-group">
+    <div *ngFor="let listing of listings" class="list-group-item">
+      <h5>{{ listing.title }}</h5>
+      <p>{{ listing.description }}</p>
+    </div>
+  </div>
+  
