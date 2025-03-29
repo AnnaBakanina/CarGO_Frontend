@@ -1,31 +1,79 @@
 <div class="container mt-5 vh-100"> <!-- vh100 helped to unstick footer -->
-    <h2 class="text-primary">Add New Vehicle</h2>
+    <h2 class="text-primary">Додати Оголошення</h2>
     <form class="p-4 border rounded bg-light">
       <div class="mb-3">
-        <label for="vehicle" class="form-label">Vehicle Type:</label>
+        <label for="vehicle" class="form-label">Тип авто:</label>
         <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
       </div>
       <div class="mb-3">
-        <label for="vehicle" class="form-label">Brand:</label>
+        <label for="vehicle" class="form-label">Тип кузова:</label>
+        <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
+      </div>
+      <div class="mb-3">
+        <label for="vehicle" class="form-label">Марка авто:</label>
         <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.make" (change)=onBrandChange()>
           <option value=""></option>
           <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="vehicle" class="form-label">Model:</label>
+        <label for="vehicle" class="form-label">Модель авто:</label>
         <select id="vehicle" name="vehicle" type="text" class="form-select">
           <option value=""></option>
           <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+        <label for="numberField" class="form-label">Рік випуску:</label>
+        <input type="number" class="form-control" id="numberField" placeholder="Введіть число">
+      </div>
+      <div class="mb-3">
+        <label for="textNumberField" class="form-label">VIN номер:</label>
+        <input type="text" class="form-control" id="textNumberField" placeholder="Введіть текст або числа">
+      </div>
+      <div class="mb-3">
+        <label for="numberField" class="form-label">Пробіг:</label>
+        <input type="number" class="form-control" id="numberField" placeholder="Введіть число">
+      </div>
+      <div class="mb-3">
+        <label for="vehicle" class="form-label">Технічний стан:</label>
+        <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Опис:</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
       <div class="mb-3">
-        <label for="formFile" class="form-label">Add Photos</label>
+        <label for="numberField" class="form-label">Ціна:</label>
+        <input type="number" class="form-control" id="numberField" placeholder="Введіть число">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="option1" value="option1">
+          <label class="form-check-label" for="option1">Можливий торг</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="option2" value="option2">
+          <label class="form-check-label" for="option2">Нерозмитнений</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="option3" value="option3">
+          <label class="form-check-label" for="option3">Можлива оплата частинами</label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Завантажити фото</label>
         <input class="form-control" type="file" id="formFile">
+      </div>
+      <div class="mb-3">
+        <label for="phoneField" class="form-label">Номер телефону</label>
+        <input type="tel" class="form-control" id="phoneField" placeholder="+48 123 456 789">
+      </div>
+      <div class="mb-3">
+        <label for="vehicle" class="form-label">Регіон:</label>
+        <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
+      </div>
+      <div class="mb-3">
+        <label for="vehicle" class="form-label">Місто:</label>
+        <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

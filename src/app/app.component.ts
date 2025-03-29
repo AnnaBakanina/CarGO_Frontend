@@ -9,11 +9,6 @@ import { FooterComponent } from './components/footer/footer.component';
   imports: [RouterOutlet, NavigationComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
-  // template: `<h1>CarGO</h1>
-  // <nav>
-  //   <a routerLink="vehicle/new">Vehicle Form</a>
-  // </nav>
-  // <router-outlet></router-outlet>`
 })
 export class AppComponent {
   title = 'my-project';

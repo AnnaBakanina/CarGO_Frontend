@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  app-root {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .content {
+    flex: 5; /* Розтягує контент, щоб футер йшов вниз */
+  }
+  
+  footer {
+    /* Футер має відображатися внизу, але тільки після того, як контент заповнить екран */
+    margin-top: auto;
+  }
+  
