@@ -1,7 +1,21 @@
 <div class="list-group">
-    <div *ngFor="let listing of listings" class="list-group-item">
+    <!-- <div *ngFor="let listing of listings" class="list-group-item">
       <h5>{{ listing.title }}</h5>
       <p>{{ listing.description }}</p>
+    </div> -->
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5>Title 1</h5>
+            <p>Description 1</p>
+        </div>
+        <a class="btn btn-primary" routerLink="/">Редагувати</a>
+    </div>
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5>Title 1</h5>
+            <p>Description 1</p>
+        </div>
+        <a class="btn btn-primary" routerLink="/">Редагувати</a>
     </div>
   </div>
   

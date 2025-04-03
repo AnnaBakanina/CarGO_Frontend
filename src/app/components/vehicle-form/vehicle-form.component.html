@@ -3,14 +3,17 @@
     <form class="p-4 border rounded bg-light">
       <div class="mb-3">
         <label for="vehicle" class="form-label">Тип авто:</label>
-        <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
+        <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.type">
+          <option value=""></option>
+          <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Тип кузова:</label>
         <select id="vehicle" name="vehicle" type="text" class="form-select"></select>
       </div>
       <div class="mb-3">
-        <label for="vehicle" class="form-label">Марка авто:</label>
+        <label for="vehicle" class="form-label">Бренд авто:</label>
         <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.make" (change)=onBrandChange()>
           <option value=""></option>
           <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
@@ -45,7 +48,7 @@
       </div>
       <div class="mb-3">
         <label for="numberField" class="form-label">Ціна:</label>
-        <input type="number" class="form-control" id="numberField" placeholder="Введіть число">
+        <input type="number" class="form-control" id="numberField" placeholder="Введіть ціну">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="option1" value="option1">
           <label class="form-check-label" for="option1">Можливий торг</label>
@@ -65,7 +68,7 @@
       </div>
       <div class="mb-3">
         <label for="phoneField" class="form-label">Номер телефону</label>
-        <input type="tel" class="form-control" id="phoneField" placeholder="+48 123 456 789">
+        <input type="tel" class="form-control" id="phoneField" placeholder="Введіть номер телефону">
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Регіон:</label>

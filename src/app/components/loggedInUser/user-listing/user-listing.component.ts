@@ -9,18 +9,9 @@ import { Component } from '@angular/core';
 export class UserListingComponent {
   // listings: any[] = [];
   listings = [
-    {
-      title: 'Title 1',
-      description: 'Description1'
-    },
-    {
-      title: 'Title 2',
-      description: 'Description2'
-    },
-    {
-      title: 'Title 3',
-      description: 'Description3'
-    }
+    { title: 'Listing 1', description: 'Description 1' },
+    { title: 'Listing 2', description: 'Description 2' },
+    { title: 'Listing 3', description: 'Description 3' }
   ];
 
   // constructor(private listingsService: ListingsService) {}

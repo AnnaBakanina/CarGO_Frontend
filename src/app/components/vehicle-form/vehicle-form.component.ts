@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
+import { CarTypeService } from '../../services/carType.serice';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -14,13 +15,20 @@ import { BrandService } from '../../services/brand.service';
 export class VehicleFormComponent implements OnInit {
   brands: any[] = [];
   models: any [] = [];
+  carTypes: any[] = [];
   vehicle: any = {};
 
-  constructor(private brandService: BrandService) {}
+  constructor(
+    private brandService: BrandService,
+    private carTypeService: CarTypeService
+    ) {}
 
   ngOnInit() {
     this.brandService.getBrands().subscribe((data: any) => {
       this.brands = data;
+    });
+    this.carTypeService.getCarTypes().subscribe((data: any) => {
+      this.carTypes = data;
     });
   }
 
