@@ -1,3 +1,4 @@
+import { VehicleService } from './../../services/vehicle.service';
 import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
 import { CommonModule } from '@angular/common';
@@ -21,13 +22,18 @@ export class VehicleFormComponent implements OnInit {
   techState: any[] = [];
   regions: any[] = [];
   cities: any[] = [];
-  vehicle: any = {};
+  vehicle: any = {
+    isAuction: false,
+    isPaymentInParts: false,
+    IsTaxable: false
+  };
 
   constructor(
     private brandService: BrandService,
     private carTypeService: CarTypeService,
     private techStateService: TechStateService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private vehicleService: VehicleService
     ) {}
 
   ngOnInit() {
@@ -46,9 +52,23 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onBrandChange() {
-    var selectedBrand = this.brands.find(m => m.id == this.vehicle.make);
+    var selectedBrand = this.brands.find(m => m.id == this.vehicle.makeId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
-    var selectedRegion = this.regions.find(c => c.id == this.vehicle.region);
+    delete this.vehicle.modelId;
+    var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
     this.cities = selectedRegion ? selectedRegion.city: [];
+    delete this.vehicle.cityId;
   }
+
+  submit() {
+    this.vehicleService.create(this.vehicle)
+      .subscribe({
+        next: x => {
+          console.log(x);
+          },
+        error: err => {
+          console.error(err);
+          }
+      });
+  }  
 }
