@@ -1,3 +1,4 @@
+import { NotFoundPageComponent } from './components/errorPages/not-found-page/not-found-page.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { Routes } from '@angular/router';
 
@@ -9,5 +10,6 @@ export const routes: Routes = [
     { path: 'home', loadComponent: () => import('./components/home/home.component').then(m => m.HomeComponent) },
     { path: 'profile', loadComponent: () => import('./components/loggedInUser/user-profile/user-profile.component').then(m => m.UserProfileComponent) },
     { path: 'profile/edit', loadComponent: () => import('./components/loggedInUser/edit-user/edit-user.component').then(m => m.EditUserComponent) },
-    { path: 'profile/admin', loadComponent: () => import('./components/admin/admin-form/admin-form.component').then(m => m.AdminFormComponent) }
+    { path: 'profile/admin', loadComponent: () => import('./components/admin/admin-form/admin-form.component').then(m => m.AdminFormComponent) },
+    { path: 'not-found', loadComponent: () => import('./components/errorPages/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent) }
 ];
