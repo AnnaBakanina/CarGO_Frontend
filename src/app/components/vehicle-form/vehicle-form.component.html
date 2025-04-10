@@ -1,9 +1,10 @@
-<div class="container mt-5 vh-100"> <!-- vh100 helped to unstick footer -->
+<div class="container mt-5 vh-100">
     <h2 class="text-primary">Нове Оголошення</h2>
+    <p> {{ vehicle | json}} </p>
     <form class="p-4 border rounded bg-light">
       <div class="mb-3">
-        <label for="vehicle" class="form-label">Тип авто:</label>
-        <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.type">
+        <label for="carType" class="form-label">Тип авто:</label>
+        <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="vehicle.type">
           <option value=""></option>
           <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
         </select>
@@ -71,7 +72,7 @@
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Регіон:</label>
-        <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.region" (change)=onBrandChange()>
+        <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.region" (change)=onRegionChange()>
           <option value=""></option>
           <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
         </select>

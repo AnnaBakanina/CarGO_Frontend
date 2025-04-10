@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center mt-5">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;">
+      
+      <h3 class="mb-4 text-center">Редагування</h3>
+      
+      <p> {{ vehicle | json}} </p>
+
+      <div class="mb-3 position-relative">
+        <label for="carType" class="form-label">Тип авто:</label>
+        <div class="d-flex align-items-center border-bottom">
+            <select class="form-select border-0 shadow-none px-0" id="carTypeId" formControlName="carTypeId">
+              <!-- <option *ngFor="let type of " [value]="type.id">{{ type.name }}</option> -->
+            </select>
+            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
+      </div>
+  
+      <div class="mb-3 position-relative">
+        <label for="vinNumber" class="form-label">VIN номер:</label>
+        <div class="d-flex align-items-center border-bottom">
+          <input type="text" class="form-control border-0 shadow-none px-0" id="vinNumber" formControlName="vinNumber" placeholder="Enter VIN number"/>
+          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+            <i class="bi bi-pencil"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- (click)="toggleEdit()"   [readonly]="!isEditing"  -->
+      <!-- Додай тут інші поля -->
+  
+      <div class="text-center mt-4">
+        <button class="btn btn-primary" type="submit">Save Changes</button>
+      </div>
+    </form>
+  </div>
+  

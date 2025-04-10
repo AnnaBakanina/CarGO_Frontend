@@ -11,4 +11,12 @@ export class VehicleService {
   create(vehicle: any) {
     return this.http.post('http://localhost:5269/vehicles', vehicle);
   }
+
+  getVehicle(id: number) {
+    return this.http.get('http://localhost:5269/vehicles/' + id); 
+  }
+
+  updateVehicle (id: number, body: any) {
+    return this.http.put('http://localhost:5269/vehicles/' + id, body);
+  }
 }
