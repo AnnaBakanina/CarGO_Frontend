@@ -3,11 +3,11 @@ import { KeyValuePair } from "./keyValuePair";
 
 export interface Vehicle {
     id: number;
-    user?: User;
-    model: KeyValuePair;
-    make: KeyValuePair;
-    carType: KeyValuePair;
-    techState: KeyValuePair;
+    userId?: number;
+    modelId: number;
+    makeId: number;
+    carTypeId: number;
+    techStateId: number;
     yearOfRelease: number;
     vinNumber: string;
     carMileage: number;
