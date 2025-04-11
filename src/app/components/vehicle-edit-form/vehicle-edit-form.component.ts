@@ -9,8 +9,10 @@ import { TechStateService } from './../../services/techState.service';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { Vehicle } from '../../models/vehicle';
+import { VehicleSave } from '../../models/vehicleSave';
+import { Brand } from '../../models/brand';
 
 @Component({
   selector: 'app-vehicle-edit-form',
@@ -20,15 +22,31 @@ import { forkJoin } from 'rxjs';
 })
 export class VehicleEditFormComponent implements OnInit {
   editForm!: FormGroup;
-  brands: any = {};
+  brands: Brand[] = [];
   models: any = {};
   carTypes: any = {};
   techState: any = {};
   regions: any = {};
   cities: any = {};
-  vehicle: any = {
-    id: 12
+  vehicle: VehicleSave = {
+    id: 10,
+    modelId: 0,
+    brandId: 0,
+    carTypeId: 0,
+    techStateId: 0,
+    yearOfRelease: 0,
+    vinNumber: '',
+    carMileage: 0,
+    description: '',
+    isAuction: false,
+    isPaymentInParts: false,
+    isTaxable: false,
+    phoneNumber: '',
+    regionId: 0,
+    cityId: 0
   };
+
+  isEditingCarType = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,41 +59,61 @@ export class VehicleEditFormComponent implements OnInit {
     private router: Router
     ) {}
 
-  ngOnInit(): void {
-    var sources = [
-      this.brandService.getBrands(),
-      this.carTypeService.getCarTypes(),
-      this.techStateService.getCarTechState(),
-      this.locationService.getLocation()
-    ];
+    ngOnInit(): void {
+      const requests: {
+        brands: Observable<Brand[]>,
+        carTypes: Observable<any>,
+        techState: Observable<any>,
+        regions: Observable<any>,
+        vehicle?: Observable<Vehicle>
+      } = {
+        brands: this.brandService.getBrands() as Observable<Brand[]>,
+        carTypes: this.carTypeService.getCarTypes(),
+        techState: this.techStateService.getCarTechState(),
+        regions: this.locationService.getLocation()
+      };
+    
+      if (this.vehicle.id) {
+        requests.vehicle = this.vehicleService.getVehicle(this.vehicle.id) as Observable<Vehicle>;
+      }
+    
+      forkJoin(requests).subscribe({
+        next: data => {
+          this.brands = data.brands;
+          this.carTypes = data.carTypes;
+          this.techState = data.techState;
+          this.regions = data.regions;
+          if (data.vehicle) {
+            this.setVehicle(data.vehicle);
+            this.populateModels();
+          };
+        },
+        error: err => {
+          this.router.navigate(['/not-found']);
+        }
+      });
+    }
 
-    if (this.vehicle.id)
-      sources.push(this.vehicleService.getVehicle(this.vehicle.id))
+    onBrandChange() {
+      this.populateModels();
+      this.vehicle.brandId = 0;
+    }
+  
+    // onRegionChange() {
+    //   var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
+    //   this.cities = selectedRegion ? selectedRegion.city: [];
+    //   delete this.vehicle.cityId;
+    // }
 
-    forkJoin(sources).subscribe({
-      next: data => {
-        this.brands = data[0];
-        this.carTypes = data[1];
-        this.techState = data[2];
-        this.regions = data[3];
-        if (this.vehicle.id)
-          this.setVehicle(data[4]);
-      },
-      error: err => { this.router.navigate(['/not-found']) }
-    });
-
-    this.vehicleService.getVehicle(this.vehicle.id)
-    .subscribe({
-      next: v => { this.vehicle = v; },
-      error: err => { this.router.navigate(['/not-found']) }
-    });
-  };
-
-  private setVehicle(v: any) {
+  private populateModels() {
+    var selectedBrand = this.brands.find(m => m.id == this.vehicle.brandId);
+    this.models = selectedBrand ? selectedBrand.carModel: [];
+  }
+  private setVehicle(v: Vehicle) {
     this.vehicle.id = v.id;
-    this.vehicle.makeId = v.brand.id;
+    this.vehicle.brandId = v.brand.id;
     this.vehicle.modelId = v.model.id;
-    this.vehicle.carTypeId = v.carType.id;
+    this.vehicle.carTypeId = Number(v.carType.id);
     this.vehicle.techStateId = v.techState.id;
     this.vehicle.yearOfRelease = v.yearOfRelease;
     this.vehicle.vinNumber = v.vinNumber;
@@ -85,6 +123,8 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.isPaymentInParts = v.isPaymentInParts;
     this.vehicle.isTaxable = v.isTaxable;
     this.vehicle.phoneNumber = v.phoneNumber;
+    this.vehicle.regionId = v.region.id;
+    this.vehicle.cityId = v.city.id;
   }
   
   onSubmit(): void {

@@ -1,17 +1,18 @@
 <div class="d-flex justify-content-center mt-5">
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;">
+    <form (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;">
       
       <h3 class="mb-4 text-center">Редагування</h3>
       
-      <p> {{ vehicle | json}} </p>
+      <!-- <p> {{ vehicle | json}} </p> -->
+      <p>Типи: {{ models | json }}</p>
 
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Тип авто:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0" id="carTypeId" formControlName="carTypeId">
-              <!-- <option *ngFor="let type of " [value]="type.id">{{ type.name }}</option> -->
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="carTypeId" [(ngModel)]="vehicle.carTypeId" name="carTypeId" [disabled]="!isEditingCarType">
+              <option *ngFor="let type of carTypes" [value]="type.id">{{ type.name }}</option>
             </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit" (click)="isEditingCarType = !isEditingCarType">
               <i class="bi bi-pencil"></i>
             </button>
           </div>
@@ -20,8 +21,8 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Бренд авто:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0" id="carTypeId" formControlName="carTypeId">
-              <!-- <option *ngFor="let type of " [value]="type.id">{{ type.name }}</option> -->
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="brandId" [(ngModel)]="vehicle.brandId" name="brandId">
+              <option *ngFor="let type of brands" [value]="type.id">{{ type.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
               <i class="bi bi-pencil"></i>
@@ -32,8 +33,8 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Модель авто:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0" id="carTypeId" formControlName="carTypeId">
-              <!-- <option *ngFor="let type of " [value]="type.id">{{ type.name }}</option> -->
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="modelId" [(ngModel)]="vehicle.modelId" name="modelId" (change)=onBrandChange()>
+              <option *ngFor="let type of models" [value]="type.id">{{ type.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
               <i class="bi bi-pencil"></i>
@@ -44,7 +45,7 @@
       <div class="mb-3 position-relative">
         <label for="vinNumber" class="form-label">Рік випуску:</label>
         <div class="d-flex align-items-center border-bottom">
-          <input type="text" class="form-control border-0 shadow-none px-0" id="vinNumber" formControlName="vinNumber" placeholder="Enter VIN number"/>
+          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="yearOfRelease" [(ngModel)]="vehicle.yearOfRelease" name="yearOfRelease" placeholder="Введіть рік випуску"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
@@ -54,19 +55,17 @@
       <div class="mb-3 position-relative">
         <label for="vinNumber" class="form-label">VIN номер:</label>
         <div class="d-flex align-items-center border-bottom">
-          <input type="text" class="form-control border-0 shadow-none px-0" id="vinNumber" formControlName="vinNumber" placeholder="Enter VIN number"/>
+          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="vinNumber" [(ngModel)]="vehicle.vinNumber" name="vinNumber" placeholder="Введіть VIN номер"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
         </div>
       </div>
-      
-      <!-- (click)="toggleEdit()"   [readonly]="!isEditing"  -->
 
       <div class="mb-3 position-relative">
         <label for="vinNumber" class="form-label">Пробіг:</label>
         <div class="d-flex align-items-center border-bottom">
-          <input type="text" class="form-control border-0 shadow-none px-0" id="vinNumber" formControlName="vinNumber" placeholder="Enter VIN number"/>
+          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="carMileage" [(ngModel)]="vehicle.carMileage" name="carMileage" placeholder="Введіть пробіг"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
@@ -76,8 +75,8 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Технічний стан:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0" id="carTypeId" formControlName="carTypeId">
-              <!-- <option *ngFor="let type of " [value]="type.id">{{ type.name }}</option> -->
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="techStateId" [(ngModel)]="vehicle.techStateId" name="techStateId">
+              <option *ngFor="let type of techState" [value]="type.id">{{ type.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
               <i class="bi bi-pencil"></i>
@@ -88,10 +87,7 @@
       <div class="mb-3 position-relative">
         <label for="carDescription" class="form-label">Опис:</label>
         <div class="d-flex align-items-center border-bottom">
-          <!-- Textarea -->
-          <textarea class="form-control border-0 shadow-none px-0" id="carDescription" formControlName="carDescription" rows="3"></textarea>
-          
-          <!-- Кнопка для редагування -->
+          <textarea class="form-control border-0 shadow-none px-0 ps-3" id="description" [(ngModel)]="vehicle.description" name="description" rows="3"></textarea>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
@@ -101,7 +97,7 @@
       <div class="mb-3 position-relative">
         <label for="numberField" class="form-label">Ціна:</label>
         <div class="d-flex align-items-center border-bottom">
-          <input type="number" class="form-control border-0 shadow-none px-0" id="numberField" placeholder="Введіть ціну" />
+          <input type="number" class="form-control border-0 shadow-none px-0 ps-3" id="numberField" placeholder="Введіть ціну" />
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
@@ -110,23 +106,23 @@
       
       <div class="mb-3">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option1" value="option1">
-          <label class="form-check-label" for="option1">Можливий торг</label>
+          <input class="form-check-input" type="checkbox" id="isAuction" value="option1" [(ngModel)]="vehicle.isAuction" name="isAuction">
+          <label class="form-check-label" for="isAuction">Можливий торг</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option2" value="option2">
-          <label class="form-check-label" for="option2">Нерозмитнений</label>
+          <input class="form-check-input" type="checkbox" id="isTaxable" value="option2" [(ngModel)]="vehicle.isTaxable" name="isTaxable">
+          <label class="form-check-label" for="isTaxable">Нерозмитнений</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option3" value="option3">
-          <label class="form-check-label" for="option3">Можлива оплата частинами</label>
+          <input class="form-check-input" type="checkbox" id="isPaymentInParts" value="option3" [(ngModel)]="vehicle.isPaymentInParts" name="isPaymentInParts">
+          <label class="form-check-label" for="isPaymentInParts">Можлива оплата частинами</label>
         </div>
       </div>
       
       <div class="mb-4 position-relative">
         <label for="formFile" class="form-label">Завантажити фото</label>
         <div class="d-flex align-items-center border-bottom pb-2">
-          <input class="form-control border-0 shadow-none px-0" type="file" id="formFile" style="visibility: hidden;">
+          <input class="form-control border-0 shadow-none px-0 ps-3" type="file" id="formFile" style="visibility: hidden;">
           <button type="button" class="btn btn-outline-primary p-2" aria-label="Choose File" onclick="document.getElementById('formFile').click()">
             <i class="bi bi-upload"></i> Вибрати файл
           </button>
@@ -140,7 +136,7 @@
       <div class="mb-3 position-relative">
         <label for="phoneField" class="form-label">Номер телефону</label>
         <div class="d-flex align-items-center border-bottom">
-          <input type="tel" class="form-control border-0 shadow-none px-0" id="phoneField" placeholder="Введіть номер телефону">
+          <input type="tel" class="form-control border-0 shadow-none px-0 ps-3" id="phoneNumber" [(ngModel)]="vehicle.phoneNumber" name="phoneNumber" placeholder="Введіть номер телефону">
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
@@ -150,8 +146,8 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Регіон:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0" id="carTypeId" formControlName="carTypeId">
-              <!-- <option *ngFor="let type of " [value]="type.id">{{ type.name }}</option> -->
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="regionId" [(ngModel)]="vehicle.regionId" name="regionId">
+              <option *ngFor="let type of regions" [value]="type.id">{{ type.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
               <i class="bi bi-pencil"></i>
@@ -162,8 +158,8 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Місто:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0" id="carTypeId" formControlName="carTypeId">
-              <!-- <option *ngFor="let type of " [value]="type.id">{{ type.name }}</option> -->
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="cityId" [(ngModel)]="vehicle.cityId" name="cityId">
+              <option *ngFor="let type of cities" [value]="type.id">{{ type.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
               <i class="bi bi-pencil"></i>
@@ -172,7 +168,7 @@
       </div>
   
       <div class="text-center mt-4">
-        <button class="btn btn-primary" type="submit">Save Changes</button>
+        <button class="btn btn-primary" type="submit">Зберегти зміни</button>
       </div>
     </form>
   </div>

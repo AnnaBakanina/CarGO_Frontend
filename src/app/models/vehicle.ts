@@ -5,7 +5,7 @@ export interface Vehicle {
     id: number;
     user?: User;
     model: KeyValuePair;
-    make: KeyValuePair;
+    brand: KeyValuePair;
     carType: KeyValuePair;
     techState: KeyValuePair;
     yearOfRelease: number;
@@ -16,4 +16,6 @@ export interface Vehicle {
     isPaymentInParts: boolean;
     isTaxable: boolean;
     phoneNumber: string;
+    region: KeyValuePair;
+    city: KeyValuePair;
 }

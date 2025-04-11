@@ -1,11 +1,8 @@
-import { User } from './user';
-import { KeyValuePair } from "./keyValuePair";
-
-export interface Vehicle {
+export interface VehicleSave {
     id: number;
     userId?: number;
     modelId: number;
-    makeId: number;
+    brandId: number;
     carTypeId: number;
     techStateId: number;
     yearOfRelease: number;
@@ -16,4 +13,6 @@ export interface Vehicle {
     isPaymentInParts: boolean;
     isTaxable: boolean;
     phoneNumber: string;
+    regionId: number;
+    cityId: number;
 }
