@@ -19,4 +19,8 @@ export class VehicleService {
   updateVehicle (id: number, body: any) {
     return this.http.put('http://localhost:5269/vehicles/' + id, body);
   }
+
+  delete(id: number) {
+    return this.http.delete('http://localhost:5269/vehicles/' + id)
+  }
 }

@@ -1,10 +1,10 @@
-<div class="d-flex justify-content-center mt-5">
+<div class="d-flex justify-content-center mt-5 mb-5">
     <form (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;">
       
       <h3 class="mb-4 text-center">Редагування</h3>
       
       <!-- <p> {{ vehicle | json}} </p> -->
-      <p>Типи: {{ models | json }}</p>
+      <!-- <p>Типи: {{ models | json }}</p> -->
 
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Тип авто:</label>
@@ -167,8 +167,9 @@
           </div>
       </div>
   
-      <div class="text-center mt-4">
+      <div class="text-center mt-4 px-4 d-flex justify-content-center gap-3">
         <button class="btn btn-primary" type="submit">Зберегти зміни</button>
+        <button class="btn btn-danger" type="delete" (click)="delete()">Видалити оголошення</button>
       </div>
     </form>
   </div>

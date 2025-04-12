@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { Vehicle } from '../../models/vehicle';
 import { VehicleSave } from '../../models/vehicleSave';
@@ -55,7 +55,6 @@ export class VehicleEditFormComponent implements OnInit {
     private techStateService: TechStateService,
     private locationService: LocationService,
     private vehicleService: VehicleService,
-    private route: ActivatedRoute,
     private router: Router
     ) {}
 
@@ -99,15 +98,19 @@ export class VehicleEditFormComponent implements OnInit {
       this.vehicle.brandId = 0;
     }
   
-    // onRegionChange() {
-    //   var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
-    //   this.cities = selectedRegion ? selectedRegion.city: [];
-    //   delete this.vehicle.cityId;
-    // }
+    onRegionChange() {
+      this.populateCities();
+      this.vehicle.cityId = 0;
+    }
 
   private populateModels() {
     var selectedBrand = this.brands.find(m => m.id == this.vehicle.brandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
+  }
+
+  private populateCities() {
+    // var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
+    // this.cities = selectedRegion ? selectedRegion.city: [];
   }
   private setVehicle(v: Vehicle) {
     this.vehicle.id = v.id;
@@ -125,6 +128,11 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.phoneNumber = v.phoneNumber;
     this.vehicle.regionId = v.region.id;
     this.vehicle.cityId = v.city.id;
+  }
+
+  delete() {
+    if (confirm("Are you sure?"))
+      this.vehicleService.delete(this.vehicle.id);
   }
   
   onSubmit(): void {
