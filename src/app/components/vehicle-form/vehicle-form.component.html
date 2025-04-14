@@ -1,15 +1,18 @@
-<div class="container mt-5 vh-100">
-    <h2 class="text-primary">Нове Оголошення</h2>
-    <p> {{ vehicle | json}} </p>
-    <form class="p-4 border rounded bg-light">
-      <div class="mb-3">
+<!-- <div class="container mt-5 vh-100"> -->
+<div class="d-flex justify-content-center mt-5 mb-5">
+    <!-- <h2 class="text-primary mb-4 text-center">Нове Оголошення</h2> -->
+    <!-- <p> {{ vehicle | json}} </p> -->
+    <!-- <form class="p-4 border rounded bg-light"> -->
+    <form class="w-100" style="max-width: 80%;">
+      <h3 class="text-primary mb-4 text-center">Нове Оголошення</h3>
+      <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Тип авто:</label>
         <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="vehicle.type">
           <option value=""></option>
           <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
         </select>
       </div>
-      <div class="mb-3">
+      <div class="mb-3 position-relative">
         <label for="vehicle" class="form-label">Бренд авто:</label>
         <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="vehicle.make" (change)=onBrandChange()>
           <option value=""></option>
