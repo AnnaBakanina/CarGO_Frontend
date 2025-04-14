@@ -1,15 +1,12 @@
-<div class="container-fluid p-5 text-white text-center" style="background: url('https://images.pexels.com/photos/63294/autos-technology-vw-multi-storey-car-park-63294.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') center/cover no-repeat;">
-    <h1 class="fw-bold">Everyone can find their perfect car</h1>
-    <p>More than 10,000+ offers to choose from</p>
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-8 bg-white p-3 rounded shadow">
+<div class="container-fluid p-5 text-white text-center mt-5 hero-bg" style="background: url('/silhouette-skyline-illustration.png') center/cover no-repeat;">
+    <div class="row justify-content-center mt-auto">
+        <div class="col-md-8 bg-white p-3 rounded shadow mt-5">
             <form class="row g-2">
                 <div class="col-md-3">
-                    <select class="form-select">
-                        <option selected>Марка</option>
-                        <option value="1">BMW</option>
-                        <option value="2">Audi</option>
-                    </select>
+                    <select class="form-select" id="brandId" [(ngModel)]="selectedBrandId" name="brandId">
+                        <option selected>Бренд</option>
+                        <option *ngFor="let type of brands" [value]="type.id">{{ type.name }}</option>
+                      </select>
                 </div>
                 <div class="col-md-3">
                     <select class="form-select">
@@ -19,11 +16,7 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select">
-                        <option selected>Ціна до</option>
-                        <option value="1">$10,000</option>
-                        <option value="2">$20,000</option>
-                    </select>
+                    <input type="number" class="form-control" id="priceTo" [(ngModel)]="filters.priceTo" placeholder="Ціна дo ...">
                 </div>
                 <div class="col-md-3">
                     <button type="submit" class="btn btn-primary w-100">Шукати</button>
@@ -31,4 +24,8 @@
             </form>
         </div>
     </div>
+</div>
+<div class="row justify-content-center mt-auto">
+    <h1 class="fw-bold text-black">Кожен може знайти свій ідеальний автомобіль</h1>
+    <p class="text-black">Понад 10 000 пропозицій на вибір</p>
 </div>

@@ -1,0 +1,8 @@
+.hero-bg {
+    background-image: url('/silhouette-skyline-illustration.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    min-height: 400px;
+  }
+  

@@ -1,0 +1,9 @@
+.gradient-logo {
+    font-weight: bold;
+    font-size: 1.8rem;
+    background: linear-gradient(90deg, #007bff, #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+  

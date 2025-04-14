@@ -13,5 +13,6 @@ export const routes: Routes = [
     { path: 'profile/admin', loadComponent: () => import('./components/admin/admin-form/admin-form.component').then(m => m.AdminFormComponent) },
     { path: 'not-found', loadComponent: () => import('./components/errorPages/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent) },
     { path: 'contact', loadComponent: () => import('./components/contact-page/contact-page.component').then(m => m.ContactPageComponent) },
-    { path: 'blog', loadComponent: () => import('./components/blog-page/blog-page.component').then(m => m.BlogPageComponent) }
+    { path: 'blog', loadComponent: () => import('./components/blog-page/blog-page.component').then(m => m.BlogPageComponent) },
+    { path: 'sign-up', loadComponent: () => import('./components/sign-up-form/sign-up-form.component').then(m => m.SignUpFormComponent) }
 ];

@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BrandService } from '../../services/brand.service';
+import { KeyValuePair } from '../../models/keyValuePair';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Brand } from '../../models/brand';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   articles = [
     {
       title: 'Як тестувати Angular-додатки',
@@ -27,4 +32,29 @@ export class HomeComponent {
       link: '/blog/api-angular'
     }
   ];
+  brands: Brand[] = [];
+  selectedBrandId: number = 0;
+  models: KeyValuePair[] = [];
+  filters = {
+    make: '',
+    type: '',
+    priceFrom: null,
+    priceTo: null
+  };
+
+  constructor(
+    private brandService: BrandService
+  ) {}
+
+  ngOnInit() {
+    this.brandService.getBrands().subscribe((data: any) => {
+      this.brands = data;
+    });
+  }
+  
+  // onBrandChange() {
+  //   var selectedBrand = this.brands.find(m => m.id == this.models.id);
+  //   this.models = selectedBrand ? selectedBrand.carModel: [];
+  //   this.modelId = 0;
+  // }
 }
