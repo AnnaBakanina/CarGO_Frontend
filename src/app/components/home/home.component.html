@@ -6,7 +6,7 @@
             <form class="row g-2">
                 <div class="col-md-3">
                     <select class="form-select" id="brandId" [(ngModel)]="selectedBrandId" name="brandId">
-                        <option selected>Бренд</option>
+                        <option value="" disabled selected class="text-black">Бренд</option>
                         <option *ngFor="let type of brands" [value]="type.id">{{ type.name }}</option>
                       </select>
                 </div>
