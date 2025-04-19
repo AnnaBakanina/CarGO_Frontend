@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Vehicle } from '../../../models/vehicle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { VehicleService } from '../../../services/vehicle.service';
 
 @Component({
   selector: 'app-vehicle-table-listing',
@@ -15,6 +16,10 @@ export class VehicleTableListingComponent {
     model: '',
     vin: ''
   };
+
+  constructor(
+    private vehicleService: VehicleService
+  ) {}
   
   vehicles: Vehicle[] = [];
   paginatedVehicles: Vehicle[] = [];
@@ -26,9 +31,10 @@ export class VehicleTableListingComponent {
   sortAsc = true;
   
   ngOnInit() {
-    // тут дані — можеш підвантажити з сервісу
-    this.vehicles = this.getMockData(); 
-    this.applyFilters();
+    this.vehicleService.getAllVehicles().subscribe((data: any) => {
+      this.vehicles = data;
+      this.applyFilters();
+    });
   }
   
   applyFilters() {
@@ -79,28 +85,30 @@ export class VehicleTableListingComponent {
     this.applyFilters();
   }
   
-  // Мокові дані
-  getMockData(): Vehicle[] {
-    return [
-      {
-        id: 1,
-        user: undefined,
-        brand: {id: 7, name:'Toyota'},
-        model: {id:5, name:'Corolla'},
-        carType: {id:9, name:'Sedan'},
-        techState: {id:5, name: 'New'},
-        yearOfRelease: 2022,
-        vinNumber: 'ABC123KDFVKLD78',
-        carMileage: 0,
-        description: 'Ця властивість дозволяє автоматично переносити слова, якщо вони не вміщуються в одну клітинку.',
-        isAuction: false,
-        isPaymentInParts: false,
-        isTaxable: true,
-        phoneNumber: '+380991234567',
-        region: {id: 7, name:'Lvivska'},
-        city: {id: 9, name:'Lviv'}
-      },
-      // ...додай ще
-    ];
-  }
+  // // Мокові дані
+  // getMockData(): Vehicle[] {
+  //   return [
+  //     {
+  //       id: 1,
+  //       user: undefined,
+  //       brand: {id: 7, name:'Toyota'},
+  //       model: {id:5, name:'Corolla'},
+  //       carType: {id:9, name:'Sedan'},
+  //       techState: {id:5, name: 'New'},
+  //       yearOfRelease: 2022,
+  //       vinNumber: 'ABC123KDFVKLD78',
+  //       carMileage: 0,
+  //       description: 'Ця властивість дозволяє автоматично переносити слова, якщо вони не вміщуються в одну клітинку.',
+  //       isAuction: false,
+  //       isPaymentInParts: false,
+  //       isTaxable: true,
+  //       phoneNumber: '+380991234567',
+  //       region: {id: 7, name:'Lvivska'},
+  //       city: {id: 9, name:'Lviv'},
+  //       price: 20000,
+  //       advertisementStatus: {id: 1, name: 'Active'}
+  //     },
+  //     // ...додай ще
+  //   ];
+  // }
 }

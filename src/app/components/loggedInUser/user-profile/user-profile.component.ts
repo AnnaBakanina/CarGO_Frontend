@@ -5,11 +5,12 @@ import { RouterModule } from '@angular/router';
 import { UserListingComponent } from '../user-listing/user-listing.component';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { AdminFormComponent } from '../../admin/admin-form/admin-form.component';
+import { UserTableListingComponent } from '../user-table-listing/user-table-listing.component';
 // import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [CommonModule, UserListingComponent, RouterModule, VehicleTableListingComponent, UserInfoComponent, AdminFormComponent],
+  imports: [CommonModule, UserListingComponent, RouterModule, VehicleTableListingComponent, UserInfoComponent, AdminFormComponent, UserTableListingComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })

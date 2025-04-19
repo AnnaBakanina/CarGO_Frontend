@@ -43,7 +43,9 @@ export class VehicleEditFormComponent implements OnInit {
     isTaxable: false,
     phoneNumber: '',
     regionId: 0,
-    cityId: 0
+    cityId: 0,
+    price: 0,
+    advertisementStatusId: 1
   };
 
   isEditingCarType = false;

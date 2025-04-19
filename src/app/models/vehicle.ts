@@ -18,4 +18,6 @@ export interface Vehicle {
     phoneNumber: string;
     region: KeyValuePair;
     city: KeyValuePair;
+    price: number;
+    advertisementStatus: KeyValuePair;
 }

@@ -15,4 +15,6 @@ export interface VehicleSave {
     phoneNumber: string;
     regionId: number;
     cityId: number;
+    price: number;
+    advertisementStatusId: number;
 }

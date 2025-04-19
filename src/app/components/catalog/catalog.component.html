@@ -13,14 +13,20 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Бренд авто:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="brands">
+            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="filter.brandId" (change)="onFilterChange()">
               <option value=""></option>
               <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
             </select>
           </div>
-          <div class="mb-3">
-            <label for="numberField" class="form-label">Пробіг:</label>
-            <input type="number" class="form-control" id="numberField" placeholder="Введіть число">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="priceFrom" class="form-label">Пробіг від:</label>
+              <input type="number" class="form-control" id="carMileageFrom" [(ngModel)]="filter.carMileageFrom" placeholder="Напр. 10000">
+            </div>
+            <div class="col-md-6">
+              <label for="priceTo" class="form-label">Пробіг до:</label>
+              <input type="number" class="form-control" id="carMileageTo" [(ngModel)]="filter.carMileageTo" placeholder="Напр. 50000">
+            </div>
           </div>
           <div class="mb-3">
             <label for="vehicle" class="form-label">Технічний стан:</label>
@@ -32,40 +38,42 @@
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="priceFrom" class="form-label">Ціна від:</label>
-              <input type="number" class="form-control" id="priceFrom" [(ngModel)]="filters.priceFrom" placeholder="Напр. 10000">
+              <input type="number" class="form-control" id="priceFrom" [(ngModel)]="filter.priceFrom" placeholder="Напр. 10000">
             </div>
             <div class="col-md-6">
               <label for="priceTo" class="form-label">Ціна до:</label>
-              <input type="number" class="form-control" id="priceTo" [(ngModel)]="filters.priceTo" placeholder="Напр. 50000">
+              <input type="number" class="form-control" id="priceTo" [(ngModel)]="filter.priceTo" placeholder="Напр. 50000">
             </div>
           </div>          
           <div class="mb-3">
             <label for="vehicle" class="form-label">Регіон:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="regions">
+            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="filter.regionId" (change)=onRegionChange()>
               <option value=""></option>
               <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
             </select>
           </div>
           <div class="mb-3">
             <label for="vehicle" class="form-label">Місто:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select">
+            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="filter.cityId">
               <option value=""></option>
               <option *ngFor="let c of cities" value="{{ c.id }}">{{ c.name }}</option>
             </select>
           </div>
-          <button class="btn btn-primary w-100">Шукати</button>
+          <button class="btn btn-primary w-100">Фільтрувати</button>
+          <button class="btn btn-primary mt-2 w-100">Очистити</button>
         </div>
       </div>
   
       <!-- Right Content: Catalog -->
       <div class="col-md-9">
         <div class="row">
-          <div class="col-md-4 mb-4" *ngFor="let vehicle of vehicles">
+          <div class="col-md-4 mb-4" *ngFor="let vehicle of apiVehicles">
             <div class="card">
-              <img [src]="vehicle.image" class="card-img-top" alt="Vehicle Image">
+              <!-- <img [src]="vehicle.image" class="card-img-top" alt="Vehicle Image"> -->
               <div class="card-body">
-                <h5 class="card-title">{{ vehicle.make }} {{ vehicle.model }}</h5>
-                <p class="card-text">{{ vehicle.type }}</p>
+                <h5 class="card-title">{{ vehicle.brand.name }} {{ vehicle.model.name }} | {{ vehicle.carType.name }}</h5>
+                <p class="card-text">{{ vehicle.carMileage }} тис. км</p>
+                <p class="card-text">{{ vehicle.price }} $</p>
                 <button class="btn btn-outline-primary">Детальніше</button>
               </div>
             </div>

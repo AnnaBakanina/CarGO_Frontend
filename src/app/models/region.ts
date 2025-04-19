@@ -1,6 +1,6 @@
 import { KeyValuePair } from './keyValuePair';
-export interface Brand {
+export interface Region {
   id: number;
   name: string;
-  carModel: KeyValuePair[];
+  city: KeyValuePair[];
 }

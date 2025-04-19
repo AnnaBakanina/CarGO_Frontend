@@ -20,6 +20,10 @@ export class VehicleService {
     return this.http.put('http://localhost:5269/vehicles/' + id, body);
   }
 
+  getAllVehicles() {
+    return this.http.get('http://localhost:5269/vehicles');
+  }
+
   delete(id: number) {
     return this.http.delete('http://localhost:5269/vehicles/' + id)
   }

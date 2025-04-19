@@ -42,10 +42,10 @@
                                         (click)="setTab('info')"><i class="fas fa-user me-2"></i>Інформація</button>
                                         <button type="button" class="nav-link text-start" [class.active]="activeTab === 'announcements'" 
                                         (click)="setTab('announcements')"><i class="fas fa-solid fa-list me-2"></i>Оголошення</button>
-                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'users'" 
-                                        (click)="setTab('users')"><i class="fas fa-solid fa-file me-2"></i>Керування оголошеннями</button>
-                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'users'" 
-                                        (click)="setTab('users')"><i class="fas fa-solid fa-address-book me-2"></i>Керування користувачами</button>
+                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'manageAnnoucements'" 
+                                        (click)="setTab('manageAnnoucements')"><i class="fas fa-solid fa-file me-2"></i>Керування оголошеннями</button>
+                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'manageUsers'" 
+                                        (click)="setTab('manageUsers')"><i class="fas fa-solid fa-address-book me-2"></i>Керування користувачами</button>
                                         <button type="button" class="nav-link text-start" [class.active]="activeTab === 'reports'" 
                                         (click)="setTab('reports')"><i class="fas fa-solid fa-chart-pie me-2"></i>Звіти</button>
                                     </div>
@@ -59,7 +59,8 @@
                                     <div class="mb-4">
                                       <app-user-info *ngIf="activeTab === 'info'"></app-user-info>
                                       <app-user-listing *ngIf="activeTab === 'announcements'"></app-user-listing>
-                                      <app-vehicle-table-listing *ngIf="activeTab === 'users'"></app-vehicle-table-listing>
+                                      <app-vehicle-table-listing *ngIf="activeTab === 'manageAnnoucements'"></app-vehicle-table-listing>
+                                      <app-user-table-listing *ngIf="activeTab === 'manageUsers'"></app-user-table-listing>
                                       <app-admin-form *ngIf="activeTab === 'reports'"></app-admin-form>
                                     </div>
                                 </div>

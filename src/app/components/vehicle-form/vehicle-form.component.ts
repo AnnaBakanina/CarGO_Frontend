@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
+import { Region } from '../../models/region';
 
 @Component({
   selector: 'app-vehicle-form',

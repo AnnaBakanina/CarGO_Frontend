@@ -1,4 +1,6 @@
-<div class="container mt-5">
+<div class="container mt-2">
+
+  <!-- <pre>{{ paginatedVehicles | json }}</pre> -->
 
     <!-- Фільтри -->
     <div class="row mb-3">
@@ -38,7 +40,7 @@
             <tbody>
               <tr *ngFor="let vehicle of paginatedVehicles">
                 <td>{{ vehicle.id }}</td>
-                <td>{{ vehicle.user }}</td>
+                <td>{{ vehicle.user?.id }}</td>
                 <td>{{ vehicle.brand.name }}</td>
                 <td>{{ vehicle.model.name }}</td>
                 <td>{{ vehicle.carType.name }}</td>
