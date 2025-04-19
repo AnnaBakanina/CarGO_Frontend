@@ -1,0 +1,9 @@
+<div class="overlay" (click)="onClose()">
+    <div class="popup" (click)="$event.stopPropagation()">
+      <h3>{{ vehicle.brand.name }} {{ vehicle.model.name }}</h3>
+      <p><strong>Тип:</strong> {{ vehicle.carType.name }}</p>
+      <p><strong>Рік:</strong> {{ vehicle.year }}</p>
+      <p><strong>VIN:</strong> {{ vehicle.vin }}</p>
+      <button class="btn btn-secondary mt-3" (click)="onClose()">Закрити</button>
+    </div>
+  </div>

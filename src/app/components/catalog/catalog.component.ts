@@ -8,11 +8,12 @@ import { VehicleService } from './../../services/vehicle.service';
 import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
 import { Region } from '../../models/region';
+import { VehicleInfoPopupComponent } from '../vehicle-info-popup/vehicle-info-popup.component';
 
 @Component({
   selector: 'app-catalog',
   standalone:true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, VehicleInfoPopupComponent],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
 })
@@ -35,27 +36,9 @@ export class CatalogComponent implements OnInit {
   regions: Region[] = [];
   cities: any[] = [];
   apiVehicles: Vehicle[] = [];
-  vehicles = [
-    { 
-      make: 'Toyota',
-      model: 'Corolla',
-      type: 'Sedan',
-      image: ''
-    },
-    { 
-      make: 'Ford',
-      model: 'Explorer',
-      type: 'SUV',
-      image: 'https://d2qldpouxvc097.cloudfront.net/image-by-path?bucket=a5-gallery-serverless-prod-chromebucket-1iz9ffi08lwxm&key=450243%2Ffront34%2Flg%2Fe4e4e3'
-    },
-    { 
-      make: 'Chevrolet',
-      model: 'Silverado',
-      type: 'Truck',
-      image: 'https://i.bstr.es/highmotor/2024/10/Chevrolet-Silverado-EV-2025-00001-1280x715.jpeg'
-    }
-  ];
-  allVehicles: Vehicle[] = [];
+
+  selectedVehicle: Vehicle | null = null;
+  isPopupOpen = false;
 
   constructor(
     private brandService: BrandService,
@@ -99,8 +82,18 @@ export class CatalogComponent implements OnInit {
     this.filter.cityId = null;
   }
 
+  openPopup(vehicle: Vehicle) {
+    this.selectedVehicle = vehicle;
+    this.isPopupOpen = true;
+  }
+  
+  closePopup() {
+    this.isPopupOpen = false;
+    this.selectedVehicle = null;
+  }
+
   onFilterChange() {
-    var vehicles = this.allVehicles;
+    var vehicles = this.apiVehicles;
     if (this.filter.brandId)
       vehicles = vehicles.filter(v => v.brand.id == this.filter.brandId);
   }
