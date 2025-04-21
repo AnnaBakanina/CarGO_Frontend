@@ -83,6 +83,6 @@
   
     </div>
   </div>
-  <app-vehicle-info-popup *ngIf="isPopupOpen" [vehicle]="selectedVehicle" [onClose]="closePopup"></app-vehicle-info-popup>
+  <app-vehicle-info-popup *ngIf="isPopupOpen" [vehicle]="selectedVehicle" (onClose)="closePopup()"></app-vehicle-info-popup>
 
   

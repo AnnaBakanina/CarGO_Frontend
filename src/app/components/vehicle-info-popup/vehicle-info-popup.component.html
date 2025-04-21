@@ -1,4 +1,4 @@
-<div class="overlay" (click)="onClose()">
+<!-- <div class="overlay" (click)="onClose()">
     <div class="popup" (click)="$event.stopPropagation()">
       <h3>{{ vehicle.brand.name }} {{ vehicle.model.name }}</h3>
       <p><strong>Тип:</strong> {{ vehicle.carType.name }}</p>
@@ -6,4 +6,79 @@
       <p><strong>VIN:</strong> {{ vehicle.vin }}</p>
       <button class="btn btn-secondary mt-3" (click)="onClose()">Закрити</button>
     </div>
+  </div> -->
+
+  <div class="overlay" (click)="closePopup()">
+    <div class="popup bg-white p-4 rounded shadow-lg position-relative" 
+         (click)="$event.stopPropagation()" 
+         style="max-width: 800px; width: 100%;">
+      
+      <button type="button" class="btn-close position-absolute top-0 end-0 m-3" 
+              aria-label="Закрити" (click)="closePopup()"></button>
+  
+      <h3 class="mb-4 text-primary">{{ vehicle.brand.name }} {{ vehicle.model.name }}</h3>
+  
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <strong>Тип кузова:</strong>
+          <div>{{ vehicle.carType.name }}</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Технічний стан:</strong>
+          <div>{{ vehicle.techState.name }}</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Статус оголошення:</strong>
+          <div>{{ vehicle.advertisementStatus.name }}</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Рік випуску:</strong>
+          <div>{{ vehicle.yearOfRelease }}</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Пробіг:</strong>
+          <div>{{ vehicle.carMileage }} тис. км</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Ціна:</strong>
+          <div>{{ vehicle.price | number }} $</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>VIN номер:</strong>
+          <div>{{ vehicle.vinNumber }}</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Оновлено:</strong>
+          <div>{{ vehicle.lastUpdated | date:'mediumDate' }}</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <strong>Телефон продавця:</strong>
+          <div>{{ vehicle.phoneNumber }}</div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isAuction" [(ngModel)]="vehicle.isAuction" name="isAuction" disabled>
+                <label class="form-check-label" for="isAuction">Можливий торг</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isTaxable" [(ngModel)]="vehicle.isTaxable" name="isTaxable" disabled>
+                <label class="form-check-label" for="isTaxable">Нерозмитнений</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isPaymentInParts" [(ngModel)]="vehicle.isPaymentInParts" name="isPaymentInParts" disabled>
+                <label class="form-check-label" for="isPaymentInParts">Можлива оплата частинами</label>
+              </div>
+        </div>
+      </div>
+  
+      <div class="mt-2">
+        <strong>Опис:</strong>
+        <p class="border p-2 rounded bg-light"
+           style="word-wrap: break-word; white-space: pre-wrap; overflow-wrap: break-word;">
+          {{ vehicle.description }}
+        </p>
+      </div>
+      
+    </div>
   </div>
+  
