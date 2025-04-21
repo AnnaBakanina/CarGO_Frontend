@@ -6,25 +6,34 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class VehicleService {
+  private readonly vehicleEndpoint = 'http://localhost:5269/vehicles';
   constructor( private http: HttpClient) { }
 
   create(vehicle: any) {
-    return this.http.post('http://localhost:5269/vehicles', vehicle);
+    return this.http.post(this.vehicleEndpoint, vehicle);
   }
 
   getVehicle(id: number) {
-    return this.http.get('http://localhost:5269/vehicles/' + id); 
+    return this.http.get(this.vehicleEndpoint + id); 
   }
 
   updateVehicle (id: number, body: any) {
-    return this.http.put('http://localhost:5269/vehicles/' + id, body);
+    return this.http.put(this.vehicleEndpoint + id, body);
   }
 
   getAllVehicles() {
-    return this.http.get('http://localhost:5269/vehicles');
+    return this.http.get(this.vehicleEndpoint);
   }
 
+  // getAllVehicles(filter: undefined) {
+  //   return this.http.get(this.vehicleEndpoint + '?' + this.toQueryString(filter));
+  // }
+
+  // toQueryString(obj: any) {
+
+  // }
+
   delete(id: number) {
-    return this.http.delete('http://localhost:5269/vehicles/' + id)
+    return this.http.delete(this.vehicleEndpoint + id)
   }
 }

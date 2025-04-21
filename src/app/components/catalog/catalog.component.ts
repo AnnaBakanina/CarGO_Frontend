@@ -61,6 +61,10 @@ export class CatalogComponent implements OnInit {
     this.locationService.getLocation().subscribe((data: any) => {
       this.regions = data;
     });
+    this.getVehicles();
+  }
+
+  private getVehicles() {
     this.vehicleService.getAllVehicles().subscribe((data: any) => {
       this.apiVehicles = data;
     });
@@ -96,5 +100,19 @@ export class CatalogComponent implements OnInit {
     var vehicles = this.apiVehicles;
     if (this.filter.brandId)
       vehicles = vehicles.filter(v => v.brand.id == this.filter.brandId);
+  }
+
+  onResetFilter() {
+    this.filter = {
+      brandId: null,
+      carTypeId: null,
+      priceFrom: null,
+      priceTo: null,
+      carMileageFrom: null,
+      carMileageTo: null,
+      regionId: null,
+      cityId: null
+    };
+    this.onFilterChange();
   }
 }
