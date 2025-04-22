@@ -19,7 +19,7 @@ import { VehicleInfoPopupComponent } from '../vehicle-info-popup/vehicle-info-po
 })
 
 export class CatalogComponent implements OnInit {
-  filter = {
+  filter: any = {
     brandId: null,
     carTypeId: null,
     priceFrom: null,
@@ -27,7 +27,9 @@ export class CatalogComponent implements OnInit {
     carMileageFrom: null,
     carMileageTo: null,
     regionId: null,
-    cityId: null
+    cityId: null,
+    sortBy: null,
+    isSortAscending: null
   };
   brands: any[] = [];
   models: any [] = [];
@@ -39,6 +41,7 @@ export class CatalogComponent implements OnInit {
 
   selectedVehicle: Vehicle | null = null;
   isPopupOpen = false;
+  sortOption = '';
 
   constructor(
     private brandService: BrandService,
@@ -65,7 +68,7 @@ export class CatalogComponent implements OnInit {
   }
 
   private getVehicles() {
-    this.vehicleService.getAllVehicles().subscribe((data: any) => {
+    this.vehicleService.getAllVehicles(this.filter).subscribe((data: any) => {
       this.apiVehicles = data;
     });
   }
@@ -96,10 +99,15 @@ export class CatalogComponent implements OnInit {
     this.selectedVehicle = null;
   }
 
-  onFilterChange() {
-    var vehicles = this.apiVehicles;
-    if (this.filter.brandId)
-      vehicles = vehicles.filter(v => v.brand.id == this.filter.brandId);
+  onSortByChange() {
+    const [sortBy, direction] = this.sortOption.split('-');
+    this.filter.sortBy = sortBy;
+    this.filter.isSortAscending = direction === 'asc';
+    this.getVehicles();
+  }
+
+  onApplyFilters() {
+    this.getVehicles();
   }
 
   onResetFilter() {
@@ -113,6 +121,6 @@ export class CatalogComponent implements OnInit {
       regionId: null,
       cityId: null
     };
-    this.onFilterChange();
+    this.onApplyFilters();
   }
 }

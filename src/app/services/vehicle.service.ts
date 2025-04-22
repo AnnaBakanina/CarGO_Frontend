@@ -21,13 +21,13 @@ export class VehicleService {
     return this.http.put(this.vehicleEndpoint + id, body);
   }
 
-  getAllVehicles() {
-    return this.http.get(this.vehicleEndpoint);
-  }
-
-  // getAllVehicles(filter: undefined) {
-  //   return this.http.get(this.vehicleEndpoint + '?' + this.toQueryString(filter));
+  // getAllVehicles() {
+  //   return this.http.get(this.vehicleEndpoint);
   // }
+
+  getAllVehicles(filter: undefined) {
+    return this.http.get(this.vehicleEndpoint + '?' + this.toQueryString(filter));
+  }
 
   toQueryString(obj: any) {
     var parts = [];

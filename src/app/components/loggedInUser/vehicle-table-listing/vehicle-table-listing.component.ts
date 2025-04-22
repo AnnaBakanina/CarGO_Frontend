@@ -11,11 +11,18 @@ import { VehicleService } from '../../../services/vehicle.service';
   styleUrl: './vehicle-table-listing.component.css'
 })
 export class VehicleTableListingComponent {
-  filters = {
+  filters: any = {
     brand: '',
     model: '',
     vin: ''
   };
+
+  // Add sorting from server
+  // filter: any = {
+  //   brandId: null,
+  //   modelId: null,
+  //   vinNum: null
+  // };
 
   constructor(
     private vehicleService: VehicleService
@@ -31,7 +38,7 @@ export class VehicleTableListingComponent {
   sortAsc = true;
   
   ngOnInit() {
-    this.vehicleService.getAllVehicles().subscribe((data: any) => {
+    this.vehicleService.getAllVehicles(this.filters).subscribe((data: any) => {
       this.vehicles = data;
       this.applyFilters();
     });
