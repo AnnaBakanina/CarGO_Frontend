@@ -13,7 +13,7 @@
           </div>
           <div class="mb-3">
             <label class="form-label">Бренд авто:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="filter.brandId">
+            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.brandId">
               <option value=""></option>
               <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
             </select>
@@ -21,11 +21,11 @@
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="priceFrom" class="form-label">Пробіг від:</label>
-              <input type="number" class="form-control" id="carMileageFrom" [(ngModel)]="filter.carMileageFrom" placeholder="Напр. 10000">
+              <input type="number" class="form-control" id="carMileageFrom" [(ngModel)]="query.carMileageFrom" placeholder="Напр. 10000">
             </div>
             <div class="col-md-6">
               <label for="priceTo" class="form-label">Пробіг до:</label>
-              <input type="number" class="form-control" id="carMileageTo" [(ngModel)]="filter.carMileageTo" placeholder="Напр. 50000">
+              <input type="number" class="form-control" id="carMileageTo" [(ngModel)]="query.carMileageTo" placeholder="Напр. 50000">
             </div>
           </div>
           <div class="mb-3">
@@ -38,23 +38,23 @@
           <div class="row mb-3">
             <div class="col-md-6">
               <label for="priceFrom" class="form-label">Ціна від:</label>
-              <input type="number" class="form-control" id="priceFrom" [(ngModel)]="filter.priceFrom" placeholder="Напр. 10000">
+              <input type="number" class="form-control" id="priceFrom" [(ngModel)]="query.priceFrom" placeholder="Напр. 10000">
             </div>
             <div class="col-md-6">
               <label for="priceTo" class="form-label">Ціна до:</label>
-              <input type="number" class="form-control" id="priceTo" [(ngModel)]="filter.priceTo" placeholder="Напр. 50000">
+              <input type="number" class="form-control" id="priceTo" [(ngModel)]="query.priceTo" placeholder="Напр. 50000">
             </div>
           </div>          
           <div class="mb-3">
             <label for="vehicle" class="form-label">Регіон:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="filter.regionId" (change)=onRegionChange()>
+            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.regionId" (change)=onRegionChange()>
               <option value=""></option>
               <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
             </select>
           </div>
           <div class="mb-3">
             <label for="vehicle" class="form-label">Місто:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="filter.cityId">
+            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.cityId">
               <option value=""></option>
               <option *ngFor="let c of cities" value="{{ c.id }}">{{ c.name }}</option>
             </select>
@@ -95,9 +95,10 @@
           </div>
         </div>
       </div>
-  
+
     </div>
   </div>
+  <app-pagination [totalItems]="totalItems" [pageSize]="query.pageSize" [currentPage]="query.page" (pageChange)="onPageChange($event)"></app-pagination>
   <app-vehicle-info-popup *ngIf="isPopupOpen" [vehicle]="selectedVehicle" (onClose)="closePopup()"></app-vehicle-info-popup>
 
   

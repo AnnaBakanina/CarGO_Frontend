@@ -9,17 +9,18 @@ import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
 import { Region } from '../../models/region';
 import { VehicleInfoPopupComponent } from '../vehicle-info-popup/vehicle-info-popup.component';
+import { PaginationComponent } from '../shared/pagination/pagination.component';
 
 @Component({
   selector: 'app-catalog',
   standalone:true,
-  imports: [CommonModule, FormsModule, VehicleInfoPopupComponent],
+  imports: [CommonModule, FormsModule, VehicleInfoPopupComponent, PaginationComponent],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
 })
 
 export class CatalogComponent implements OnInit {
-  filter: any = {
+  query: any = {
     brandId: null,
     carTypeId: null,
     priceFrom: null,
@@ -29,7 +30,9 @@ export class CatalogComponent implements OnInit {
     regionId: null,
     cityId: null,
     sortBy: null,
-    isSortAscending: null
+    isSortAscending: null,
+    page: 1,
+    pageSize: 1
   };
   brands: any[] = [];
   models: any [] = [];
@@ -38,6 +41,7 @@ export class CatalogComponent implements OnInit {
   regions: Region[] = [];
   cities: any[] = [];
   apiVehicles: Vehicle[] = [];
+  totalItems: any;
 
   selectedVehicle: Vehicle | null = null;
   isPopupOpen = false;
@@ -68,8 +72,9 @@ export class CatalogComponent implements OnInit {
   }
 
   private getVehicles() {
-    this.vehicleService.getAllVehicles(this.filter).subscribe((data: any) => {
-      this.apiVehicles = data;
+    this.vehicleService.getAllVehicles(this.query).subscribe((result: any) => {
+      this.apiVehicles = result.data;
+      this.totalItems = result.totalItems;
     });
   }
 
@@ -80,13 +85,13 @@ export class CatalogComponent implements OnInit {
   // }
 
   onRegionChange() {
-    if (this.filter.regionId !== null) {
-      const selectedRegion = this.regions.find(r => r.id == this.filter.regionId);
+    if (this.query.regionId !== null) {
+      const selectedRegion = this.regions.find(r => r.id == this.query.regionId);
       this.cities = selectedRegion?.city || [];
     } else {
       this.cities = [];
     }
-    this.filter.cityId = null;
+    this.query.cityId = null;
   }
 
   openPopup(vehicle: Vehicle) {
@@ -101,8 +106,13 @@ export class CatalogComponent implements OnInit {
 
   onSortByChange() {
     const [sortBy, direction] = this.sortOption.split('-');
-    this.filter.sortBy = sortBy;
-    this.filter.isSortAscending = direction === 'asc';
+    this.query.sortBy = sortBy;
+    this.query.isSortAscending = direction === 'asc';
+    this.getVehicles();
+  }
+
+  onPageChange(page: number) {
+    this.query.page = page;
     this.getVehicles();
   }
 
@@ -111,7 +121,7 @@ export class CatalogComponent implements OnInit {
   }
 
   onResetFilter() {
-    this.filter = {
+    this.query = {
       brandId: null,
       carTypeId: null,
       priceFrom: null,
