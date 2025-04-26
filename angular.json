@@ -68,7 +68,13 @@
               "buildTarget": "my-project:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "ssl": true,
+            "sslKey": "/Users/annabakanina/Library/Mobile Documents/com~apple~CloudDocs/LNTU/Bachelor Project/sslCerts/cargo-private-key.pem",
+            "sslCert": "/Users/annabakanina/Library/Mobile Documents/com~apple~CloudDocs/LNTU/Bachelor Project/sslCerts/certificate.pem",
+            "port": 4200
+          }          
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"

@@ -32,7 +32,7 @@ export class CatalogComponent implements OnInit {
     sortBy: null,
     isSortAscending: null,
     page: 1,
-    pageSize: 1
+    pageSize: 10
   };
   brands: any[] = [];
   models: any [] = [];
