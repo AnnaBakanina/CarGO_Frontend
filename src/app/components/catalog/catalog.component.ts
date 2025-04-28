@@ -13,7 +13,7 @@ import { PaginationComponent } from '../shared/pagination/pagination.component';
 
 @Component({
   selector: 'app-catalog',
-  standalone:true,
+  standalone: true,
   imports: [CommonModule, FormsModule, VehicleInfoPopupComponent, PaginationComponent],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
