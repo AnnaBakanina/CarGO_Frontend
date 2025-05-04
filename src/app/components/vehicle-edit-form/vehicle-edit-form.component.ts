@@ -28,8 +28,8 @@ export class VehicleEditFormComponent implements OnInit {
   techState: any = {};
   regions: any = {};
   cities: any = {};
+  updateVehicleId = 12;
   vehicle: VehicleSave = {
-    id: 10,
     modelId: 0,
     brandId: 0,
     carTypeId: 0,
@@ -74,12 +74,18 @@ export class VehicleEditFormComponent implements OnInit {
         regions: this.locationService.getLocation()
       };
     
-      if (this.vehicle.id) {
-        requests.vehicle = this.vehicleService.getVehicle(this.vehicle.id) as Observable<Vehicle>;
+      if (this.updateVehicleId) {
+        requests.vehicle = this.vehicleService.getVehicle(this.updateVehicleId) as Observable<Vehicle>;
       }
     
       forkJoin(requests).subscribe({
-        next: data => {
+        next: (data: {
+          brands: Brand[],
+          carTypes: any,
+          techState: any,
+          regions: any,
+          vehicle?: Vehicle
+        }) => {
           this.brands = data.brands;
           this.carTypes = data.carTypes;
           this.techState = data.techState;
@@ -89,7 +95,7 @@ export class VehicleEditFormComponent implements OnInit {
             this.populateModels();
           };
         },
-        error: err => {
+        error: (err: any) => {
           this.router.navigate(['/not-found']);
         }
       });
@@ -115,7 +121,6 @@ export class VehicleEditFormComponent implements OnInit {
     // this.cities = selectedRegion ? selectedRegion.city: [];
   }
   private setVehicle(v: Vehicle) {
-    this.vehicle.id = v.id;
     this.vehicle.brandId = v.brand.id;
     this.vehicle.modelId = v.model.id;
     this.vehicle.carTypeId = Number(v.carType.id);
@@ -134,7 +139,7 @@ export class VehicleEditFormComponent implements OnInit {
 
   delete() {
     if (confirm("Are you sure?"))
-      this.vehicleService.delete(this.vehicle.id);
+      this.vehicleService.delete(this.updateVehicleId);
   }
   
   onSubmit(): void {

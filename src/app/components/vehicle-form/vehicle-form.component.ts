@@ -24,10 +24,24 @@ export class VehicleFormComponent implements OnInit {
   techState: any[] = [];
   regions: any[] = [];
   cities: any[] = [];
-  vehicle: any = {
+  vehicle: VehicleSave = {
+    userId: undefined,
+    modelId: 0,
+    brandId: 0,
+    carTypeId: 0,
+    techStateId: 0,
+    yearOfRelease: 0,
+    vinNumber: '',
+    carMileage: 0,
+    description: '',
     isAuction: false,
     isPaymentInParts: false,
-    IsTaxable: false
+    isTaxable: false,
+    phoneNumber: '',
+    regionId: 0,
+    cityId: 0,
+    price: 0,
+    advertisementStatusId: 1
   };
 
   constructor(
@@ -54,7 +68,7 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onBrandChange() {
-    var selectedBrand = this.brands.find(m => m.id == this.vehicle.makeId);
+    var selectedBrand = this.brands.find(m => m.id == this.vehicle.brandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
     delete this.vehicle.modelId;
   }

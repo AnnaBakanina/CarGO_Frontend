@@ -1,5 +1,4 @@
 export interface VehicleSave {
-    id: number;
     userId?: string;
     modelId: number;
     brandId: number;
