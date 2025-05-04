@@ -1,6 +1,6 @@
 export interface VehicleSave {
     id: number;
-    userId?: number;
+    userId?: string;
     modelId: number;
     brandId: number;
     carTypeId: number;

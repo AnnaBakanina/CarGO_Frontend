@@ -13,8 +13,9 @@ bootstrapApplication(AppComponent, {
       domain: 'dev-4fswi5dwxm162ljc.us.auth0.com',
       clientId: 'X0dvzi5mFU5Bo4qzRAPNTsIOGNdC94Ze',
       authorizationParams: {
-        redirect_uri: window.location.origin
-      }
+        redirect_uri: window.location.origin + '/profile'
+      },
+      cacheLocation: 'localstorage'
     })
   ]
 }).catch((err) => console.error(err));

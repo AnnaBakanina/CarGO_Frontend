@@ -11,9 +11,9 @@ import { User } from '../../../models/user';
 })
 export class UserTableListingComponent {
   users: User[] = [
-    { id: 1, firstName: 'Anna', lastName: 'Kowalska', email: 'anna@example.com', phoneNumber: '...' },
-    { id: 2, firstName: 'Jan',lastName: 'Nowak', email: 'jan@example.com', phoneNumber: '...' },
-    { id: 3, firstName: 'Ola',lastName: 'Wiśniewska', email: 'ola@example.com', phoneNumber: '...' },
+    { id: '1', firstName: 'Anna', lastName: 'Kowalska', email: 'anna@example.com', phoneNumber: '...' },
+    { id: '2', firstName: 'Jan',lastName: 'Nowak', email: 'jan@example.com', phoneNumber: '...' },
+    { id: '3', firstName: 'Ola',lastName: 'Wiśniewska', email: 'ola@example.com', phoneNumber: '...' },
   ];
 
   columns: { key: keyof User, label: string }[] = [

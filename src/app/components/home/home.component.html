@@ -5,9 +5,8 @@
         <div class="col-md-8 bg-white p-3 rounded shadow mt-5">
             <form class="row g-2">
                 <div class="col-md-3">
-                    <select class="form-select" id="brandId" [(ngModel)]="selectedBrandId" name="brandId">
-                        <option value="" disabled selected class="text-black">Бренд</option>
-                        <option *ngFor="let type of brands" [value]="type.id">{{ type.name }}</option>
+                    <select class="form-select" id="brandId" [(ngModel)]="selectedBrandId" name="brandId" placeholder="Ціна дo ...">
+                        <option *ngFor="let b of brands" [value]="b.id">{{ b.name }}</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -83,40 +82,14 @@
     <div class="container">
         <h2 class="text-center mb-5">Що Кажуть Наші Клієнти</h2>
         <div class="row">
-            <div class="col-md-4 mb-4">
+            <div class="col-md-4 mb-4" *ngFor="let review of reviews">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-text">"This is an amazing product! It has helped me streamline my workflow and
-                            become more productive. I highly recommend it."</p>
+                        <p class="card-text">{{ review.description }}</p>
                         <div class="d-flex align-items-center mt-3">
                             <div>
-                                <h6 class="mb-0">Петро К.</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">"I was skeptical at first, but this service exceeded my expectations. The
-                            team is incredibly responsive and helpful."</p>
-                        <div class="d-flex align-items-center mt-3">
-                            <div>
-                                <h6 class="mb-0">Анна Б.</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">"The results speak for themselves. Our business has grown significantly
-                            since we started using this service. Thank you!"</p>
-                        <div class="d-flex align-items-center mt-3">
-                            <div>
-                                <h6 class="mb-0">Миколай Т.</h6>
+                                <h6 class="mb-0">{{ review.name }}</h6>
+                                <p class="fst-italic text-muted small">{{ review.role }}</p>
                             </div>
                         </div>
                     </div>

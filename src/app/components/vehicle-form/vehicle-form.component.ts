@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
 import { Region } from '../../models/region';
+import { VehicleSave } from '../../models/vehicleSave';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -67,10 +68,10 @@ export class VehicleFormComponent implements OnInit {
   submit() {
     this.vehicleService.create(this.vehicle)
       .subscribe({
-        next: x => {
+        next: (x: VehicleSave) => {
           console.log(x);
           },
-        error: err => {
+        error: (err:any) => {
           console.error(err);
           }
       });

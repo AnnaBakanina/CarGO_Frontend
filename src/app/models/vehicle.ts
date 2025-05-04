@@ -1,9 +1,8 @@
-import { User } from './user';
 import { KeyValuePair } from "./keyValuePair";
 
 export interface Vehicle {
     id: number;
-    user?: User;
+    user?: string;
     model: KeyValuePair;
     brand: KeyValuePair;
     carType: KeyValuePair;

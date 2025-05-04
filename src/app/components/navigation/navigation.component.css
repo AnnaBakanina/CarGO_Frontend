@@ -1,4 +1,4 @@
-.gradient-logo {
+  .gradient-logo {
     font-weight: bold;
     font-size: 1.8rem;
     background: linear-gradient(90deg, #007bff, #00c6ff);
@@ -6,4 +6,15 @@
     -webkit-text-fill-color: transparent;
     display: inline-block;
   }
+
+  .nav-link-username {
+    color: white; /* Білий колір тексту */
+    text-decoration: none; /* Відключає підкреслення за замовчуванням */
+    transition: text-decoration 0.3s ease; /* Плавний перехід для підкреслення */
+  }
+  
+  .nav-link-username:hover {
+    text-decoration: underline; /* Підкреслює текст при наведенні */
+  }
+  
   
