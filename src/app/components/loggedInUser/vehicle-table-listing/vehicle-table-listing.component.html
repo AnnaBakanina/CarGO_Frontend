@@ -40,7 +40,7 @@
             <tbody>
               <tr *ngFor="let vehicle of paginatedVehicles">
                 <td>{{ vehicle.id }}</td>
-                <td>{{ vehicle.user?.id }}</td>
+                <td>{{ vehicle.user }}</td>
                 <td>{{ vehicle.brand.name }}</td>
                 <td>{{ vehicle.model.name }}</td>
                 <td>{{ vehicle.carType.name }}</td>

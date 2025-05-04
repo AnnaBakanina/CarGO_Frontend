@@ -70,13 +70,13 @@ export class VehicleFormComponent implements OnInit {
   onBrandChange() {
     var selectedBrand = this.brands.find(m => m.id == this.vehicle.brandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
-    delete this.vehicle.modelId;
+    // delete this.vehicle.modelId;
   }
 
   onRegionChange() {
     var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
     this.cities = selectedRegion ? selectedRegion.city: [];
-    delete this.vehicle.cityId;
+    // delete this.vehicle.cityId;
   }
 
   submit() {
