@@ -28,7 +28,7 @@ export class VehicleEditFormComponent implements OnInit {
   techState: any = {};
   regions: any = {};
   cities: any = {};
-  updateVehicleId = 12;
+  updateVehicleId = 22;
   vehicle: VehicleSave = {
     modelId: 0,
     brandId: 0,

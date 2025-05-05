@@ -9,7 +9,7 @@ import { Vehicle } from '../models/vehicle';
 })
 
 export class VehicleService {
-  private readonly vehicleEndpoint = 'http://localhost:5269/vehicles';
+  private readonly vehicleEndpoint = 'http://localhost:5269/vehicles/';
   constructor( private http: HttpClient) { }
 
   create(vehicle: VehicleSave): Observable<Vehicle> {
