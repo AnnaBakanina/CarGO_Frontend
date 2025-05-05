@@ -8,6 +8,7 @@ import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
 import { Region } from '../../models/region';
 import { VehicleSave } from '../../models/vehicleSave';
+import { Vehicle } from '../../models/vehicle';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -80,14 +81,13 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    this.vehicleService.create(this.vehicle)
-      .subscribe({
-        next: (x: VehicleSave) => {
-          console.log(x);
-          },
-        error: (err:any) => {
-          console.error(err);
-          }
-      });
+    this.vehicleService.create(this.vehicle).subscribe({
+      next: (x: Vehicle) => {
+        console.log(x);  
+      },  
+      error: (err:any) => {
+        console.error(err);  
+      }      
+    });
   }  
 }
