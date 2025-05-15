@@ -4,10 +4,13 @@ import { KeyValuePair } from '../../models/keyValuePair';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Brand } from '../../models/brand';
+import { VehicleService } from '../../services/vehicle.service';
+import { Vehicle } from '../../models/vehicle';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -38,49 +41,39 @@ export class HomeComponent implements OnInit {
     { make: 'Ford', model: 'Explorer', type: 'SUV', image: 'https://d2qldpouxvc097.cloudfront.net/image-by-path?bucket=a5-gallery-serverless-prod-chromebucket-1iz9ffi08lwxm&key=450243%2Ffront34%2Flg%2Fe4e4e3' },
     { make: 'Chevrolet', model: 'Silverado', type: 'Truck', image: 'https://i.bstr.es/highmotor/2024/10/Chevrolet-Silverado-EV-2025-00001-1280x715.jpeg' }
   ];
-  articles = [
-    {
-      title: 'Як тестувати Angular-додатки',
-      description: 'Основи тестування в Angular: Unit тести, e2e тести...',
-      image: 'assets/test-angular.jpg',
-      link: '/blog/test-angular'
-    },
-    {
-      title: 'Оптимізація продуктивності',
-      description: 'Як зробити Angular-додаток швидшим?',
-      image: 'assets/performance.jpg',
-      link: '/blog/performance'
-    },
-    {
-      title: 'Робота з API в Angular',
-      description: 'Використання HttpClient для роботи з REST API...',
-      image: 'assets/api-angular.jpg',
-      link: '/blog/api-angular'
-    }
-  ];
   brands: Brand[] = [];
   selectedBrandId: number = 0;
   models: KeyValuePair[] = [];
-  filters = {
-    make: '',
-    type: '',
-    priceFrom: null,
+  apiVehicles: Vehicle[] = [];
+  vehiclesQuery: any = {
+    sortBy: 'lastUpdated',
+    isSortAscending: false,
+    page: 1,
+    pageSize: 3
+  };
+  query: any = {
+    brandId: null,
+    modelId: null,
     priceTo: null
   };
 
   constructor(
-    private brandService: BrandService
+    private brandService: BrandService,
+    private vehicleService: VehicleService
   ) {}
 
   ngOnInit() {
     this.brandService.getBrands().subscribe((data: any) => {
       this.brands = data;
     });
+    this.vehicleService.getAllVehicles(this.vehiclesQuery).subscribe((result: any) => {
+      this.apiVehicles = result.data});
+  }
+
+  onBrandChange() {
+    var selectedBrand = this.brands.find(m => m.id == this.query.brandId);
+    this.models = selectedBrand ? selectedBrand.carModel: [];
+    // delete this.vehicle.modelId;
   }
   
-  // onBrandChange() {
-  //   var selectedBrand = this.brands.find(m => m.id == this.models.id);
-  //   this.models = selectedBrand ? selectedBrand.carModel: [];
-  //   this.modelId = 0;
-  // }
 }
