@@ -9,6 +9,7 @@ import { CarTypeService } from '../../services/carType.serice';
 import { Region } from '../../models/region';
 import { VehicleSave } from '../../models/vehicleSave';
 import { Vehicle } from '../../models/vehicle';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -50,7 +51,8 @@ export class VehicleFormComponent implements OnInit {
     private carTypeService: CarTypeService,
     private techStateService: TechStateService,
     private locationService: LocationService,
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private toastr: ToastrService
     ) {}
 
   ngOnInit() {
@@ -80,13 +82,40 @@ export class VehicleFormComponent implements OnInit {
     // delete this.vehicle.cityId;
   }
 
+  resetForm() {
+    this.vehicle = {
+      userId: '',
+      modelId: 0,
+      carTypeId: 0,
+      techStateId: 0,
+      yearOfRelease: 0,
+      vinNumber: '',
+      carMileage: 0,
+      description: '',
+      isAuction: false,
+      isPaymentInParts: false,
+      isTaxable: false,
+      phoneNumber: '',
+      cityId: 0,
+      price: 0,
+      advertisementStatusId: 1
+    };
+    this.selectedBrandId = 0;
+    this.selectedRegionId = 0;
+    this.models = [];
+    this.cities = [];
+  }
+
   submit() {
     this.vehicleService.create(this.vehicle).subscribe({
       next: (x: Vehicle) => {
-        console.log(x);  
+        console.log(x);
+        this.toastr.success('Готово!', 'Оголошення доданно');
+        this.resetForm();
       },  
       error: (err:any) => {
         console.error(err);
+        this.toastr.error('Упс!', 'Щось пішло не так...');
       }      
     });
   }  
