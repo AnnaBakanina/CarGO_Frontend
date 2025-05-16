@@ -29,9 +29,11 @@ export class VehicleEditFormComponent implements OnInit {
   regions: any = {};
   cities: any = {};
   updateVehicleId = 22;
+  selectedBrandId = 0;
+  selectedRegionId = 0;
+  
   vehicle: VehicleSave = {
     modelId: 0,
-    brandId: 0,
     carTypeId: 0,
     techStateId: 0,
     yearOfRelease: 0,
@@ -42,7 +44,6 @@ export class VehicleEditFormComponent implements OnInit {
     isPaymentInParts: false,
     isTaxable: false,
     phoneNumber: '',
-    regionId: 0,
     cityId: 0,
     price: 0,
     advertisementStatusId: 1
@@ -103,7 +104,7 @@ export class VehicleEditFormComponent implements OnInit {
 
     onBrandChange() {
       this.populateModels();
-      this.vehicle.brandId = 0;
+      this.selectedBrandId = 0;
     }
   
     onRegionChange() {
@@ -112,16 +113,16 @@ export class VehicleEditFormComponent implements OnInit {
     }
 
   private populateModels() {
-    var selectedBrand = this.brands.find(m => m.id == this.vehicle.brandId);
+    var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
   }
 
   private populateCities() {
-    // var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
+    // var selectedRegion = this.regions.find(c => c.id == this.selectedRegionId);
     // this.cities = selectedRegion ? selectedRegion.city: [];
   }
+  
   private setVehicle(v: Vehicle) {
-    this.vehicle.brandId = v.brand.id;
     this.vehicle.modelId = v.model.id;
     this.vehicle.carTypeId = Number(v.carType.id);
     this.vehicle.techStateId = v.techState.id;
@@ -133,7 +134,7 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.isPaymentInParts = v.isPaymentInParts;
     this.vehicle.isTaxable = v.isTaxable;
     this.vehicle.phoneNumber = v.phoneNumber;
-    this.vehicle.regionId = v.region.id;
+    // this.vehicle.regionId = v.region.id;
     this.vehicle.cityId = v.city.id;
   }
 

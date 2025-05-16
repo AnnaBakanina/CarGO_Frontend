@@ -15,8 +15,9 @@ export class UserService {
     firstName: '',
     lastName: '',
     email: '',
-    phoneNumber: ''
+    phoneNumber: '',
   };
+  userRole = '';
   
   // private managementToken = '';
     
@@ -33,8 +34,9 @@ export class UserService {
             firstName: user[`${this.namespace}/first_name`] || '',
             lastName: user[`${this.namespace}/last_name`] || '',
             email: user.email || '',
-            phoneNumber: user[`${this.namespace}/phone_number`] || ''
+            phoneNumber: user[`${this.namespace}/phone_number`] || '',
           };
+          this.userRole = user[`${this.namespace}/role`] || ''
         }
       })
     ).subscribe();
@@ -50,6 +52,10 @@ export class UserService {
 
   isAuthenticated() {
     return this.auth.isAuthenticated$;
+  }
+
+  isAdmin(): boolean {
+    return this.userRole == 'admin';
   }
 
   updateProfile() {

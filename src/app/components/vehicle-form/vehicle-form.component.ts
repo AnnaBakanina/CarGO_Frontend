@@ -25,10 +25,11 @@ export class VehicleFormComponent implements OnInit {
   techState: any[] = [];
   regions: any[] = [];
   cities: any[] = [];
+  selectedBrandId = 0;
+  selectedRegionId = 0;
   vehicle: VehicleSave = {
-    userId: undefined,
+    userId: '',
     modelId: 0,
-    brandId: 0,
     carTypeId: 0,
     techStateId: 0,
     yearOfRelease: 0,
@@ -39,7 +40,6 @@ export class VehicleFormComponent implements OnInit {
     isPaymentInParts: false,
     isTaxable: false,
     phoneNumber: '',
-    regionId: 0,
     cityId: 0,
     price: 0,
     advertisementStatusId: 1
@@ -69,13 +69,13 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onBrandChange() {
-    var selectedBrand = this.brands.find(m => m.id == this.vehicle.brandId);
+    var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
     // delete this.vehicle.modelId;
   }
 
   onRegionChange() {
-    var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
+    var selectedRegion = this.regions.find(c => c.id == this.selectedRegionId);
     this.cities = selectedRegion ? selectedRegion.city: [];
     // delete this.vehicle.cityId;
   }
@@ -86,7 +86,7 @@ export class VehicleFormComponent implements OnInit {
         console.log(x);  
       },  
       error: (err:any) => {
-        console.error(err);  
+        console.error(err);
       }      
     });
   }  

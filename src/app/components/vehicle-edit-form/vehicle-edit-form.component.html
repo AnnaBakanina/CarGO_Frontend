@@ -21,7 +21,7 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Бренд авто:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="brandId" [(ngModel)]="vehicle.brandId" name="brandId">
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="brandId" [(ngModel)]="selectedBrandId" name="brandId">
               <option *ngFor="let type of brands" [value]="type.id">{{ type.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
@@ -146,7 +146,7 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Регіон:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="regionId" [(ngModel)]="vehicle.regionId" name="regionId">
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="regionId" [(ngModel)]="selectedRegionId" name="regionId">
               <option *ngFor="let type of regions" [value]="type.id">{{ type.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
