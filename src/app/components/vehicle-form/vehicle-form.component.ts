@@ -10,6 +10,7 @@ import { Region } from '../../models/region';
 import { VehicleSave } from '../../models/vehicleSave';
 import { Vehicle } from '../../models/vehicle';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -52,7 +53,8 @@ export class VehicleFormComponent implements OnInit {
     private techStateService: TechStateService,
     private locationService: LocationService,
     private vehicleService: VehicleService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: UserService
     ) {}
 
   ngOnInit() {
@@ -68,6 +70,9 @@ export class VehicleFormComponent implements OnInit {
     this.locationService.getLocation().subscribe((data: any) => {
       this.regions = data;
     });
+    if (this.userService.isAuthenticated()) {
+      this.vehicle.userId = this.userService.userDetails.id;
+    }
   }
 
   onBrandChange() {
@@ -110,12 +115,12 @@ export class VehicleFormComponent implements OnInit {
     this.vehicleService.create(this.vehicle).subscribe({
       next: (x: Vehicle) => {
         console.log(x);
-        this.toastr.success('Готово!', 'Оголошення доданно');
+        this.toastr.success('Оголошення доданно', 'Готово!');
         this.resetForm();
-      },  
+      },
       error: (err:any) => {
         console.error(err);
-        this.toastr.error('Упс!', 'Щось пішло не так...');
+        this.toastr.error('Щось пішло не так...', 'Упс!');
       }      
     });
   }  
