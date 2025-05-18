@@ -8,7 +8,7 @@ import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { Vehicle } from '../../models/vehicle';
 import { VehicleSave } from '../../models/vehicleSave';
@@ -28,7 +28,7 @@ export class VehicleEditFormComponent implements OnInit {
   techState: any = {};
   regions: any = {};
   cities: any = {};
-  updateVehicleId = 22;
+  updateVehicleId = 0;
   selectedBrandId = 0;
   selectedRegionId = 0;
   
@@ -58,10 +58,13 @@ export class VehicleEditFormComponent implements OnInit {
     private techStateService: TechStateService,
     private locationService: LocationService,
     private vehicleService: VehicleService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
     ) {}
 
     ngOnInit(): void {
+      this.updateVehicleId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+
       const requests: {
         brands: Observable<Brand[]>,
         carTypes: Observable<any>,
