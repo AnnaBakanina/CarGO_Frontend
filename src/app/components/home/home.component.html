@@ -6,13 +6,13 @@
             <form class="row g-2">
                 <div class="col-md-3">
                     <select class="form-select" id="brandId" [(ngModel)]="query.brandId" name="brandId">
-                        <option selected>Бренд</option>
+                        <option [value]="null" selected>Бренд</option>
                         <option *ngFor="let b of brands" [value]="b.id">{{ b.name }}</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <select class="form-select" id="modelId" [(ngModel)]="query.modelId" name="modelId" (change)=onBrandChange()>
-                        <option selected>Модель</option>
+                        <option [value]="null" selected>Модель</option>
                         <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
                     </select>
                 </div>
