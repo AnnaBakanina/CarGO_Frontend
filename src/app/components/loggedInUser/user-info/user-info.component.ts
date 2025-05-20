@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-info',
@@ -22,7 +23,10 @@ export class UserInfoComponent implements OnInit {
   };
   formChanged: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private toastr: ToastrService
+    ) {}
 
   ngOnInit(): void {
     console.log('userDetails:', this.userService.userDetails);
@@ -53,7 +57,16 @@ export class UserInfoComponent implements OnInit {
     this.userService.userDetails.email = this.userEmail;
     this.userService.userDetails.phoneNumber = this.userPhone;
 
-    // this.userService.updateProfile();
+    this.userService.updateProfile().subscribe({
+      next: (x: any) => {
+        console.log(x);
+        this.toastr.success('Данні користувача оновлено', 'Готово!');
+      },
+      error: (err:any) => {
+        console.error(err);
+        this.toastr.error('Щось пішло не так...', 'Упс!');
+      }      
+    });
 
     this.formChanged = false;
     this.originalData = {
