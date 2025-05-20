@@ -1,10 +1,5 @@
 <div class="mb-3">
-    <input
-      type="text"
-      class="form-control w-auto"
-      placeholder="🔍 Пошук за прізвищем"
-      [(ngModel)]="searchTerm"
-    />
+    <input type="text" class="form-control w-auto" placeholder="🔍 Пошук за прізвищем" [(ngModel)]="searchTerm"/>
   </div>
   
   <table class="table table-bordered table-hover text-nowrap align-middle">
@@ -21,13 +16,20 @@
             }">
           </i>
         </th>
+        <th>Дії</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of filteredUsers">
-        <td>{{ user.firstName }} {{ user.lastName }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.phoneNumber }}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary" (click)="onEdit(user)">
+            <i class="bi bi-pencil"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

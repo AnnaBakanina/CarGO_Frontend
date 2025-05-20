@@ -67,4 +67,8 @@ export class UserService {
   
     return this.http.patch<any>(`${this.apiEndpoint}/user/update-profile`, data);
   }
+
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiEndpoint}/user/all-users`);
+  }
 }
