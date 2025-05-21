@@ -3,9 +3,10 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
 
 @Component({
   selector: 'app-pagination',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [ CommonModule ],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.css'
+  styleUrl: './pagination.component.css',
 })
 export class PaginationComponent {
   @Input() totalItems: number = 0;

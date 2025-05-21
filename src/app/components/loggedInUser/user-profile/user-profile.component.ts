@@ -6,7 +6,7 @@ import { UserListingComponent } from '../user-listing/user-listing.component';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { AdminFormComponent } from '../../admin/admin-form/admin-form.component';
 import { UserTableListingComponent } from '../user-table-listing/user-table-listing.component';
-// import { UserService } from '../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,21 +14,24 @@ import { UserTableListingComponent } from '../user-table-listing/user-table-list
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
-export class UserProfileComponent {
-  // user: any = {};
-  userName = 'Anna';
-  userEmail = 'annatest@test.com';
+export class UserProfileComponent implements OnInit {
   activeTab: string = 'info';
+  isAdmin: boolean = false;
+  userFirstName: string = '';
+  userLastName: string = '';
   
-  // constructor(private userService: UserService) {}
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.isAdmin = this.userService.isAdmin();
+    this.userFirstName = this.userService.userDetails.firstName;
+    this.userLastName = this.userService.userDetails.lastName;
+  }
+  get userFullName(): string {
+    return `${this.userFirstName} ${this.userLastName}`;
+  }
 
   setTab(tab:string) {
     this.activeTab = tab;
   }
-
-  // ngOnInit(): void {
-  //   this.userService.getUserProfile().subscribe(data => {
-  //     this.user = data;
-  //   });
-  // }
 }

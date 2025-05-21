@@ -8,7 +8,7 @@ import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { Vehicle } from '../../models/vehicle';
 import { VehicleSave } from '../../models/vehicleSave';
@@ -28,10 +28,12 @@ export class VehicleEditFormComponent implements OnInit {
   techState: any = {};
   regions: any = {};
   cities: any = {};
+  updateVehicleId = 0;
+  selectedBrandId = 0;
+  selectedRegionId = 0;
+  
   vehicle: VehicleSave = {
-    id: 10,
     modelId: 0,
-    brandId: 0,
     carTypeId: 0,
     techStateId: 0,
     yearOfRelease: 0,
@@ -42,7 +44,6 @@ export class VehicleEditFormComponent implements OnInit {
     isPaymentInParts: false,
     isTaxable: false,
     phoneNumber: '',
-    regionId: 0,
     cityId: 0,
     price: 0,
     advertisementStatusId: 1
@@ -57,10 +58,13 @@ export class VehicleEditFormComponent implements OnInit {
     private techStateService: TechStateService,
     private locationService: LocationService,
     private vehicleService: VehicleService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
     ) {}
 
     ngOnInit(): void {
+      this.updateVehicleId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+
       const requests: {
         brands: Observable<Brand[]>,
         carTypes: Observable<any>,
@@ -74,12 +78,18 @@ export class VehicleEditFormComponent implements OnInit {
         regions: this.locationService.getLocation()
       };
     
-      if (this.vehicle.id) {
-        requests.vehicle = this.vehicleService.getVehicle(this.vehicle.id) as Observable<Vehicle>;
+      if (this.updateVehicleId) {
+        requests.vehicle = this.vehicleService.getVehicle(this.updateVehicleId) as Observable<Vehicle>;
       }
     
       forkJoin(requests).subscribe({
-        next: data => {
+        next: (data: {
+          brands: Brand[],
+          carTypes: any,
+          techState: any,
+          regions: any,
+          vehicle?: Vehicle
+        }) => {
           this.brands = data.brands;
           this.carTypes = data.carTypes;
           this.techState = data.techState;
@@ -89,7 +99,7 @@ export class VehicleEditFormComponent implements OnInit {
             this.populateModels();
           };
         },
-        error: err => {
+        error: (err: any) => {
           this.router.navigate(['/not-found']);
         }
       });
@@ -97,7 +107,7 @@ export class VehicleEditFormComponent implements OnInit {
 
     onBrandChange() {
       this.populateModels();
-      this.vehicle.brandId = 0;
+      this.selectedBrandId = 0;
     }
   
     onRegionChange() {
@@ -106,17 +116,16 @@ export class VehicleEditFormComponent implements OnInit {
     }
 
   private populateModels() {
-    var selectedBrand = this.brands.find(m => m.id == this.vehicle.brandId);
+    var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
   }
 
   private populateCities() {
-    // var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
+    // var selectedRegion = this.regions.find(c => c.id == this.selectedRegionId);
     // this.cities = selectedRegion ? selectedRegion.city: [];
   }
+  
   private setVehicle(v: Vehicle) {
-    this.vehicle.id = v.id;
-    this.vehicle.brandId = v.brand.id;
     this.vehicle.modelId = v.model.id;
     this.vehicle.carTypeId = Number(v.carType.id);
     this.vehicle.techStateId = v.techState.id;
@@ -128,13 +137,13 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.isPaymentInParts = v.isPaymentInParts;
     this.vehicle.isTaxable = v.isTaxable;
     this.vehicle.phoneNumber = v.phoneNumber;
-    this.vehicle.regionId = v.region.id;
+    // this.vehicle.regionId = v.region.id;
     this.vehicle.cityId = v.city.id;
   }
 
   delete() {
     if (confirm("Are you sure?"))
-      this.vehicleService.delete(this.vehicle.id);
+      this.vehicleService.delete(this.updateVehicleId);
   }
   
   onSubmit(): void {

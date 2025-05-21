@@ -7,6 +7,10 @@ import { FormsModule } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.serice';
 import { Region } from '../../models/region';
+import { VehicleSave } from '../../models/vehicleSave';
+import { Vehicle } from '../../models/vehicle';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -23,10 +27,24 @@ export class VehicleFormComponent implements OnInit {
   techState: any[] = [];
   regions: any[] = [];
   cities: any[] = [];
-  vehicle: any = {
+  selectedBrandId = 0;
+  selectedRegionId = 0;
+  vehicle: VehicleSave = {
+    userId: '',
+    modelId: 0,
+    carTypeId: 0,
+    techStateId: 0,
+    yearOfRelease: 0,
+    vinNumber: '',
+    carMileage: 0,
+    description: '',
     isAuction: false,
     isPaymentInParts: false,
-    IsTaxable: false
+    isTaxable: false,
+    phoneNumber: '',
+    cityId: 0,
+    price: 0,
+    advertisementStatusId: 1
   };
 
   constructor(
@@ -34,7 +52,9 @@ export class VehicleFormComponent implements OnInit {
     private carTypeService: CarTypeService,
     private techStateService: TechStateService,
     private locationService: LocationService,
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private toastr: ToastrService,
+    private userService: UserService
     ) {}
 
   ngOnInit() {
@@ -50,29 +70,58 @@ export class VehicleFormComponent implements OnInit {
     this.locationService.getLocation().subscribe((data: any) => {
       this.regions = data;
     });
+    if (this.userService.isAuthenticated()) {
+      this.vehicle.userId = this.userService.userDetails.id;
+    }
   }
 
   onBrandChange() {
-    var selectedBrand = this.brands.find(m => m.id == this.vehicle.makeId);
+    var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
-    delete this.vehicle.modelId;
+    // delete this.vehicle.modelId;
   }
 
   onRegionChange() {
-    var selectedRegion = this.regions.find(c => c.id == this.vehicle.regionId);
+    var selectedRegion = this.regions.find(c => c.id == this.selectedRegionId);
     this.cities = selectedRegion ? selectedRegion.city: [];
-    delete this.vehicle.cityId;
+    // delete this.vehicle.cityId;
+  }
+
+  resetForm() {
+    this.vehicle = {
+      userId: '',
+      modelId: 0,
+      carTypeId: 0,
+      techStateId: 0,
+      yearOfRelease: 0,
+      vinNumber: '',
+      carMileage: 0,
+      description: '',
+      isAuction: false,
+      isPaymentInParts: false,
+      isTaxable: false,
+      phoneNumber: '',
+      cityId: 0,
+      price: 0,
+      advertisementStatusId: 1
+    };
+    this.selectedBrandId = 0;
+    this.selectedRegionId = 0;
+    this.models = [];
+    this.cities = [];
   }
 
   submit() {
-    this.vehicleService.create(this.vehicle)
-      .subscribe({
-        next: x => {
-          console.log(x);
-          },
-        error: err => {
-          console.error(err);
-          }
-      });
+    this.vehicleService.create(this.vehicle).subscribe({
+      next: (x: Vehicle) => {
+        console.log(x);
+        this.toastr.success('Оголошення доданно', 'Готово!');
+        this.resetForm();
+      },
+      error: (err:any) => {
+        console.error(err);
+        this.toastr.error('Щось пішло не так...', 'Упс!');
+      }      
+    });
   }  
 }

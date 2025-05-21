@@ -1,16 +1,3 @@
-<!-- <div class="container mt-4">
-    <h2>Профіль користувача</h2>
-    <div class="card p-3">
-      <p><strong>Ім'я:</strong> {{ userName }}</p>
-      <p><strong>Email:</strong> {{ userEmail }}</p>
-      <a class="btn btn-primary" routerLink="/profile/edit">Редагувати</a>
-    </div>
-  
-    <h3 class="mt-4">Мої оголошення</h3>
-    <app-user-listing></app-user-listing>
-    <app-vehicle-table-listing></app-vehicle-table-listing>
-  </div> -->
-  
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
 <div class="bg-light">
@@ -24,8 +11,7 @@
                     <div class="position-relative d-inline-block">
                         <img src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png" class="rounded-circle profile-pic" alt="Profile Picture">
                     </div>
-                    <h3 class="mt-3 mb-1">Анна</h3>
-                    <p class="text-muted mb-3">Senior Product Designer</p>
+                    <h3 class="mt-3 mb-1">{{ userFullName }}</h3>
                 </div>
             </div>
 
@@ -40,13 +26,13 @@
                                     <div class="nav flex-column nav-pills">
                                         <button type="button" class="nav-link active text-start" [class.active]="activeTab === 'info'" 
                                         (click)="setTab('info')"><i class="fas fa-user me-2"></i>Інформація</button>
-                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'announcements'" 
+                                        <button *ngIf="!isAdmin" type="button" class="nav-link text-start" [class.active]="activeTab === 'announcements'" 
                                         (click)="setTab('announcements')"><i class="fas fa-solid fa-list me-2"></i>Оголошення</button>
-                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'manageAnnoucements'" 
+                                        <button *ngIf="isAdmin" type="button" class="nav-link text-start" [class.active]="activeTab === 'manageAnnoucements'" 
                                         (click)="setTab('manageAnnoucements')"><i class="fas fa-solid fa-file me-2"></i>Керування оголошеннями</button>
-                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'manageUsers'" 
+                                        <button *ngIf="isAdmin" type="button" class="nav-link text-start" [class.active]="activeTab === 'manageUsers'" 
                                         (click)="setTab('manageUsers')"><i class="fas fa-solid fa-address-book me-2"></i>Керування користувачами</button>
-                                        <button type="button" class="nav-link text-start" [class.active]="activeTab === 'reports'" 
+                                        <button *ngIf="isAdmin" type="button" class="nav-link text-start" [class.active]="activeTab === 'reports'" 
                                         (click)="setTab('reports')"><i class="fas fa-solid fa-chart-pie me-2"></i>Звіти</button>
                                     </div>
                                 </div>
@@ -55,13 +41,12 @@
                             <!-- Content Area -->
                             <div class="col-lg-9">
                                 <div class="p-4">
-                                    <!-- Personal Information -->
                                     <div class="mb-4">
                                       <app-user-info *ngIf="activeTab === 'info'"></app-user-info>
                                       <app-user-listing *ngIf="activeTab === 'announcements'"></app-user-listing>
-                                      <app-vehicle-table-listing *ngIf="activeTab === 'manageAnnoucements'"></app-vehicle-table-listing>
-                                      <app-user-table-listing *ngIf="activeTab === 'manageUsers'"></app-user-table-listing>
-                                      <app-admin-form *ngIf="activeTab === 'reports'"></app-admin-form>
+                                      <app-vehicle-table-listing *ngIf="activeTab === 'manageAnnoucements' && isAdmin"></app-vehicle-table-listing>
+                                      <app-user-table-listing *ngIf="activeTab === 'manageUsers' && isAdmin"></app-user-table-listing>
+                                      <app-admin-form *ngIf="activeTab === 'reports' && isAdmin"></app-admin-form>
                                     </div>
                                 </div>
                             </div>

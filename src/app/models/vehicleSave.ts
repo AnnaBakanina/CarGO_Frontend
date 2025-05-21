@@ -1,8 +1,6 @@
 export interface VehicleSave {
-    id: number;
-    userId?: number;
+    userId?: string;
     modelId: number;
-    brandId: number;
     carTypeId: number;
     techStateId: number;
     yearOfRelease: number;
@@ -13,7 +11,6 @@ export interface VehicleSave {
     isPaymentInParts: boolean;
     isTaxable: boolean;
     phoneNumber: string;
-    regionId: number;
     cityId: number;
     price: number;
     advertisementStatusId: number;

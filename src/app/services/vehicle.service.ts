@@ -1,31 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { VehicleSave } from '../models/vehicleSave';
+import { Observable } from 'rxjs';
+import { Vehicle } from '../models/vehicle';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class VehicleService {
-  private readonly vehicleEndpoint = 'http://localhost:5269/vehicles';
+  private readonly vehicleEndpoint = 'http://localhost:5269/vehicles/';
   constructor( private http: HttpClient) { }
 
-  create(vehicle: any) {
-    return this.http.post(this.vehicleEndpoint, vehicle);
+  create(vehicle: VehicleSave): Observable<Vehicle> {
+    return this.http.post<Vehicle>(this.vehicleEndpoint, vehicle);
   }
 
   getVehicle(id: number) {
     return this.http.get(this.vehicleEndpoint + id); 
   }
 
-  updateVehicle (id: number, body: any) {
+  updateVehicle (id: number, body: VehicleSave) {
     return this.http.put(this.vehicleEndpoint + id, body);
   }
 
-  // getAllVehicles() {
-  //   return this.http.get(this.vehicleEndpoint);
-  // }
-
-  getAllVehicles(filter: undefined) {
+  getAllVehicles(filter: any = {}) {
     return this.http.get(this.vehicleEndpoint + '?' + this.toQueryString(filter));
   }
 
