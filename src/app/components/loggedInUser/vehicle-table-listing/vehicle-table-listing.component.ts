@@ -10,36 +10,44 @@ import { VehicleService } from '../../../services/vehicle.service';
   templateUrl: './vehicle-table-listing.component.html',
   styleUrl: './vehicle-table-listing.component.css'
 })
+
 export class VehicleTableListingComponent {
   filters: any = {
     brand: '',
     model: '',
     vin: ''
   };
+  vehicles: Vehicle[] = [];
+  paginatedVehicles: Vehicle[] = [];
 
-  // Add sorting from server
-  // filter: any = {
-  //   brandId: null,
-  //   modelId: null,
-  //   vinNum: null
-  // };
+  columns: { key: keyof Vehicle, label: string }[] = [
+    { key: 'id', label: "ID" },
+    { key: 'brand', label: 'Бренд' },
+    { key: 'model', label: 'Модель' },
+    { key: 'vinNumber', label: 'VIN номер' }
+  ];
 
   constructor(
     private vehicleService: VehicleService
   ) {}
-  
-  vehicles: Vehicle[] = [];
-  paginatedVehicles: Vehicle[] = [];
   
   currentPage = 1;
   itemsPerPage = 10;
   totalPages = 1;
   sortColumn: keyof Vehicle | null = null;
   sortAsc = true;
+  sortDirection: 'asc' | 'desc' = 'asc';
   
   ngOnInit() {
+    console.log(`VEHICLE LIST 1: ${this.vehicleService.getAllVehicles(this.filters)}`);
     this.vehicleService.getAllVehicles(this.filters).subscribe((data: any) => {
-      this.vehicles = data;
+      console.log(`VEHICLE LIST 2: ${data}`);
+      this.vehicles = data.map((v: any) => ({
+        id: v.id,
+        brand: v.brand.name,
+        model: v.model.name,
+        vinNumber: v.vinNumber
+      }));
       this.applyFilters();
     });
   }
@@ -91,31 +99,9 @@ export class VehicleTableListingComponent {
     }
     this.applyFilters();
   }
-  
-  // // Мокові дані
-  // getMockData(): Vehicle[] {
-  //   return [
-  //     {
-  //       id: 1,
-  //       user: undefined,
-  //       brand: {id: 7, name:'Toyota'},
-  //       model: {id:5, name:'Corolla'},
-  //       carType: {id:9, name:'Sedan'},
-  //       techState: {id:5, name: 'New'},
-  //       yearOfRelease: 2022,
-  //       vinNumber: 'ABC123KDFVKLD78',
-  //       carMileage: 0,
-  //       description: 'Ця властивість дозволяє автоматично переносити слова, якщо вони не вміщуються в одну клітинку.',
-  //       isAuction: false,
-  //       isPaymentInParts: false,
-  //       isTaxable: true,
-  //       phoneNumber: '+380991234567',
-  //       region: {id: 7, name:'Lvivska'},
-  //       city: {id: 9, name:'Lviv'},
-  //       price: 20000,
-  //       advertisementStatus: {id: 1, name: 'Active'}
-  //     },
-  //     // ...додай ще
-  //   ];
-  // }
+
+  onEdit(vehicle: Vehicle) {
+    // TODO: відкрити форму або модалку для редагування
+    console.log('Редагувати користувача:', vehicle);
+  }
 }

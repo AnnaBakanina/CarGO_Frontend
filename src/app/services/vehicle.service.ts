@@ -24,7 +24,7 @@ export class VehicleService {
     return this.http.put(this.vehicleEndpoint + id, body);
   }
 
-  getAllVehicles(filter: undefined) {
+  getAllVehicles(filter: any = {}) {
     return this.http.get(this.vehicleEndpoint + '?' + this.toQueryString(filter));
   }
 

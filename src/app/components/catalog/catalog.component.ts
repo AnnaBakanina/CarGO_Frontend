@@ -10,6 +10,7 @@ import { TechStateService } from './../../services/techState.service';
 import { Region } from '../../models/region';
 import { VehicleInfoPopupComponent } from '../vehicle-info-popup/vehicle-info-popup.component';
 import { PaginationComponent } from '../shared/pagination/pagination.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
@@ -22,6 +23,7 @@ import { PaginationComponent } from '../shared/pagination/pagination.component';
 export class CatalogComponent implements OnInit {
   query: any = {
     brandId: null,
+    modelId: null,
     carTypeId: null,
     priceFrom: null,
     priceTo: null,
@@ -52,7 +54,8 @@ export class CatalogComponent implements OnInit {
     private carTypeService: CarTypeService,
     private techStateService: TechStateService,
     private locationService: LocationService,
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private route: ActivatedRoute
   ) {}
   
   ngOnInit() {
@@ -68,7 +71,14 @@ export class CatalogComponent implements OnInit {
     this.locationService.getLocation().subscribe((data: any) => {
       this.regions = data;
     });
-    this.getVehicles();
+    
+    this.route.queryParams.subscribe(params => {
+      if (params['brandId']) this.query.brandId = +params['brandId'];
+      if (params['modelId']) this.query.carTypeId = +params['modelId'];
+      if (params['priceTo']) this.query.priceTo = +params['priceTo'];
+  
+      this.getVehicles();
+    });
   }
 
   private getVehicles() {

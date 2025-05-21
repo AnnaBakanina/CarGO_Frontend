@@ -1,6 +1,6 @@
 <div class="container mt-2">
 
-  <!-- <pre>{{ paginatedVehicles | json }}</pre> -->
+  <pre>{{ paginatedVehicles | json }}</pre>
 
     <!-- Фільтри -->
     <div class="row mb-3">
@@ -14,8 +14,42 @@
         <input type="text" class="form-control" [(ngModel)]="filters.vin" placeholder="VIN">
       </div>
     </div>
+
+    <div class="table-responsive-scroll">
+      <table class="table table-bordered table-hover text-nowrap align-middle">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns" (click)="sortData(column.key)" style="white-space: nowrap; cursor: pointer;">
+              {{ column.label }}
+              <i 
+                class="ms-1" 
+                [ngClass]="{
+                  'bi bi-caret-up-fill': sortColumn === column.key && sortDirection === 'asc',
+                  'bi bi-caret-down-fill': sortColumn === column.key && sortDirection === 'desc',
+                  'bi bi-caret-down': sortColumn !== column.key
+                }">
+              </i>
+            </th>
+            <th>Дії</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vehicle of vehicles">
+            <td>{{ vehicle.id }}</td>
+            <td>{{ vehicle.model.name }}</td>
+            <td>{{ vehicle.brand.name }}</td>
+            <td>{{ vehicle.vinNumber }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" (click)="onEdit(vehicle)">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   
-    <div class="table-responsive">
+    <!-- <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped">
             <thead>
               <tr>
@@ -52,14 +86,13 @@
                 <td><input type="checkbox" [checked]="vehicle.isAuction" disabled></td>
                 <td><input type="checkbox" [checked]="vehicle.isPaymentInParts" disabled></td>
                 <td><input type="checkbox" [checked]="vehicle.isTaxable" disabled></td>
-                <!-- <td>{{ vehicle.lastUpdated | date:'short' }}</td> -->
                 <td>{{ vehicle.phoneNumber }}</td>
                 <td>{{ vehicle.region.name }}</td>
                 <td>{{ vehicle.city.name }}</td>
               </tr>
             </tbody>
           </table>
-    </div>
+    </div> -->
   
     <!-- Пагінація -->
     <nav>

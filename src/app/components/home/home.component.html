@@ -20,7 +20,7 @@
                     <input type="number" class="form-control" id="priceTo" [(ngModel)]="query.priceTo" name="priceTo" placeholder="Ціна дo ...">
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary w-100">Шукати</button>
+                    <button type="submit" class="btn btn-primary w-100" (click)="onSearchClick()">Шукати</button>
                 </div>
             </form>
         </div>
