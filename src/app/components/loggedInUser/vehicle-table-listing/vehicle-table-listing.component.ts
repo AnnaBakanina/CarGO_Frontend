@@ -1,3 +1,4 @@
+import { Brand } from './../../../models/brand';
 import { Component } from '@angular/core';
 import { Vehicle } from '../../../models/vehicle';
 import { CommonModule } from '@angular/common';
@@ -18,7 +19,10 @@ export class VehicleTableListingComponent {
     vin: ''
   };
   vehicles: Vehicle[] = [];
-  paginatedVehicles: Vehicle[] = [];
+  currentPage = 1;
+  itemsPerPage = 7;
+  sortColumn: keyof Vehicle | null = null;
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   columns: { key: keyof Vehicle, label: string }[] = [
     { key: 'id', label: "ID" },
@@ -31,73 +35,69 @@ export class VehicleTableListingComponent {
     private vehicleService: VehicleService
   ) {}
   
-  currentPage = 1;
-  itemsPerPage = 10;
-  totalPages = 1;
-  sortColumn: keyof Vehicle | null = null;
-  sortAsc = true;
-  sortDirection: 'asc' | 'desc' = 'asc';
-  
   ngOnInit() {
-    console.log(`VEHICLE LIST 1: ${this.vehicleService.getAllVehicles(this.filters)}`);
-    this.vehicleService.getAllVehicles(this.filters).subscribe((data: any) => {
-      console.log(`VEHICLE LIST 2: ${data}`);
-      this.vehicles = data.map((v: any) => ({
+    this.vehicleService.getAllVehicles(this.filters).subscribe((results: any) => {
+      this.vehicles = results.data.map((v: any) => ({
         id: v.id,
         brand: v.brand.name,
         model: v.model.name,
         vinNumber: v.vinNumber
       }));
-      this.applyFilters();
     });
   }
-  
-  applyFilters() {
-    let filtered = this.vehicles.filter(v =>
-      (!this.filters.brand || v.brand.name.toLowerCase().includes(this.filters.brand.toLowerCase())) &&
-      (!this.filters.model || v.model.name.toLowerCase().includes(this.filters.model.toLowerCase())) &&
-      (!this.filters.vin || v.vinNumber.toLowerCase().includes(this.filters.vin.toLowerCase()))
-    );
-  
+
+  get filteredVehicles(): Vehicle[] {
+    let result = [...this.vehicles];
+
+    if (this.filters.brand.trim()) {
+      result = result.filter(v => v.brand?.name?.toLowerCase().includes(this.filters.brand.toLowerCase()));
+    }
+
+    if (this.filters.model.trim()) {
+      result = result.filter(v => v.model?.name?.toLowerCase().includes(this.filters.model.toLowerCase()));
+    }
+
+    if (this.filters.vin.trim()) {
+      result = result.filter(v => v.vinNumber.toLowerCase().includes(this.filters.vin.toLowerCase()));
+    }
+
     if (this.sortColumn) {
-      filtered.sort((a, b) => {
-        const valA = a[this.sortColumn!] ?? 0;
-        const valB = b[this.sortColumn!] ?? 0;
-        if (typeof valA === 'string') {
-          return this.sortAsc
-            ? valA.localeCompare(valB as string)
-            : (valB as string).localeCompare(valA);
-        }
-        return this.sortAsc ? +valA - +valB : +valB - +valA;
+      result.sort((a, b) => {
+        const valA = a[this.sortColumn as keyof Vehicle]?.toString().toLowerCase() || '';
+        const valB = b[this.sortColumn as keyof Vehicle]?.toString().toLowerCase() || '';
+        return this.sortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
       });
     }
-  
-    this.totalPages = Math.ceil(filtered.length / this.itemsPerPage);
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    this.paginatedVehicles = filtered.slice(start, start + this.itemsPerPage);
+
+    return result;
   }
   
+  get paginatedVehicles(): Vehicle[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredVehicles.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredVehicles.length / this.itemsPerPage);
+  }
+
+  totalPagesArray(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.applyFilters();
     }
-  }
-  
-  totalPagesArray(): number[] {
-    return Array(this.totalPages)
-      .fill(0)
-      .map((_, i) => i + 1);
   }
   
   sortData(column: keyof Vehicle) {
     if (this.sortColumn === column) {
-      this.sortAsc = !this.sortAsc;
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
       this.sortColumn = column;
-      this.sortAsc = true;
+      this.sortDirection = 'asc';
     }
-    this.applyFilters();
   }
 
   onEdit(vehicle: Vehicle) {
