@@ -1,3 +1,4 @@
+import { PhotoService } from './../../services/photo.service';
 import { VehicleService } from './../../services/vehicle.service';
 import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
@@ -47,6 +48,11 @@ export class VehicleFormComponent implements OnInit {
     advertisementStatusId: 1
   };
 
+  step = 1;
+  createdAdId: number | null = null;
+  selectedFile: File | null = null;
+  progressBar = document.querySelector('.progress-bar');
+
   constructor(
     private brandService: BrandService,
     private carTypeService: CarTypeService,
@@ -54,7 +60,8 @@ export class VehicleFormComponent implements OnInit {
     private locationService: LocationService,
     private vehicleService: VehicleService,
     private toastr: ToastrService,
-    private userService: UserService
+    private userService: UserService,
+    private photoService: PhotoService
     ) {}
 
   ngOnInit() {
@@ -74,6 +81,12 @@ export class VehicleFormComponent implements OnInit {
       this.vehicle.userId = this.userService.userDetails.id;
     }
   }
+
+  // updateProgress() {
+  //   const progress = ((this.step + 1) / 2) * 100;
+  //   this.progressBar.style.width = `${progress}%`;
+  //   progressBar.setAttribute('aria-valuenow', progress);
+  // }
 
   onBrandChange() {
     var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
@@ -123,5 +136,59 @@ export class VehicleFormComponent implements OnInit {
         this.toastr.error('Щось пішло не так...', 'Упс!');
       }      
     });
-  }  
+  }
+  
+  createAd() {
+    this.vehicleService.create(this.vehicle).subscribe({
+      next: (x: Vehicle) => {
+        this.toastr.success('Оголошення створено. Тепер завантажте фото.', 'Готово!');
+        this.createdAdId = x.id;
+        this.step = 2;
+      },
+      error: () => {
+        this.toastr.error('Не вдалося створити оголошення', 'Помилка');
+      }
+    });
+  }
+  
+  onFileSelected(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput?.files?.length) {
+      this.selectedFile = fileInput.files[0];
+    }
+  }
+  
+  uploadPhoto() {
+    if (!this.selectedFile || !this.createdAdId) return;
+  
+    const formData = new FormData();
+    formData.append('photo', this.selectedFile);
+    formData.append('vehicleId', this.createdAdId.toString());
+  
+    this.photoService.upload(formData).subscribe({
+      next: () => {
+        this.toastr.success('Фото завантажено!', 'Готово');
+        this.resetForm();
+        this.step = 1;
+      },
+      error: () => {
+        this.toastr.error('Помилка при завантаженні фото', 'Упс...');
+      }
+    });
+  }
+  
+  cancelAd() {
+    if (this.createdAdId) {
+      this.vehicleService.delete(this.createdAdId).subscribe({
+        next: () => {
+          this.toastr.info('Оголошення скасовано', 'Видалено');
+          this.resetForm();
+          this.step = 1;
+        },
+        error: () => {
+          this.toastr.error('Помилка при видаленні', 'Упс...');
+        }
+      });
+    }
+  }
 }

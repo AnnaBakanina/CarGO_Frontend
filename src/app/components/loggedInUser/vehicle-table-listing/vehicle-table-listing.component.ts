@@ -1,9 +1,9 @@
-import { Brand } from './../../../models/brand';
 import { Component } from '@angular/core';
 import { Vehicle } from '../../../models/vehicle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VehicleService } from '../../../services/vehicle.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-table-listing',
@@ -32,7 +32,8 @@ export class VehicleTableListingComponent {
   ];
 
   constructor(
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private router: Router
   ) {}
   
   ngOnInit() {
@@ -101,7 +102,7 @@ export class VehicleTableListingComponent {
   }
 
   onEdit(vehicle: Vehicle) {
-    // TODO: відкрити форму або модалку для редагування
+    this.router.navigate(['/vehicle', vehicle.id]);
     console.log('Редагувати користувача:', vehicle);
   }
 }

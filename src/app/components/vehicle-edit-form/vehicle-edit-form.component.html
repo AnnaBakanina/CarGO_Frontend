@@ -1,9 +1,8 @@
 <div class="d-flex justify-content-center mt-5 mb-5">
+  
     <form (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;">
 
-      <button type="button" class="btn-close position-absolute top-0 end-0 m-3" 
-              aria-label="Закрити"></button> 
-      <!-- (click)="closePopup()" -->
+      <button type="button" class="btn-close position-absolute end-0 me-5 md-10" aria-label="Закрити"></button>
       
       <h3 class="mb-4 text-center">Редагування</h3>
       
@@ -101,7 +100,7 @@
       <div class="mb-3 position-relative">
         <label for="numberField" class="form-label">Ціна:</label>
         <div class="d-flex align-items-center border-bottom">
-          <input type="number" class="form-control border-0 shadow-none px-0 ps-3" id="numberField" placeholder="Введіть ціну" />
+          <input type="number" class="form-control border-0 shadow-none px-0 ps-3" id="numberField" placeholder="Введіть ціну" [(ngModel)]="vehicle.price" name="price"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
@@ -173,7 +172,7 @@
   
       <div class="text-center mt-4 px-4 d-flex justify-content-center gap-3">
         <button class="btn btn-primary" type="submit">Зберегти зміни</button>
-        <button class="btn btn-danger" type="delete" (click)="delete()">Видалити оголошення</button>
+        <button class="btn btn-danger" type="button" (click)="delete()">Видалити оголошення</button>
       </div>
     </form>
   </div>

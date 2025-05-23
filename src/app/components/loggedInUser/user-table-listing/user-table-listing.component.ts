@@ -82,9 +82,4 @@ export class UserTableListingComponent implements OnInit {
       this.sortDirection = 'asc';
     }
   }
-
-  // onEdit(user: User) {
-  //   // TODO: відкрити форму або модалку для редагування
-  //   console.log('Редагувати користувача:', user);
-  // }
 }
