@@ -1,0 +1,33 @@
+<div class="overlay" (click)="closePopup()">
+  <div class="popup bg-white p-4 rounded shadow-lg position-relative"
+    (click)="$event.stopPropagation()"
+    style="max-width: 800px; width: 80%">
+    <button type="button" class="btn-close position-absolute top-0 end-0 m-3"
+      aria-label="Закрити" (click)="closePopup()"></button>
+
+    <div class="mb-4">
+      <h5 class="mb-4 text-primary mb-4 text-center">Редагувати данні користувача</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Імʼя</label>
+          <input type="text" class="form-control" [(ngModel)]="user.userFirstName" name="userFirstName"/>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Прізвище</label>
+          <input type="text" class="form-control" [(ngModel)]="user.userLastName" name="userLastName"/>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" [(ngModel)]="user.userEmail" name="userEmail"/>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Телефон</label>
+          <input type="tel" class="form-control" [(ngModel)]="user.userPhone" name="userPhone"/>
+        </div>
+        <button class="btn btn-primary mt-3" (click)="saveChanges()">
+          Зберегти
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

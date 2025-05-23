@@ -29,8 +29,6 @@ export class UserInfoComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    console.log('userDetails:', this.userService.userDetails);
-    
     this.userFirstName = this.userService.userDetails.firstName;
     this.userLastName = this.userService.userDetails.lastName;
     this.userEmail = this.userService.userDetails.email;

@@ -27,7 +27,7 @@
           <td>{{ user.email }}</td>
           <td>{{ user.phoneNumber }}</td>
           <td>
-            <button class="btn btn-sm btn-outline-primary" (click)="onEdit(user)">
+            <button class="btn btn-sm btn-outline-primary" (click)="openPopup(user)">
               <i class="bi bi-pencil"></i>
             </button>
           </td>
@@ -35,4 +35,5 @@
       </tbody>
     </table>
   </div>
+  <app-edit-user-popup *ngIf="isPopupOpen" [user]="selectedVehicle" (onClose)="closePopup()"></app-edit-user-popup>
   
