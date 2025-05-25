@@ -51,7 +51,7 @@ export class VehicleFormComponent implements OnInit {
   step = 1;
   createdAdId: number | null = null;
   selectedFile: File | null = null;
-  progressBar = document.querySelector('.progress-bar');
+  updateProgressBar = 0;
 
   constructor(
     private brandService: BrandService,
@@ -80,13 +80,13 @@ export class VehicleFormComponent implements OnInit {
     if (this.userService.isAuthenticated()) {
       this.vehicle.userId = this.userService.userDetails.id;
     }
+    this.updateProgress();
   }
 
-  // updateProgress() {
-  //   const progress = ((this.step + 1) / 2) * 100;
-  //   this.progressBar.style.width = `${progress}%`;
-  //   progressBar.setAttribute('aria-valuenow', progress);
-  // }
+  updateProgress() {
+    this.updateProgressBar = this.step === 1 ? 50 : 100;
+
+  }
 
   onBrandChange() {
     var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
@@ -149,6 +149,11 @@ export class VehicleFormComponent implements OnInit {
         this.toastr.error('Не вдалося створити оголошення', 'Помилка');
       }
     });
+  }
+
+  changeTab(goBack: boolean) {
+    goBack ? this.step = 1 : this.step = 2;
+    this.updateProgress();
   }
   
   onFileSelected(event: Event) {
