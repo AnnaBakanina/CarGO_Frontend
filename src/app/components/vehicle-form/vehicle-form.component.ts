@@ -168,9 +168,8 @@ export class VehicleFormComponent implements OnInit {
   
     const formData = new FormData();
     formData.append('photo', this.selectedFile);
-    formData.append('vehicleId', this.createdAdId.toString());
   
-    this.photoService.upload(formData).subscribe({
+    this.photoService.upload(formData, this.createdAdId).subscribe({
       next: () => {
         this.toastr.success('Фото завантажено!', 'Готово');
         this.resetForm();

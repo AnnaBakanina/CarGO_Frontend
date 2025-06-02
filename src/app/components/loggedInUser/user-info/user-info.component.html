@@ -15,7 +15,8 @@
         </div>
         <div class="col-md-6">
             <label class="form-label">Телефон</label>
-            <input type="tel" class="form-control" [(ngModel)]="userPhone" (ngModelChange)="checkForChanges()">
+            <input type="tel" class="form-control" value="+3809909*****">
+            <!-- <input type="tel" class="form-control" [(ngModel)]="userPhone" (ngModelChange)="checkForChanges()"> -->
         </div>
         <button class="btn btn-primary mt-3" *ngIf="formChanged" (click)="saveChanges()">Зберегти</button>          
     </div>

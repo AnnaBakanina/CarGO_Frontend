@@ -1,1 +1,35 @@
-<p>admin-form works!</p>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container py-4">
+    <!-- <h1 class="text-center mb-4">Data Visualization Dashboard</h1> -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="dashboard-card weather-widget">
+                <div class="weather-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="weather-temp">23°C</div>
+                <div class="weather-description">Сонячно</div>
+                <div class="weather-location">Київ, Україна</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon text-primary">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-value">1,234</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="dashboard-card">
+                <h3>Нові Оголошення</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="dashboard-card">
+                <h3>Продані Авто</h3>
+                <canvas id="demographicsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-center mt-5 mb-5">
+
   
-    <form (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;">
+    <form #form="ngForm" (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;" novalidate>
 
       <button type="button" class="btn-close position-absolute end-0 me-5 md-10" aria-label="Закрити"></button>
       
@@ -12,10 +13,10 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Тип авто:</label>
         <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="carTypeId" [(ngModel)]="vehicle.carTypeId" name="carTypeId" [disabled]="!isEditingCarType">
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="carTypeId" [(ngModel)]="vehicle.carTypeId" name="carTypeId">
               <option *ngFor="let type of carTypes" [value]="type.id">{{ type.name }}</option>
             </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit" (click)="isEditingCarType = !isEditingCarType">
+            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
               <i class="bi bi-pencil"></i>
             </button>
           </div>
@@ -57,12 +58,16 @@
   
       <div class="mb-3 position-relative">
         <label for="vinNumber" class="form-label">VIN номер:</label>
-        <div class="d-flex align-items-center border-bottom">
-          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="vinNumber" [(ngModel)]="vehicle.vinNumber" name="vinNumber" placeholder="Введіть VIN номер"/>
+        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': vinNumber.invalid && vinNumber.touched}">
+          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="vinNumber" [(ngModel)]="vehicle.vinNumber" required #vinNumber="ngModel" name="vinNumber" placeholder="Введіть VIN номер"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
         </div>
+        <div *ngIf="editForm.get('vinNumber')?.invalid && editForm.get('vinNumber')?.touched"
+     style="color: red; font-size: 0.875rem;">
+  Поле обов'язкове
+</div>
       </div>
 
       <div class="mb-3 position-relative">
@@ -122,7 +127,7 @@
         </div>
       </div>
       
-      <div class="mb-4 position-relative">
+      <!-- <div class="mb-4 position-relative">
         <label for="formFile" class="form-label">Завантажити фото</label>
         <div class="d-flex align-items-center border-bottom pb-2">
           <input class="form-control border-0 shadow-none px-0 ps-3" type="file" id="formFile" style="visibility: hidden;">
@@ -134,7 +139,7 @@
           </button>
         </div>
         <small class="text-muted mt-2">Виберіть файл з вашого пристрою.</small>
-      </div>
+      </div> -->
       
       <div class="mb-3 position-relative">
         <label for="phoneField" class="form-label">Номер телефону</label>
