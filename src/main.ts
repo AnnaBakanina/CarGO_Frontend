@@ -18,7 +18,6 @@ bootstrapApplication(AppComponent, {
       clientId: 'X0dvzi5mFU5Bo4qzRAPNTsIOGNdC94Ze',
       authorizationParams: {
         redirect_uri: window.location.origin + '/home'
-        // redirect_uri: window.location.origin + '/profile'
       },
       cacheLocation: 'localstorage'
     })

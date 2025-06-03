@@ -14,7 +14,9 @@ export class NavigationComponent {
   constructor(public auth: AuthService) {}
 
   login() {
-    this.auth.loginWithRedirect();
+    this.auth.loginWithRedirect({
+      appState: { target: '/profile' }
+    });
   }
 
   logout() {

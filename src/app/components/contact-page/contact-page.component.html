@@ -11,30 +11,30 @@
           <div class="col-lg-6">
             <div class="contact-box ml-3">
               <h1 class="font-weight-light mt-5">Звʼяжіться з нами</h1>
-              <form class="mt-4" (submit)="sendEmail($event)">
+              <form class="mt-4" #contactForm="ngForm" (submit)="sendEmail($event, contactForm)">
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="form-group mt-2">
-                      <input class="form-control" type="text" name="user_name" placeholder="Імʼя" required />
+                      <input class="form-control" type="text" name="user_name" ngModel placeholder="Імʼя" required />
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <div class="form-group mt-2">
-                      <input class="form-control" type="email" name="user_email" placeholder="Електронна адреса" required />
+                      <input class="form-control" type="email" name="user_email" ngModel placeholder="Електронна адреса" required />
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <div class="form-group mt-2">
-                      <input class="form-control" type="text" name="user_phone" placeholder="Телефон" required />
+                      <input class="form-control" type="text" name="user_phone" ngModel placeholder="Телефон" required />
                     </div>
                   </div>
                   <div class="col-lg-12">
                     <div class="form-group mt-2">
-                      <textarea class="form-control" rows="3" name="user_message" placeholder="Повідомлення" required ></textarea>
+                      <textarea class="form-control" rows="3" name="user_message" ngModel placeholder="Повідомлення" required></textarea>
                     </div>
                   </div>
-                  <div class="col-lg-12">
-                    <button type="submit" class="btn btn-primary mt-3 text-white border-0 px-3 py-2"><span> Відправити</span></button>
+                  <div class="col-lg-12 mt-2">
+                    <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">Відправити</button>
                   </div>
                 </div>
               </form>

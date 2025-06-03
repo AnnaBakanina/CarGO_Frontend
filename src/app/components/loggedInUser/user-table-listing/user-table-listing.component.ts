@@ -18,7 +18,7 @@ export class UserTableListingComponent implements OnInit {
   sortColumn: keyof User | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  selectedVehicle: User | null = null;
+  selectedUser: User | null = null;
   isPopupOpen = false;
   sortOption = '';
 
@@ -64,14 +64,14 @@ export class UserTableListingComponent implements OnInit {
     return result;
   }
 
-  openPopup(vehicle: User) {
-    this.selectedVehicle = vehicle;
+  openPopup(user: User) {
+    this.selectedUser = user;
     this.isPopupOpen = true;
   }
   
   closePopup() {
     this.isPopupOpen = false;
-    this.selectedVehicle = null;
+    this.selectedUser = null;
   }
 
   sortBy(column: keyof User) {

@@ -5,7 +5,7 @@ import { Vehicle } from '../../../models/vehicle';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-listing',
@@ -29,7 +29,8 @@ export class UserListingComponent {
 
   constructor(
     private vehicleService: VehicleService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
