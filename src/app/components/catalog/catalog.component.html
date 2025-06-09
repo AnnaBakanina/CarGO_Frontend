@@ -6,7 +6,7 @@
           <h5 class="text-primary">Фільтри</h5>
           <div class="mb-3 mt-3">
             <label class="form-label">Тип авто:</label>
-            <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="carTypes">
+            <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="query.carTypeId">
               <option value=""></option>
               <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
             </select>
@@ -30,7 +30,7 @@
           </div>
           <div class="mb-3">
             <label for="vehicle" class="form-label">Технічний стан:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="techState">
+            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.techStateId">
               <option value=""></option>
               <option *ngFor="let t of techState" value="{{ t.id }}">{{ t.name }}</option>
             </select>

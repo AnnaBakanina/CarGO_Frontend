@@ -26,6 +26,7 @@ export class CatalogComponent implements OnInit {
     brandId: null,
     modelId: null,
     carTypeId: null,
+    techStateId: null,
     priceFrom: null,
     priceTo: null,
     carMileageFrom: null,
