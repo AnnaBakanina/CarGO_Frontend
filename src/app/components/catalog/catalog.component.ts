@@ -134,11 +134,15 @@ export class CatalogComponent implements OnInit {
     });
   }
 
-  // onBrandChange() {
-  //   var selectedBrand = this.brands.find(m => m.id == this.models.id);
-  //   this.models = selectedBrand ? selectedBrand.carModel: [];
-  //   delete this.vehicle.modelId;
-  // }
+  onBrandChange() {
+    if (this.query.brandId !== null) {
+      const selectedBrand = this.brands.find(b => b.id == this.query.brandId);
+      this.models = selectedBrand?.carModel || [];
+    } else {
+      this.models = [];
+    }
+    this.query.modelId = null;
+  }
 
   onRegionChange() {
     if (this.query.regionId !== null) {
@@ -179,13 +183,19 @@ export class CatalogComponent implements OnInit {
   onResetFilter() {
     this.query = {
       brandId: null,
+      modelId: null,
       carTypeId: null,
+      techStateId: null,
       priceFrom: null,
       priceTo: null,
       carMileageFrom: null,
       carMileageTo: null,
       regionId: null,
-      cityId: null
+      cityId: null,
+      sortBy: null,
+      isSortAscending: null,
+      page: 1,
+      pageSize: 9
     };
     this.onApplyFilters();
   }

@@ -141,12 +141,14 @@ export class VehicleFormComponent implements OnInit {
   createAd() {
     this.vehicleService.create(this.vehicle).subscribe({
       next: (x: Vehicle) => {
-        this.toastr.success('Оголошення створено. Тепер завантажте фото.', 'Готово!');
+        // this.toastr.success('Оголошення створено. Тепер завантажте фото.', 'Готово!');
+        console.log('Оголошення створено. Тепер завантажте фото.');
         this.createdAdId = x.id;
         this.step = 2;
       },
       error: () => {
-        this.toastr.error('Не вдалося створити оголошення', 'Помилка');
+        console.log('Не вдалося створити оголошення');
+        // this.toastr.error('Не вдалося створити оголошення', 'Помилка');
       }
     });
   }
@@ -154,6 +156,7 @@ export class VehicleFormComponent implements OnInit {
   changeTab(goBack: boolean) {
     goBack ? this.step = 1 : this.step = 2;
     this.updateProgress();
+    this.createAd();
   }
   
   onFileSelected(event: Event) {
@@ -167,7 +170,7 @@ export class VehicleFormComponent implements OnInit {
     if (!this.selectedFile || !this.createdAdId) return;
   
     const formData = new FormData();
-    formData.append('photo', this.selectedFile);
+    formData.append('file', this.selectedFile);
   
     this.photoService.upload(formData, this.createdAdId).subscribe({
       next: () => {
@@ -185,7 +188,7 @@ export class VehicleFormComponent implements OnInit {
     if (this.createdAdId) {
       this.vehicleService.delete(this.createdAdId).subscribe({
         next: () => {
-          this.toastr.info('Оголошення скасовано', 'Видалено');
+          this.toastr.info('Оголошення скасовано', 'Готово');
           this.resetForm();
           this.step = 1;
         },
