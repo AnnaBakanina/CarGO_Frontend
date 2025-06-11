@@ -21,4 +21,5 @@ export interface Vehicle {
     advertisementStatus: KeyValuePair;
     image?: string;
     photos?: string[];
+    lastUpdated: string;
 }
