@@ -15,6 +15,7 @@ import { VehicleSave } from '../../models/vehicleSave';
 import { Brand } from '../../models/brand';
 import { Region } from '../../models/region';
 import { ToastrService } from 'ngx-toastr';
+import { AdvertisementStatusService } from '../../services/advertisementStatus.service';
 
 @Component({
   selector: 'app-vehicle-edit-form',
@@ -30,6 +31,7 @@ export class VehicleEditFormComponent implements OnInit {
   techState: any = {};
   regions: Region[] = [];
   cities: any = {};
+  adStatuses: any = {};
   updateVehicleId = 0;
   selectedBrandId = 0;
   selectedRegionId = 0;
@@ -62,7 +64,8 @@ export class VehicleEditFormComponent implements OnInit {
     private vehicleService: VehicleService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private advertisementStatusService: AdvertisementStatusService
     ) {}
 
     ngOnInit(): void {
@@ -73,12 +76,14 @@ export class VehicleEditFormComponent implements OnInit {
         carTypes: Observable<any>,
         techState: Observable<any>,
         regions: Observable<Region[]>,
-        vehicle?: Observable<Vehicle>
+        vehicle?: Observable<Vehicle>,
+        adStatuses: Observable<any>
       } = {
         brands: this.brandService.getBrands() as Observable<Brand[]>,
         carTypes: this.carTypeService.getCarTypes(),
         techState: this.techStateService.getCarTechState(),
-        regions: this.locationService.getLocation() as Observable<Region[]>
+        regions: this.locationService.getLocation() as Observable<Region[]>,
+        adStatuses: this.advertisementStatusService.getAdvertisementStatuses()
       };
 
       this.editForm = this.formBuilder.group({
@@ -91,7 +96,8 @@ export class VehicleEditFormComponent implements OnInit {
         description: [''],
         phoneNumber: ['', Validators.required],
         cityId: [null, Validators.required],
-        price: [null, Validators.required]
+        price: [null, Validators.required],
+        advertisementStatusId: [null, Validators.required]
       });
     
       if (this.updateVehicleId) {
@@ -104,7 +110,8 @@ export class VehicleEditFormComponent implements OnInit {
           carTypes: any,
           techState: any,
           regions: Region[],
-          vehicle?: Vehicle
+          vehicle?: Vehicle,
+          adStatuses: any
         }) => {
           this.brands = data.brands;
           this.carTypes = data.carTypes;
@@ -115,6 +122,7 @@ export class VehicleEditFormComponent implements OnInit {
             this.populateModels();
             this.populateCities();
           };
+          this.adStatuses = data.adStatuses;
         },
         error: (err: any) => {
           this.router.navigate(['/not-found']);
@@ -158,6 +166,7 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.phoneNumber = v.phoneNumber;
     this.selectedRegionId = v.region.id;
     this.vehicle.cityId = v.city.id;
+    this.vehicle.advertisementStatusId = v.advertisementStatus.id;
   }
 
   delete() {
@@ -167,6 +176,7 @@ export class VehicleEditFormComponent implements OnInit {
   
   onSubmit(): void {
     if (this.editForm.valid) {
+      this.toastr.success('Оголошення оновлено.', 'Готово!');
       console.log('Form Submitted:', this.editForm.value);
     } else {
       this.editForm.markAllAsTouched();

@@ -67,16 +67,16 @@
         <label for="numberField" class="form-label">Ціна:</label>
         <input type="number" class="form-control" id="numberField" placeholder="Введіть ціну" [(ngModel)]="vehicle.price" name="price" required>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option1" value="option1">
-          <label class="form-check-label" for="option1">Можливий торг</label>
+          <input class="form-check-input" type="checkbox" id="isAuction" value="isAuction" [(ngModel)]="vehicle.isAuction" name="isAuction">
+          <label class="form-check-label" for="isAuction">Можливий торг</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option2" value="option2">
-          <label class="form-check-label" for="option2">Нерозмитнений</label>
+          <input class="form-check-input" type="checkbox" id="isTaxable" value="isTaxable" [(ngModel)]="vehicle.isTaxable" name="isTaxable">
+          <label class="form-check-label" for="isTaxable">Нерозмитнений</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option3" value="option3">
-          <label class="form-check-label" for="option3">Можлива оплата частинами</label>
+          <input class="form-check-input" type="checkbox" id="isPaymentInParts" value="isPaymentInParts" [(ngModel)]="vehicle.isPaymentInParts" name="isPaymentInParts">
+          <label class="form-check-label" for="isPaymentInParts">Можлива оплата частинами</label>
         </div>
       </div>
       <div class="mb-3">

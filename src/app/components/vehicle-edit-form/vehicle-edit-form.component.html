@@ -64,10 +64,9 @@
             <i class="bi bi-pencil"></i>
           </button>
         </div>
-        <div *ngIf="editForm.get('vinNumber')?.invalid && editForm.get('vinNumber')?.touched"
-     style="color: red; font-size: 0.875rem;">
-  Поле обов'язкове
-</div>
+        <!-- <div *ngIf="editForm.get('vinNumber')?.invalid && editForm.get('vinNumber')?.touched" style="color: red; font-size: 0.875rem;">
+          Поле обов'язкове
+        </div> -->
       </div>
 
       <div class="mb-3 position-relative">
@@ -168,6 +167,18 @@
         <div class="d-flex align-items-center border-bottom">
             <select class="form-select border-0 shadow-none px-0 ps-3" id="cityId" [(ngModel)]="vehicle.cityId" name="cityId">
               <option *ngFor="let type of cities" [value]="type.id">{{ type.name }}</option>
+            </select>
+            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </div>
+      </div>
+
+      <div class="mb-3 position-relative">
+        <label for="carType" class="form-label">Статус оголошення:</label>
+        <div class="d-flex align-items-center border-bottom">
+            <select class="form-select border-0 shadow-none px-0 ps-3" id="adStatusId" [(ngModel)]="vehicle.advertisementStatusId" name="adStatusId">
+              <option *ngFor="let status of adStatuses" [value]="status.id">{{ status.name }}</option>
             </select>
             <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
               <i class="bi bi-pencil"></i>
