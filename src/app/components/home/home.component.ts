@@ -7,6 +7,7 @@ import { Brand } from '../../models/brand';
 import { VehicleService } from '../../services/vehicle.service';
 import { Vehicle } from '../../models/vehicle';
 import { Router, RouterModule } from '@angular/router';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-home',
@@ -60,7 +61,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private brandService: BrandService,
     private vehicleService: VehicleService,
-    private router: Router
+    private router: Router,
+    private photoService: PhotoService
   ) {}
 
   ngOnInit() {
@@ -68,7 +70,18 @@ export class HomeComponent implements OnInit {
       this.brands = data;
     });
     this.vehicleService.getAllVehicles(this.vehiclesQuery).subscribe((result: any) => {
-      this.apiVehicles = result.data});
+      this.apiVehicles = result.data;
+
+      this.apiVehicles.forEach((vehicle, index) => {
+        this.photoService.getPhotos(vehicle.id).subscribe((photos: any[]) => {
+          if (photos.length > 0) {
+            this.apiVehicles[index].image = `http://localhost:5269/uploads/${photos[0].fileName}`;
+          } else {
+            this.apiVehicles[index].image = '/default_car.jpg';
+          }
+        });
+      });
+    });
   }
 
   onBrandChange() {

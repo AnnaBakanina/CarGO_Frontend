@@ -154,9 +154,14 @@ export class VehicleFormComponent implements OnInit {
   }
 
   changeTab(goBack: boolean) {
-    goBack ? this.step = 1 : this.step = 2;
+    if (goBack) {
+      this.step = 1;
+    } else {
+      this.step = 2;
+      this.createAd();
+    }
+    // goBack ? this.step = 1 : this.step = 2;
     this.updateProgress();
-    this.createAd();
   }
   
   onFileSelected(event: Event) {
