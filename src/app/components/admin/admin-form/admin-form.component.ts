@@ -3,8 +3,33 @@ import { VehicleService } from '../../../services/vehicle.service';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user';
 import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js/auto';
+// import Chart from 'chart.js/auto';
+import {
+  Chart,
+  CategoryScale,
+  LinearScale,
+  BarController,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  RadialLinearScale,
+  PolarAreaController,
+  ArcElement
+} from 'chart.js';
 
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  BarController,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  RadialLinearScale,
+  PolarAreaController,
+  ArcElement
+);
 
 @Component({
   selector: 'app-admin-form',
@@ -15,6 +40,7 @@ import Chart from 'chart.js/auto';
 export class AdminFormComponent implements OnInit {
   vehicles: Vehicle[] = [];
   users: User[] = [];
+  allResultsQuery: any = { pageSize: 10000 };
 
   constructor(
     private vehicleService: VehicleService,
@@ -22,9 +48,10 @@ export class AdminFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.vehicleService.getAllVehicles().subscribe((results: any) => {
+    this.vehicleService.getAllVehicles(this.allResultsQuery).subscribe((results: any) => {
       this.vehicles = results.data;
       setTimeout(() => this.renderRevenueChart(), 0);
+      setTimeout(() => this.renderBrandChart(), 0);
     });
     this.userService.getAllUsers().subscribe((data: any) => {
       this.users = data;
@@ -79,5 +106,48 @@ export class AdminFormComponent implements OnInit {
       counts[date] = (counts[date] || 0) + 1;
     }
     return counts;
+  }
+
+  private renderBrandChart(): void{
+    const selledVehicles = this.vehicles.filter(v=> v.advertisementStatus.id === 2);
+    const brandCounts = selledVehicles.reduce((acc, curr) => {
+    acc[curr.brand.name] = (acc[curr.brand.name] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const labels = Object.keys(brandCounts);
+    const data = Object.values(brandCounts);
+
+    const ctx = (document.getElementById('brandChart') as HTMLCanvasElement).getContext('2d');
+
+    new Chart(ctx!, {
+      type: 'polarArea',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Vehicles by Brand',
+          data: data,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(153, 102, 255, 0.5)',
+            'rgba(255, 159, 64, 0.5)',
+            'rgba(100, 200, 100, 0.5)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          r: {
+            pointLabels: {
+              centerPointLabels: true // центровані мітки
+            }
+          }
+        }
+      }
+    });
   }
 }
