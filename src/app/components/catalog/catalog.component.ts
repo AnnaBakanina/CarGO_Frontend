@@ -35,6 +35,7 @@ export class CatalogComponent implements OnInit {
     cityId: null,
     sortBy: null,
     isSortAscending: null,
+    advertisementStatusId: 1,
     page: 1,
     pageSize: 9
   };

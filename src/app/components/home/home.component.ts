@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
   vehiclesQuery: any = {
     sortBy: 'lastUpdated',
     isSortAscending: false,
+    advertisementStatusId: 1,
     page: 1,
     pageSize: 3
   };

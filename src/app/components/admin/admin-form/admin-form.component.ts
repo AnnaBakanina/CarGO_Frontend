@@ -39,8 +39,10 @@ Chart.register(
 })
 export class AdminFormComponent implements OnInit {
   vehicles: Vehicle[] = [];
+  selledVehicles: Vehicle[] = [];
   users: User[] = [];
   allResultsQuery: any = { pageSize: 10000 };
+  allSelledVehiclesQuery: any = { advertisementStatusId: 3 };
 
   constructor(
     private vehicleService: VehicleService,
@@ -51,6 +53,9 @@ export class AdminFormComponent implements OnInit {
     this.vehicleService.getAllVehicles(this.allResultsQuery).subscribe((results: any) => {
       this.vehicles = results.data;
       setTimeout(() => this.renderRevenueChart(), 0);
+    });
+    this.vehicleService.getAllVehicles(this.allSelledVehiclesQuery).subscribe((results: any) => {
+      this.selledVehicles = results.data;
       setTimeout(() => this.renderBrandChart(), 0);
     });
     this.userService.getAllUsers().subscribe((data: any) => {
@@ -109,8 +114,7 @@ export class AdminFormComponent implements OnInit {
   }
 
   private renderBrandChart(): void{
-    const selledVehicles = this.vehicles.filter(v=> v.advertisementStatus.id === 2);
-    const brandCounts = selledVehicles.reduce((acc, curr) => {
+    const brandCounts = this.selledVehicles.reduce((acc, curr) => {
     acc[curr.brand.name] = (acc[curr.brand.name] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
@@ -143,7 +147,7 @@ export class AdminFormComponent implements OnInit {
         scales: {
           r: {
             pointLabels: {
-              centerPointLabels: true // центровані мітки
+              centerPointLabels: true
             }
           }
         }
