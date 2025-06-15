@@ -8,24 +8,24 @@
     <div class="mb-4">
       <h5 class="mb-4 text-primary mb-4 text-center">Редагувати данні користувача</h5>
       
-      <div class="row g-3">
+      <div class="row g-3" *ngIf="editableUser">
         <div class="col-md-6">
           <label class="form-label">Імʼя</label>
-          <input type="text" class="form-control" [(ngModel)]="user.firstName" name="userFirstName"/>
+          <input type="text" class="form-control" [(ngModel)]="editableUser.firstName" name="userFirstName"/>
         </div>
         <div class="col-md-6">
           <label class="form-label">Прізвище</label>
-          <input type="text" class="form-control" [(ngModel)]="user.lastName" name="userLastName"/>
+          <input type="text" class="form-control" [(ngModel)]="editableUser.lastName" name="userLastName"/>
         </div>
         <div class="col-md-6">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control" [(ngModel)]="user.email" name="userEmail"/>
+          <input type="email" class="form-control" [(ngModel)]="editableUser.email" name="userEmail"/>
         </div>
         <div class="col-md-6">
           <label class="form-label">Телефон</label>
-          <input type="tel" class="form-control" [(ngModel)]="user.phoneNumber" name="userPhone"/>
+          <input type="tel" class="form-control" [(ngModel)]="editableUser.phoneNumber" name="userPhone"/>
         </div>
-        <button class="btn btn-primary mt-3" (click)="saveChanges()">
+        <button class="btn btn-primary mt-3" [disabled]="!isChanged()" (click)="saveChanges()">
           Зберегти
         </button>
       </div>
