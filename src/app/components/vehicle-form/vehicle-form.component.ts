@@ -137,6 +137,23 @@ export class VehicleFormComponent implements OnInit {
       }      
     });
   }
+
+  updateAd() {
+    if (!this.createdAdId) return;
+  
+    this.vehicleService.updateVehicle(this.createdAdId, this.vehicle).subscribe({
+      next: (x: Vehicle) => {
+        console.log('Оголошення оновлено');
+        this.toastr.success('Оголошення оновлено', 'Готово!');
+        this.step = 2;
+        this.updateProgress();
+      },
+      error: () => {
+        this.toastr.error('Не вдалося оновити оголошення', 'Помилка');
+      }
+    });
+  }
+  
   
   createAd() {
     this.vehicleService.create(this.vehicle).subscribe({
@@ -157,8 +174,13 @@ export class VehicleFormComponent implements OnInit {
     if (goBack) {
       this.step = 1;
     } else {
-      this.step = 2;
-      this.createAd();
+      if (this.createdAdId !== null) {
+        this.step = 2;
+        this.updateAd();
+      } else {
+        this.step = 2;
+        this.createAd();
+      }
     }
     // goBack ? this.step = 1 : this.step = 2;
     this.updateProgress();
@@ -180,6 +202,7 @@ export class VehicleFormComponent implements OnInit {
     this.photoService.upload(formData, this.createdAdId).subscribe({
       next: () => {
         this.toastr.success('Фото завантажено!', 'Готово');
+        this.toastr.success('Оголошення додано!', 'Готово');
         this.resetForm();
         this.step = 1;
       },

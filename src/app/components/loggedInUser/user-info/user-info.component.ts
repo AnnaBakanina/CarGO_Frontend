@@ -29,6 +29,10 @@ export class UserInfoComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    this.getUpToDateUserData();
+  }
+
+  getUpToDateUserData() {
     this.userFirstName = this.userService.userDetails.firstName;
     this.userLastName = this.userService.userDetails.lastName;
     this.userEmail = this.userService.userDetails.email;
@@ -67,11 +71,6 @@ export class UserInfoComponent implements OnInit {
     });
 
     this.formChanged = false;
-    this.originalData = {
-      firstName: this.userFirstName,
-      lastName: this.userLastName,
-      email: this.userEmail,
-      phone: this.userPhone
-    };
+    this.getUpToDateUserData();
   }
 }

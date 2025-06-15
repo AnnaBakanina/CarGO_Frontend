@@ -22,21 +22,18 @@
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Тип авто:</label>
         <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="vehicle.carTypeId" required>
-          <option [value]="null" selected>Тип авто</option>
           <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
         </select>
       </div>
       <div class="mb-3 position-relative">
         <label for="vehicle" class="form-label">Бренд авто:</label>
         <select id="vehicle" name="brandId" type="text" class="form-select" [(ngModel)]="selectedBrandId" (change)=onBrandChange() required>
-          <option [value]="null" selected>Бренд</option>
           <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Модель авто:</label>
         <select id="vehicle" name="modelId" type="text" class="form-select" [(ngModel)]="vehicle.modelId" required>
-          <option [value]="null" selected>Модель</option>
           <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
         </select>
       </div>
@@ -55,13 +52,12 @@
       <div class="mb-3">
         <label for="vehicle" class="form-label">Технічний стан:</label>
         <select id="vehicle" name="techStateId" type="text" class="form-select" [(ngModel)]="vehicle.techStateId" required>
-          <option [value]="null" selected>Технічний стан</option>
           <option *ngFor="let t of techState" value="{{ t.id }}">{{ t.name }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Опис:</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="vehicle.description" name="description" placeholder="Додайте опис" required></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="vehicle.description" name="description" maxlength="2000" placeholder="Додайте опис" required></textarea>
       </div>
       <div class="mb-3">
         <label for="numberField" class="form-label">Ціна:</label>
@@ -86,14 +82,12 @@
       <div class="mb-3">
         <label for="vehicle" class="form-label">Регіон:</label>
         <select id="vehicle" name="regionId" type="text" class="form-select" [(ngModel)]="selectedRegionId" (change)=onRegionChange() required>
-          <option value=""></option>
           <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Місто:</label>
         <select id="vehicle" name="cityId" type="text" class="form-select" [(ngModel)]="vehicle.cityId" required>
-          <option value=""></option>
           <option *ngFor="let c of cities" value="{{ c.id }}">{{ c.name }}</option>
         </select>
       </div>

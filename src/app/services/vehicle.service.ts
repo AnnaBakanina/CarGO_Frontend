@@ -20,8 +20,8 @@ export class VehicleService {
     return this.http.get(this.vehicleEndpoint + id); 
   }
 
-  updateVehicle (id: number, body: VehicleSave) {
-    return this.http.put(this.vehicleEndpoint + id, body);
+  updateVehicle (id: number, body: VehicleSave): Observable<Vehicle> {
+    return this.http.put<Vehicle>(this.vehicleEndpoint + id, body);
   }
 
   getAllVehicles(filter: any = {}) {
