@@ -1,14 +1,10 @@
 <div class="d-flex justify-content-center mt-5 mb-5">
 
-  
-    <form #form="ngForm" (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;" novalidate>
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="w-100" style="max-width: 80%;" novalidate>
 
       <button type="button" class="btn-close position-absolute end-0 me-5 md-10" aria-label="Закрити"></button>
       
       <h3 class="mb-4 text-center">Редагування</h3>
-      
-      <!-- <p> {{ vehicle | json}} </p> -->
-      <!-- <p>Типи: {{ models | json }}</p> -->
 
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Тип авто:</label>
@@ -48,11 +44,14 @@
 
       <div class="mb-3 position-relative">
         <label for="vinNumber" class="form-label">Рік випуску:</label>
-        <div class="d-flex align-items-center border-bottom">
-          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="yearOfRelease" [(ngModel)]="vehicle.yearOfRelease" name="yearOfRelease" placeholder="Введіть рік випуску"/>
+        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': yearOfRelease.invalid && yearOfRelease.touched}">
+          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="yearOfRelease" [(ngModel)]="vehicle.yearOfRelease" required #yearOfRelease="ngModel" name="yearOfRelease" placeholder="Введіть рік випуску"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
+        </div>
+        <div *ngIf="yearOfRelease.invalid && yearOfRelease.touched" style="color: red; font-size: 0.875rem;">
+          Поле обов'язкове
         </div>
       </div>
   
@@ -64,18 +63,21 @@
             <i class="bi bi-pencil"></i>
           </button>
         </div>
-        <div *ngIf="editForm.get('vinNumber')?.invalid && editForm.get('vinNumber')?.touched" style="color: red; font-size: 0.875rem;">
+        <div *ngIf="vinNumber.invalid && vinNumber.touched" style="color: red; font-size: 0.875rem;">
           Поле обов'язкове
         </div>
       </div>
 
       <div class="mb-3 position-relative">
         <label for="vinNumber" class="form-label">Пробіг:</label>
-        <div class="d-flex align-items-center border-bottom">
-          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="carMileage" [(ngModel)]="vehicle.carMileage" name="carMileage" placeholder="Введіть пробіг"/>
+        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': carMileage.invalid && carMileage.touched}">
+          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="carMileage" [(ngModel)]="vehicle.carMileage" required #carMileage="ngModel" name="carMileage" placeholder="Введіть пробіг"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
+        </div>
+        <div *ngIf="carMileage.invalid && carMileage.touched" style="color: red; font-size: 0.875rem;">
+          Поле обов'язкове
         </div>
       </div>
 
@@ -93,21 +95,27 @@
 
       <div class="mb-3 position-relative">
         <label for="carDescription" class="form-label">Опис:</label>
-        <div class="d-flex align-items-center border-bottom">
-          <textarea class="form-control border-0 shadow-none px-0 ps-3" id="description" [(ngModel)]="vehicle.description" name="description" rows="3"></textarea>
+        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': description.invalid && description.touched}">
+          <textarea class="form-control border-0 shadow-none px-0 ps-3" id="description" [(ngModel)]="vehicle.description" required #description="ngModel" name="description" rows="3"></textarea>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
+        </div>
+        <div *ngIf="description.invalid && description.touched" style="color: red; font-size: 0.875rem;">
+          Поле обов'язкове
         </div>
       </div>
       
       <div class="mb-3 position-relative">
         <label for="numberField" class="form-label">Ціна:</label>
-        <div class="d-flex align-items-center border-bottom">
-          <input type="number" class="form-control border-0 shadow-none px-0 ps-3" id="numberField" placeholder="Введіть ціну" [(ngModel)]="vehicle.price" name="price"/>
+        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': price.invalid && price.touched}">
+          <input type="number" class="form-control border-0 shadow-none px-0 ps-3" id="numberField" placeholder="Введіть ціну" [(ngModel)]="vehicle.price" required #price="ngModel" name="price"/>
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
+        </div>
+        <div *ngIf="price.invalid && price.touched" style="color: red; font-size: 0.875rem;">
+          Поле обов'язкове
         </div>
       </div>
       
@@ -126,27 +134,16 @@
         </div>
       </div>
       
-      <!-- <div class="mb-4 position-relative">
-        <label for="formFile" class="form-label">Завантажити фото</label>
-        <div class="d-flex align-items-center border-bottom pb-2">
-          <input class="form-control border-0 shadow-none px-0 ps-3" type="file" id="formFile" style="visibility: hidden;">
-          <button type="button" class="btn btn-outline-primary p-2" aria-label="Choose File" onclick="document.getElementById('formFile').click()">
-            <i class="bi bi-upload"></i> Вибрати файл
-          </button>
+      <div class="mb-3 position-relative">
+        <label for="phoneField" class="form-label">Номер телефону</label>
+        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': phoneNumber.invalid && phoneNumber.touched}">
+          <input type="tel" class="form-control border-0 shadow-none px-0 ps-3" id="phoneNumber" [(ngModel)]="vehicle.phoneNumber" required #phoneNumber="ngModel" name="phoneNumber" placeholder="Введіть номер телефону">
           <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
             <i class="bi bi-pencil"></i>
           </button>
         </div>
-        <small class="text-muted mt-2">Виберіть файл з вашого пристрою.</small>
-      </div> -->
-      
-      <div class="mb-3 position-relative">
-        <label for="phoneField" class="form-label">Номер телефону</label>
-        <div class="d-flex align-items-center border-bottom">
-          <input type="tel" class="form-control border-0 shadow-none px-0 ps-3" id="phoneNumber" [(ngModel)]="vehicle.phoneNumber" name="phoneNumber" placeholder="Введіть номер телефону">
-          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
+        <div *ngIf="phoneNumber.invalid && phoneNumber.touched" style="color: red; font-size: 0.875rem;">
+          Поле обов'язкове
         </div>
       </div>
       
@@ -187,7 +184,7 @@
       </div>
   
       <div class="text-center mt-4 px-4 d-flex justify-content-center gap-3">
-        <button class="btn btn-primary" type="submit">Зберегти зміни</button>
+        <button class="btn btn-primary" type="submit" [disabled]="!form.touched">Зберегти зміни</button>
         <button class="btn btn-danger" type="button" (click)="openDeleteModal()">Видалити оголошення</button>
 
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" #deleteModal>

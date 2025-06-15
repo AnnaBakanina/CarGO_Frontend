@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -124,6 +124,7 @@ export class VehicleEditFormComponent implements OnInit {
           this.regions = data.regions;
           if (data.vehicle) {
             this.setVehicle(data.vehicle);
+            this.editForm.patchValue(this.vehicle);
             this.populateModels();
             this.populateCities();
           };
@@ -163,7 +164,7 @@ export class VehicleEditFormComponent implements OnInit {
         next: () => {
           this.toastr.success('Оголощення видалено', 'Успіх!');
           this.closeDeleteModal();
-          this.router.navigate(['/profile']); // Або куди треба після видалення
+          this.router.navigate(['/profile']);
         },
         error: () => {
           this.toastr.error('Не вдалося видалити оголошення', 'Помилка');
@@ -199,20 +200,32 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.cityId = v.city.id;
     this.vehicle.advertisementStatusId = v.advertisementStatus.id;
   }
-
-  // delete() {
-  //   if (confirm("Ви впевнені?"))
-  //     this.vehicleService.delete(this.updateVehicleId);
-  // }
   
-  onSubmit(): void {
-    if (this.editForm.valid) {
-      this.toastr.success('Оголошення оновлено.', 'Готово!');
-      console.log('Form Submitted:', this.editForm.value);
-    } else {
-      this.editForm.markAllAsTouched();
+  onSubmit(form: NgForm): void {
+    if (form.invalid) {
       this.toastr.info('Всі поля мають бути заповнені.', 'Увага!');
-      console.log('Form is invalid');
+      Object.values(form.controls).forEach(control => {
+        control.markAsTouched();
+      });
+      return;
     }
+  
+    const updatedVehicle: VehicleSave = {
+      ...this.editForm.value,
+      isAuction: this.vehicle.isAuction,
+      isPaymentInParts: this.vehicle.isPaymentInParts,
+      isTaxable: this.vehicle.isTaxable
+    };
+  
+    this.vehicleService.updateVehicle(this.updateVehicleId, updatedVehicle).subscribe({
+      next: (res) => {
+        this.toastr.success('Оголошення оновлено.', 'Готово!');
+        this.router.navigate(['/profile']); // або будь-який інший маршрут
+      },
+      error: (err) => {
+        this.toastr.error('Не вдалося оновити оголошення.', 'Помилка');
+        console.error('Update failed', err);
+      }
+    });
   }
 }

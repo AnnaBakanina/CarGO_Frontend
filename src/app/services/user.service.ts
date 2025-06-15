@@ -11,6 +11,7 @@ import { BehaviorSubject, Observable, of, switchMap, tap } from 'rxjs';
 export class UserService {
   private readonly apiEndpoint = 'http://localhost:5269';
   namespace = 'https://yourdomain.com';
+
   private userDetailsSubject = new BehaviorSubject<User>({
     id: '',
     firstName: '',
@@ -18,6 +19,7 @@ export class UserService {
     email: '',
     phoneNumber: ''
   });
+  
   userDetails$ = this.userDetailsSubject.asObservable();
   userRole = '';
 
