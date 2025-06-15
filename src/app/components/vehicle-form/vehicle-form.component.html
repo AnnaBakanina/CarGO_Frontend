@@ -1,15 +1,4 @@
-<!-- <div class="container mt-5 vh-100"> -->
 <div class="d-flex justify-content-center mt-5 mb-5">
-    <!-- <h2 class="text-primary mb-4 text-center">Нове Оголошення</h2> -->
-    <!-- <p> {{ vehicle | json}} </p> -->
-    <!-- <form class="p-4 border rounded bg-light"> -->
-
-      <!-- <h3 class="text-primary mb-4 text-center">Нове Оголошення</h3> -->
-
-      <!-- <div class="steps mb-4">
-        <div [class.fw-bold]="step === 1">1. Заповнення оголошення</div>
-        <div [class.fw-bold]="step === 2">2. Завантаження фото</div>
-      </div> -->
 
     <form class="w-100" style="max-width: 80%;" *ngIf="step === 1" #addForm="ngForm" (ngSubmit)="changeTab(false)">
 
@@ -95,13 +84,11 @@
         <button class="btn btn-danger" type="submit" (click)="cancelAd()">Скасувати</button>
         <button class="btn btn-primary" type="submit" [disabled]="!addForm.valid">Наступний крок</button>
       </div>
-      <!-- <button type="submit" class="btn btn-primary" (click)="changeTab(false)">Далі</button> -->
     </form>
 
     <!-- Другий крок -->
 
     <form class="w-100" style="max-width: 80%;" *ngIf="step === 2">
-      <!-- <button class="btn btn-close" type="submit" (click)="cancelAd()"></button> -->
       <button type="button" class="btn btn-outline-secondary" (click)="changeTab(true)">
         <i class="bi bi-arrow-left"></i> Назад
       </button>
@@ -110,17 +97,20 @@
       <div class="progress mb-5">
         <div class="progress-bar bg-success" role="progressbar" [style.width.%]="updateProgressBar" [attr.aria-valuenow]="updateProgressBar" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
-      <div class="mb-3">
-        <input class="form-control" type="file" (change)="onFileSelected($event)">
+      <div class="input-group">
+        <input type="file" class="form-control" id="photoUpload" accept="image/*" (change)="onFileSelected($event)">
+        <label class="input-group-text" for="photoUpload">
+          <i class="bi bi-image"></i>
+        </label>
       </div>
       <div class="text-center mt-4 px-4 d-flex justify-content-center gap-5">
-        <button class="btn btn-danger" type="submit" (click)="cancelAd()">Скасувати</button>
-        <button class="btn btn-primary" type="button" (click)="uploadPhoto()">Додати оголошення</button>
+        <button class="btn btn-danger" type="submit" (click)="cancelAd()">
+          <i class="bi bi-x-circle"></i> Скасувати
+        </button>
+        <button class="btn btn-primary w-45" type="button" (click)="uploadPhoto()">
+          <i class="bi bi-upload"></i> Додати оголошення
+        </button>
       </div>
-      <!-- <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary" (click)="cancelAd()">Скасувати</button>
-        <button type="button" class="btn btn-primary" (click)="uploadPhoto()">Завантажити</button>
-      </div> -->
     </form>
   </div>
   
