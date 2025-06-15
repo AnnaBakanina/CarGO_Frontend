@@ -64,9 +64,9 @@
             <i class="bi bi-pencil"></i>
           </button>
         </div>
-        <!-- <div *ngIf="editForm.get('vinNumber')?.invalid && editForm.get('vinNumber')?.touched" style="color: red; font-size: 0.875rem;">
+        <div *ngIf="editForm.get('vinNumber')?.invalid && editForm.get('vinNumber')?.touched" style="color: red; font-size: 0.875rem;">
           Поле обов'язкове
-        </div> -->
+        </div>
       </div>
 
       <div class="mb-3 position-relative">
@@ -188,7 +188,24 @@
   
       <div class="text-center mt-4 px-4 d-flex justify-content-center gap-3">
         <button class="btn btn-primary" type="submit">Зберегти зміни</button>
-        <button class="btn btn-danger" type="button" (click)="delete()">Видалити оголошення</button>
+        <button class="btn btn-danger" type="button" (click)="openDeleteModal()">Видалити оголошення</button>
+
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" #deleteModal>
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header bg-danger text-white">
+                <button type="button" class="btn-close btn-close-white" aria-label="Закрити" (click)="closeDeleteModal()"></button>
+              </div>
+              <div class="modal-body">
+                <p class="mb-0">Ви впевнені, що хочете видалити це оголошення?</p>
+              </div>
+              <div class="modal-footer text-center me-4 px-4 d-flex justify-content-center gap-3">
+                <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Відмінити</button>
+                <button type="button" class="btn btn-danger" (click)="confirmDelete()">Видалити</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>

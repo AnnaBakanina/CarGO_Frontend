@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,13 +17,20 @@ import { Region } from '../../models/region';
 import { ToastrService } from 'ngx-toastr';
 import { AdvertisementStatusService } from '../../services/advertisementStatus.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-vehicle-edit-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './vehicle-edit-form.component.html',
   styleUrl: './vehicle-edit-form.component.css'
 })
+
 export class VehicleEditFormComponent implements OnInit {
+  @ViewChild('deleteModal') deleteModal!: ElementRef;
+
+  private modalInstance: any;
+  
   editForm!: FormGroup;
   brands: Brand[] = [];
   models: any = {};
@@ -52,8 +59,6 @@ export class VehicleEditFormComponent implements OnInit {
     price: 0,
     advertisementStatusId: 1
   };
-
-  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -140,6 +145,32 @@ export class VehicleEditFormComponent implements OnInit {
       this.selectedRegionId = 0;
     }
 
+    openDeleteModal() {
+      if (!this.modalInstance) {
+        this.modalInstance = new bootstrap.Modal(this.deleteModal.nativeElement);
+      }
+      this.modalInstance.show();
+    }
+  
+    closeDeleteModal() {
+      if (this.modalInstance) {
+        this.modalInstance.hide();
+      }
+    }
+
+    confirmDelete() {
+      this.vehicleService.delete(this.updateVehicleId).subscribe({
+        next: () => {
+          this.toastr.success('Оголощення видалено', 'Успіх!');
+          this.closeDeleteModal();
+          this.router.navigate(['/profile']); // Або куди треба після видалення
+        },
+        error: () => {
+          this.toastr.error('Не вдалося видалити оголошення', 'Помилка');
+        }
+      });
+    }
+
   private populateModels() {
     var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
@@ -169,10 +200,10 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.advertisementStatusId = v.advertisementStatus.id;
   }
 
-  delete() {
-    if (confirm("Ви впевнені?"))
-      this.vehicleService.delete(this.updateVehicleId);
-  }
+  // delete() {
+  //   if (confirm("Ви впевнені?"))
+  //     this.vehicleService.delete(this.updateVehicleId);
+  // }
   
   onSubmit(): void {
     if (this.editForm.valid) {
