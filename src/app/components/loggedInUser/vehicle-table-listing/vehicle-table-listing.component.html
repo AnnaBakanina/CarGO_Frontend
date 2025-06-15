@@ -36,8 +36,8 @@
         <tbody>
           <tr *ngFor="let vehicle of paginatedVehicles">
             <td>{{ vehicle.id }}</td>
-            <td>{{ vehicle.model }}</td>
-            <td>{{ vehicle.brand }}</td>
+            <td>{{ vehicle.brand.name }}</td>
+            <td>{{ vehicle.model.name }}</td>
             <td>{{ vehicle.vinNumber }}</td>
             <td>
               <button class="btn btn-sm btn-outline-primary" (click)="onEdit(vehicle)">

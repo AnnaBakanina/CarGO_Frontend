@@ -38,12 +38,7 @@ export class VehicleTableListingComponent {
   
   ngOnInit() {
     this.vehicleService.getAllVehicles(this.filters).subscribe((results: any) => {
-      this.vehicles = results.data.map((v: any) => ({
-        id: v.id,
-        brand: v.brand.name,
-        model: v.model.name,
-        vinNumber: v.vinNumber
-      }));
+      this.vehicles = results.data;
     });
   }
 

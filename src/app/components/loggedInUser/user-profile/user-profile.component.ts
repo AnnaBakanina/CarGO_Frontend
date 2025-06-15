@@ -24,9 +24,12 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
-    this.userFirstName = this.userService.userDetails.firstName;
-    this.userLastName = this.userService.userDetails.lastName;
+    this.userService.userDetails$.subscribe(user => {
+      this.userFirstName = user.firstName;
+      this.userLastName = user.lastName;
+    });  
   }
+  
   get userFullName(): string {
     return `${this.userFirstName} ${this.userLastName}`;
   }

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-info',
@@ -10,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './user-info.component.html',
   styleUrl: './user-info.component.css'
 })
-export class UserInfoComponent implements OnInit {
+export class UserInfoComponent implements OnInit, OnDestroy {
   userFirstName: string = '';
   userLastName: string = '';
   userEmail: string = '';
@@ -23,26 +24,27 @@ export class UserInfoComponent implements OnInit {
   };
   formChanged: boolean = false;
 
+  private userSubscription?: Subscription;
+
   constructor(
     private userService: UserService,
     private toastr: ToastrService
     ) {}
 
   ngOnInit(): void {
-    this.getUpToDateUserData();
-  }
+    this.userSubscription = this.userService.userDetails$.subscribe(user => {
+      this.userFirstName = user.firstName;
+      this.userLastName = user.lastName;
+      this.userEmail = user.email;
+      this.userPhone = user.phoneNumber;
 
-  getUpToDateUserData() {
-    this.userFirstName = this.userService.userDetails.firstName;
-    this.userLastName = this.userService.userDetails.lastName;
-    this.userEmail = this.userService.userDetails.email;
-    this.userPhone = this.userService.userDetails.phoneNumber;
-    this.originalData = {
-      firstName: this.userFirstName,
-      lastName: this.userLastName,
-      email: this.userEmail,
-      phone: this.userPhone
-    };
+      this.originalData = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        phone: user.phoneNumber
+      };
+    });
   }
 
   checkForChanges() {
@@ -54,23 +56,35 @@ export class UserInfoComponent implements OnInit {
   }
 
   saveChanges() {
-    this.userService.userDetails.firstName = this.userFirstName;
-    this.userService.userDetails.lastName = this.userLastName;
-    this.userService.userDetails.email = this.userEmail;
-    this.userService.userDetails.phoneNumber = this.userPhone;
+    const updatedUser = {
+      ...this.userService.userDetails,
+      firstName: this.userFirstName,
+      lastName: this.userLastName,
+      email: this.userEmail,
+      phoneNumber: this.userPhone
+    };
+
+    this.userService.userDetails = updatedUser;
 
     this.userService.updateProfile().subscribe({
-      next: (x: any) => {
-        console.log(x);
-        this.toastr.success('Данні користувача оновлено', 'Готово!');
+      next: () => {
+        this.toastr.success('Дані користувача оновлено', 'Готово!');
+        this.formChanged = false;
+        this.originalData = {
+          firstName: this.userFirstName,
+          lastName: this.userLastName,
+          email: this.userEmail,
+          phone: this.userPhone
+        };
       },
-      error: (err:any) => {
+      error: (err: any) => {
         console.error(err);
         this.toastr.error('Щось пішло не так...', 'Упс!');
-      }      
+      }
     });
+  }
 
-    this.formChanged = false;
-    this.getUpToDateUserData();
+  ngOnDestroy(): void {
+    this.userSubscription?.unsubscribe();
   }
 }
