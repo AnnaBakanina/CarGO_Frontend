@@ -35,5 +35,9 @@
       </tbody>
     </table>
   </div>
-  <app-edit-user-popup *ngIf="isPopupOpen" [user]="selectedUser" (onClose)="closePopup()"></app-edit-user-popup>
+  <app-edit-user-popup
+  *ngIf="isPopupOpen"
+  [user]="selectedUser"
+  (onClose)="closePopup()">
+</app-edit-user-popup>
   

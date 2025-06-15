@@ -7,23 +7,23 @@
 
     <div class="mb-4">
       <h5 class="mb-4 text-primary mb-4 text-center">Редагувати данні користувача</h5>
-      <h5 class="mb-4 text-primary mb-4 text-center">{{ user.userFirstName }} {{ user.userLastName }}</h5>
+      
       <div class="row g-3">
         <div class="col-md-6">
           <label class="form-label">Імʼя</label>
-          <input type="text" class="form-control" [(ngModel)]="user.userFirstName" name="userFirstName"/>
+          <input type="text" class="form-control" [(ngModel)]="user.firstName" name="userFirstName"/>
         </div>
         <div class="col-md-6">
           <label class="form-label">Прізвище</label>
-          <input type="text" class="form-control" [(ngModel)]="user.userLastName" name="userLastName"/>
+          <input type="text" class="form-control" [(ngModel)]="user.lastName" name="userLastName"/>
         </div>
         <div class="col-md-6">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control" [(ngModel)]="user.userEmail" name="userEmail"/>
+          <input type="email" class="form-control" [(ngModel)]="user.email" name="userEmail"/>
         </div>
         <div class="col-md-6">
           <label class="form-label">Телефон</label>
-          <input type="tel" class="form-control" [(ngModel)]="user.userPhone" name="userPhone"/>
+          <input type="tel" class="form-control" [(ngModel)]="user.phoneNumber" name="userPhone"/>
         </div>
         <button class="btn btn-primary mt-3" (click)="saveChanges()">
           Зберегти
