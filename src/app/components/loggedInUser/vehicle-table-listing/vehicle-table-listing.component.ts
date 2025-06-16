@@ -16,11 +16,13 @@ export class VehicleTableListingComponent {
   filters: any = {
     brand: '',
     model: '',
-    vin: ''
+    vin: '',
+    page: 1,
+    pageSize: 1000
   };
   vehicles: Vehicle[] = [];
   currentPage = 1;
-  itemsPerPage = 7;
+  itemsPerPage = 10;
   sortColumn: keyof Vehicle | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
 
