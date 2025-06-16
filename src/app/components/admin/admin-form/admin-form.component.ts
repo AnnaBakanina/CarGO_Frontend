@@ -17,6 +17,7 @@ import {
   PolarAreaController,
   ArcElement
 } from 'chart.js';
+import { CommonModule } from '@angular/common';
 
 Chart.register(
   CategoryScale,
@@ -33,7 +34,7 @@ Chart.register(
 
 @Component({
   selector: 'app-admin-form',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './admin-form.component.html',
   styleUrl: './admin-form.component.css'
 })
@@ -52,7 +53,7 @@ export class AdminFormComponent implements OnInit {
   ngOnInit() {
     this.vehicleService.getAllVehicles(this.allResultsQuery).subscribe((results: any) => {
       this.vehicles = results.data;
-      setTimeout(() => this.renderRevenueChart(), 0);
+      setTimeout(() => this.renderNewAdChart(), 0);
     });
     this.vehicleService.getAllVehicles(this.allSelledVehiclesQuery).subscribe((results: any) => {
       this.selledVehicles = results.data;
@@ -63,13 +64,13 @@ export class AdminFormComponent implements OnInit {
     });
   }
 
-  private renderRevenueChart(): void {
+  private renderNewAdChart(): void {
     const grouped = this.groupByDate(this.vehicles.map(v => v.lastUpdated));
 
-    const labels = Object.keys(grouped);
-    const data = Object.values(grouped);
+    const labels = Object.keys(grouped).sort();
+    const data = labels.map(date => grouped[date]);
 
-    const ctx = document.getElementById('revenueChart') as HTMLCanvasElement;
+    const ctx = document.getElementById('newAdChart') as HTMLCanvasElement;
 
     new Chart(ctx, {
       type: 'bar',
@@ -106,10 +107,12 @@ export class AdminFormComponent implements OnInit {
 
   private groupByDate(dates: string[]): { [date: string]: number } {
     const counts: { [date: string]: number } = {};
+
     for (const dateString of dates) {
       const date = new Date(dateString).toISOString().split('T')[0];
       counts[date] = (counts[date] || 0) + 1;
     }
+
     return counts;
   }
 
