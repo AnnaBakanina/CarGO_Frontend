@@ -15,7 +15,10 @@ export class NavigationComponent {
 
   login() {
     this.auth.loginWithRedirect({
-      appState: { target: '/profile' }
+      appState: { target: '/profile' },
+      authorizationParams: {
+        ui_locales: 'uk'
+      }
     });
   }
 

@@ -16,6 +16,7 @@ import { Brand } from '../../models/brand';
 import { Region } from '../../models/region';
 import { ToastrService } from 'ngx-toastr';
 import { AdvertisementStatusService } from '../../services/advertisementStatus.service';
+import { UserService } from '../../services/user.service';
 
 declare var bootstrap: any;
 
@@ -30,8 +31,8 @@ export class VehicleEditFormComponent implements OnInit {
   @ViewChild('deleteModal') deleteModal!: ElementRef;
 
   private modalInstance: any;
-  
   editForm!: FormGroup;
+
   brands: Brand[] = [];
   models: any = {};
   carTypes: any = {};
@@ -42,8 +43,8 @@ export class VehicleEditFormComponent implements OnInit {
   updateVehicleId = 0;
   selectedBrandId = 0;
   selectedRegionId = 0;
-  
   vehicle: VehicleSave = {
+    userId: '',
     modelId: 0,
     carTypeId: 0,
     techStateId: 0,
@@ -70,7 +71,8 @@ export class VehicleEditFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private toastr: ToastrService,
-    private advertisementStatusService: AdvertisementStatusService
+    private advertisementStatusService: AdvertisementStatusService,
+    private userService: UserService
     ) {}
 
     ngOnInit(): void {
@@ -212,15 +214,17 @@ export class VehicleEditFormComponent implements OnInit {
   
     const updatedVehicle: VehicleSave = {
       ...this.editForm.value,
+      advertisementStatusId: this.vehicle.advertisementStatusId,
       isAuction: this.vehicle.isAuction,
       isPaymentInParts: this.vehicle.isPaymentInParts,
-      isTaxable: this.vehicle.isTaxable
+      isTaxable: this.vehicle.isTaxable,
+      userId: this.userService.userDetails.id
     };
   
     this.vehicleService.updateVehicle(this.updateVehicleId, updatedVehicle).subscribe({
       next: (res) => {
         this.toastr.success('Оголошення оновлено.', 'Готово!');
-        this.router.navigate(['/profile']); // або будь-який інший маршрут
+        this.router.navigate(['/profile']);
       },
       error: (err) => {
         this.toastr.error('Не вдалося оновити оголошення.', 'Помилка');
