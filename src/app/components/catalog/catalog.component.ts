@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
-import { CarTypeService } from '../../services/carType.serice';
+import { CarTypeService } from '../../services/carType.service';
 import { VehicleService } from './../../services/vehicle.service';
 import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';

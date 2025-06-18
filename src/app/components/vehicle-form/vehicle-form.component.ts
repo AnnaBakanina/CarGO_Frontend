@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
-import { CarTypeService } from '../../services/carType.serice';
+import { CarTypeService } from '../../services/carType.service';
 import { Region } from '../../models/region';
 import { VehicleSave } from '../../models/vehicleSave';
 import { Vehicle } from '../../models/vehicle';
@@ -201,8 +201,7 @@ export class VehicleFormComponent implements OnInit {
   
     this.photoService.upload(formData, this.createdAdId).subscribe({
       next: () => {
-        this.toastr.success('Фото завантажено!', 'Готово');
-        this.toastr.success('Оголошення додано!', 'Готово');
+        this.toastr.success('Оголошення створено і фото завантажено!', 'Готово');
         this.resetForm();
         this.step = 1;
       },

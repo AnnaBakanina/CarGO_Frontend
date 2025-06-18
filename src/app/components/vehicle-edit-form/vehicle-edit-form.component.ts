@@ -7,7 +7,7 @@ import { VehicleService } from './../../services/vehicle.service';
 import { LocationService } from './../../services/location.service';
 import { TechStateService } from './../../services/techState.service';
 import { BrandService } from '../../services/brand.service';
-import { CarTypeService } from '../../services/carType.serice';
+import { CarTypeService } from '../../services/carType.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { Vehicle } from '../../models/vehicle';
@@ -213,7 +213,17 @@ export class VehicleEditFormComponent implements OnInit {
     }
   
     const updatedVehicle: VehicleSave = {
-      ...this.editForm.value,
+      // ...this.editForm.value,
+      carTypeId: this.vehicle.carTypeId,
+      modelId: this.vehicle.modelId,
+      yearOfRelease: this.vehicle.yearOfRelease,
+      vinNumber: this.vehicle.vinNumber,
+      carMileage: this.vehicle.carMileage,
+      techStateId: this.vehicle.techStateId,
+      description: this.vehicle.description,
+      price: this.vehicle.price,
+      phoneNumber: this.vehicle.phoneNumber,
+      cityId: this.vehicle.cityId,
       advertisementStatusId: this.vehicle.advertisementStatusId,
       isAuction: this.vehicle.isAuction,
       isPaymentInParts: this.vehicle.isPaymentInParts,

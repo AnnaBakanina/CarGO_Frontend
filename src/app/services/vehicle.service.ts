@@ -10,7 +10,9 @@ import { Vehicle } from '../models/vehicle';
 
 export class VehicleService {
   private readonly vehicleEndpoint = 'http://localhost:5269/vehicles/';
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient) {
+    console.log('HttpClient injected:', http);
+  }
 
   create(vehicle: VehicleSave): Observable<Vehicle> {
     return this.http.post<Vehicle>(this.vehicleEndpoint, vehicle);
