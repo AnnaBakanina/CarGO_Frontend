@@ -12,11 +12,12 @@ import { Region } from '../../models/region';
 import { VehicleInfoPopupComponent } from '../vehicle-info-popup/vehicle-info-popup.component';
 import { PaginationComponent } from '../shared/pagination/pagination.component';
 import { ActivatedRoute } from '@angular/router';
+import { NoResultsFoundComponent } from '../errorPages/no-results-found/no-results-found.component';
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [CommonModule, FormsModule, VehicleInfoPopupComponent, PaginationComponent],
+  imports: [CommonModule, FormsModule, VehicleInfoPopupComponent, PaginationComponent, NoResultsFoundComponent],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
 })

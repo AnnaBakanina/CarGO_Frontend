@@ -87,7 +87,7 @@
           </div>
         </div>
       
-        <div class="row">
+        <div class="row" *ngIf="apiVehicles.length > 0">
           <div class="col-md-4 mb-4" *ngFor="let vehicle of apiVehicles">
             <div class="card">
               <img [src]="vehicle.image" class="card-img-top vehicle-img" alt="Vehicle Image">
@@ -100,6 +100,7 @@
             </div>
           </div>
         </div>
+        <app-no-results-found *ngIf="apiVehicles?.length === 0"></app-no-results-found>
       </div>
 
     </div>
