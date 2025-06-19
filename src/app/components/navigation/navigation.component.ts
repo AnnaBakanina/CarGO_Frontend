@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-navigation',
   standalone: true,
@@ -24,5 +26,11 @@ export class NavigationComponent {
 
   logout() {
     this.auth.logout({});
+  }
+
+  closeNavbar() {
+    const navbarCollapse = document.getElementById('navbarNav');
+    const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse!, { toggle: false });
+    bsCollapse.hide();
   }
 }

@@ -1,5 +1,4 @@
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand gradient-logo" routerLink="/home">CarGO</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -8,32 +7,27 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/catalog" routerLinkActive="active">Каталог</a>
+            <a class="nav-link" routerLink="/catalog" routerLinkActive="active" (click)="closeNavbar()">Каталог</a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" routerLink="/blog" routerLinkActive="inactive">Блог</a>
-          </li> -->
           <li class="nav-item">
-            <a class="nav-link" routerLink="/contact" routerLinkActive="inactive">Контакти</a>
+            <a class="nav-link" routerLink="/contact" routerLinkActive="inactive" (click)="closeNavbar()">Контакти</a>
           </li>
         </ul>
-        <a *ngIf="auth.isAuthenticated$ | async" class="nav-link-username me-3" routerLink="/profile" routerLinkActive="inactive">Мій Профайл</a>
-        <a *ngIf="!(auth.isAuthenticated$ | async)" class="btn btn-outline-light d-flex align-items-center justify-content-center me-3" routerLink="/vehicle/new" routerLinkActive="active">Додати Оголошення</a>
-        <a *ngIf="auth.isAuthenticated$ | async" (click)="login()" routerLink="/vehicle/new" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
-          <i class="bi bi-plus"></i>
-        </a>
+        <a *ngIf="auth.isAuthenticated$ | async" class="nav-link-username me-3" routerLink="/profile" routerLinkActive="inactive" (click)="closeNavbar()">Мій Профайл</a>
+        <div class="d-flex flex-row align-items-center mt-3 mt-lg-0">
+          <a *ngIf="!(auth.isAuthenticated$ | async)" class="btn btn-outline-light d-flex align-items-center justify-content-center me-3" routerLink="/vehicle/new" routerLinkActive="active" (click)="closeNavbar()">Додати Оголошення</a>
+          <a *ngIf="auth.isAuthenticated$ | async" (click)="login()" routerLink="/vehicle/new" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;" (click)="closeNavbar()">
+            <i class="bi bi-plus"></i>
+          </a>
         
-        <!-- Кругла кнопка з іконкою профілю -->
-        <!-- <a routerLink="/login" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-          <i class="bi bi-person"></i>
-        </a> -->
-        <!-- Кнопка для логіну або лог-ауту -->
-        <a *ngIf="!(auth.isAuthenticated$ | async)" (click)="login()" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-          <i class="bi bi-person"></i>
-        </a>
-        <a *ngIf="auth.isAuthenticated$ | async" (click)="logout()" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-          <i class="bi bi-door-open"></i> <!-- Іконка для виходу -->  
-        </a>
+          <!-- Кнопка для логіну або лог-ауту -->
+           <a *ngIf="!(auth.isAuthenticated$ | async)" (click)="login()" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" (click)="closeNavbar()">
+            <i class="bi bi-person"></i>
+          </a>
+           <a *ngIf="auth.isAuthenticated$ | async" (click)="logout()" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" (click)="closeNavbar()">
+            <i class="bi bi-door-open"></i> <!-- Іконка для виходу -->  
+           </a>
+        </div>
       </div>
     </div>
   </nav>
