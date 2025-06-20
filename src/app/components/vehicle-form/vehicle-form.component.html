@@ -1,93 +1,118 @@
-<!-- <div class="container mt-5 vh-100"> -->
 <div class="d-flex justify-content-center mt-5 mb-5">
-    <!-- <h2 class="text-primary mb-4 text-center">Нове Оголошення</h2> -->
-    <!-- <p> {{ vehicle | json}} </p> -->
-    <!-- <form class="p-4 border rounded bg-light"> -->
-    <form class="w-100" style="max-width: 80%;">
+
+  <!-- Перший крок -->
+
+    <form class="w-100" style="max-width: 80%;" *ngIf="step === 1" #addForm="ngForm" (ngSubmit)="changeTab(false)">
+
       <h3 class="text-primary mb-4 text-center">Нове Оголошення</h3>
+      
+      <div class="progress mb-5">
+        <div class="progress-bar bg-success" role="progressbar" [style.width.%]="updateProgressBar" [attr.aria-valuenow]="updateProgressBar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+
       <div class="mb-3 position-relative">
         <label for="carType" class="form-label">Тип авто:</label>
-        <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="vehicle.carTypeId">
-          <option value=""></option>
+        <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="vehicle.carTypeId" required>
           <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
         </select>
       </div>
       <div class="mb-3 position-relative">
         <label for="vehicle" class="form-label">Бренд авто:</label>
-        <select id="vehicle" name="brandId" type="text" class="form-select" [(ngModel)]="selectedBrandId" (change)=onBrandChange()>
-          <option value=""></option>
+        <select id="vehicle" name="brandId" type="text" class="form-select" [(ngModel)]="selectedBrandId" (change)=onBrandChange() required>
           <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Модель авто:</label>
-        <select id="vehicle" name="modelId" type="text" class="form-select" [(ngModel)]="vehicle.modelId">
-          <option value=""></option>
+        <select id="vehicle" name="modelId" type="text" class="form-select" [(ngModel)]="vehicle.modelId" required>
           <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="numberField" class="form-label">Рік випуску:</label>
-        <input type="number" class="form-control" id="numberField" placeholder="Введіть число" [(ngModel)]="vehicle.yearOfRelease" name="yearOfRelease">
+        <input type="number" class="form-control" id="numberField" placeholder="Введіть число" [(ngModel)]="vehicle.yearOfRelease" name="yearOfRelease" required>
       </div>
       <div class="mb-3">
         <label for="textNumberField" class="form-label">VIN номер:</label>
-        <input type="text" class="form-control" id="textNumberField" placeholder="Введіть текст або числа" [(ngModel)]="vehicle.vinNumber" name="vinNumber">
+        <input type="text" class="form-control" id="textNumberField" placeholder="Введіть VIN номер" [(ngModel)]="vehicle.vinNumber" name="vinNumber" required>
       </div>
       <div class="mb-3">
         <label for="numberField" class="form-label">Пробіг:</label>
-        <input type="number" class="form-control" id="numberField" placeholder="Введіть число" [(ngModel)]="vehicle.carMileage" name="carMileage">
+        <input type="number" class="form-control" id="numberField" placeholder="Введіть число" [(ngModel)]="vehicle.carMileage" name="carMileage" required>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Технічний стан:</label>
-        <select id="vehicle" name="techStateId" type="text" class="form-select" [(ngModel)]="vehicle.techStateId">
-          <option value=""></option>
+        <select id="vehicle" name="techStateId" type="text" class="form-select" [(ngModel)]="vehicle.techStateId" required>
           <option *ngFor="let t of techState" value="{{ t.id }}">{{ t.name }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Опис:</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="vehicle.description" name="description"></textarea>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="vehicle.description" name="description" maxlength="2000" placeholder="Додайте опис" required></textarea>
       </div>
       <div class="mb-3">
         <label for="numberField" class="form-label">Ціна:</label>
-        <input type="number" class="form-control" id="numberField" placeholder="Введіть ціну" [(ngModel)]="vehicle.price" name="price">
+        <input type="number" class="form-control" id="numberField" placeholder="Введіть ціну" [(ngModel)]="vehicle.price" name="price" required>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option1" value="option1">
-          <label class="form-check-label" for="option1">Можливий торг</label>
+          <input class="form-check-input" type="checkbox" id="isAuction" value="isAuction" [(ngModel)]="vehicle.isAuction" name="isAuction">
+          <label class="form-check-label" for="isAuction">Можливий торг</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option2" value="option2">
-          <label class="form-check-label" for="option2">Нерозмитнений</label>
+          <input class="form-check-input" type="checkbox" id="isTaxable" value="isTaxable" [(ngModel)]="vehicle.isTaxable" name="isTaxable">
+          <label class="form-check-label" for="isTaxable">Нерозмитнений</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="option3" value="option3">
-          <label class="form-check-label" for="option3">Можлива оплата частинами</label>
+          <input class="form-check-input" type="checkbox" id="isPaymentInParts" value="isPaymentInParts" [(ngModel)]="vehicle.isPaymentInParts" name="isPaymentInParts">
+          <label class="form-check-label" for="isPaymentInParts">Можлива оплата частинами</label>
         </div>
-      </div>
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Завантажити фото</label>
-        <input class="form-control" type="file" id="formFile">
       </div>
       <div class="mb-3">
         <label for="phoneField" class="form-label">Номер телефону</label>
-        <input type="tel" class="form-control" id="phoneField" placeholder="Введіть номер телефону" [(ngModel)]="vehicle.phoneNumber" name="phoneNumber">
+        <input type="tel" class="form-control" id="phoneField" placeholder="Введіть номер телефону" [(ngModel)]="vehicle.phoneNumber" name="phoneNumber" required>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Регіон:</label>
-        <select id="vehicle" name="regionId" type="text" class="form-select" [(ngModel)]="selectedRegionId" (change)=onRegionChange()>
-          <option value=""></option>
+        <select id="vehicle" name="regionId" type="text" class="form-select" [(ngModel)]="selectedRegionId" (change)=onRegionChange() required>
           <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="vehicle" class="form-label">Місто:</label>
-        <select id="vehicle" name="cityId" type="text" class="form-select" [(ngModel)]="vehicle.cityId">
-          <option value=""></option>
+        <select id="vehicle" name="cityId" type="text" class="form-select" [(ngModel)]="vehicle.cityId" required>
           <option *ngFor="let c of cities" value="{{ c.id }}">{{ c.name }}</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary" (click)="submit()">Додати</button>
+      <div class="text-center mt-4 px-4 d-flex justify-content-center gap-5">
+        <button class="btn btn-danger" type="submit" (click)="cancelAd()">Скасувати</button>
+        <button class="btn btn-primary" type="submit" [disabled]="!addForm.valid">Наступний крок</button>
+      </div>
+    </form>
+
+    <!-- Другий крок -->
+
+    <form class="w-100" style="max-width: 80%;" *ngIf="step === 2">
+      <button type="button" class="btn btn-outline-secondary" (click)="changeTab(true)">
+        <i class="bi bi-arrow-left"></i> Назад
+      </button>
+      
+      <h3 class="text-primary mb-4 text-center">Завантажити фото</h3>
+      <div class="progress mb-5">
+        <div class="progress-bar bg-success" role="progressbar" [style.width.%]="updateProgressBar" [attr.aria-valuenow]="updateProgressBar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="input-group">
+        <input type="file" class="form-control" id="photoUpload" accept="image/*" (change)="onFileSelected($event)">
+        <label class="input-group-text" for="photoUpload">
+          <i class="bi bi-image"></i>
+        </label>
+      </div>
+      <div class="text-center mt-4 px-4 d-flex justify-content-center gap-5">
+        <button class="btn btn-danger" type="submit" (click)="cancelAd()">
+          <i class="bi bi-x-circle"></i> Скасувати
+        </button>
+        <button class="btn btn-primary w-45" type="button" (click)="uploadPhoto()">
+          <i class="bi bi-upload"></i> Додати оголошення
+        </button>
+      </div>
     </form>
   </div>
   

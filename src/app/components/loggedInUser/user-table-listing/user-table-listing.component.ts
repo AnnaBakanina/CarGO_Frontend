@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../../models/user';
 import { UserService } from '../../../services/user.service';
+import { EditUserPopupComponent } from '../edit-user-popup/edit-user-popup.component';
 
 @Component({
   selector: 'app-user-table-listing',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, EditUserPopupComponent],
   templateUrl: './user-table-listing.component.html',
   styleUrl: './user-table-listing.component.css'
 })
@@ -16,6 +17,10 @@ export class UserTableListingComponent implements OnInit {
   searchTerm: string = '';
   sortColumn: keyof User | '' = '';
   sortDirection: 'asc' | 'desc' = 'asc';
+
+  selectedUser: User | null = null;
+  isPopupOpen = false;
+  sortOption = '';
 
   columns: { key: keyof User, label: string }[] = [
     { key: 'firstName', label: "Ім'я" },
@@ -59,6 +64,16 @@ export class UserTableListingComponent implements OnInit {
     return result;
   }
 
+  openPopup(user: User) {
+    this.selectedUser = user;
+    this.isPopupOpen = true;
+  }
+  
+  closePopup() {
+    this.isPopupOpen = false;
+    this.selectedUser = null;
+  }
+
   sortBy(column: keyof User) {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -66,10 +81,5 @@ export class UserTableListingComponent implements OnInit {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-  }
-
-  onEdit(user: User) {
-    // TODO: відкрити форму або модалку для редагування
-    console.log('Редагувати користувача:', user);
   }
 }

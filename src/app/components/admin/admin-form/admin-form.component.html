@@ -1,1 +1,37 @@
-<p>admin-form works!</p>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="dashboard-card ad-widget">
+                <div class="stat-icon text-primary">
+                    <i class="fas fa-clipboard"></i>
+                </div>
+                <div class="stat-value">{{ vehicles.length }}</div>
+                <div class="stat-label">Всього оголошень</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon text-primary">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-value">{{ users.length }}</div>
+                <div class="stat-label">Всього користувачів</div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="dashboard-card">
+                <h3 class="h5 fw-semibold text-primary text-center text-uppercase">
+                     Нові Оголошення
+                  </h3>
+                <canvas id="newAdChart" class=" p-3 mb-4 w-100" height="200"></canvas>
+            </div>
+            <div class="dashboard-card">
+                <h3 class="h5 fw-semibold text-primary text-center text-uppercase">
+                    Продані Авто
+                  </h3>
+                <canvas id="brandChart" class=" p-3 mb-4 w-100" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

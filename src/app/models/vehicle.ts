@@ -19,4 +19,7 @@ export interface Vehicle {
     city: KeyValuePair;
     price: number;
     advertisementStatus: KeyValuePair;
+    image?: string;
+    photos?: string[];
+    lastUpdated: string;
 }

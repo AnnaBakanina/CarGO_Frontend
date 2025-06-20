@@ -1,9 +1,9 @@
-import { Brand } from './../../../models/brand';
 import { Component } from '@angular/core';
 import { Vehicle } from '../../../models/vehicle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VehicleService } from '../../../services/vehicle.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-table-listing',
@@ -16,11 +16,13 @@ export class VehicleTableListingComponent {
   filters: any = {
     brand: '',
     model: '',
-    vin: ''
+    vin: '',
+    page: 1,
+    pageSize: 1000
   };
   vehicles: Vehicle[] = [];
   currentPage = 1;
-  itemsPerPage = 7;
+  itemsPerPage = 10;
   sortColumn: keyof Vehicle | null = null;
   sortDirection: 'asc' | 'desc' = 'asc';
 
@@ -32,17 +34,13 @@ export class VehicleTableListingComponent {
   ];
 
   constructor(
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private router: Router
   ) {}
   
   ngOnInit() {
     this.vehicleService.getAllVehicles(this.filters).subscribe((results: any) => {
-      this.vehicles = results.data.map((v: any) => ({
-        id: v.id,
-        brand: v.brand.name,
-        model: v.model.name,
-        vinNumber: v.vinNumber
-      }));
+      this.vehicles = results.data;
     });
   }
 
@@ -101,7 +99,7 @@ export class VehicleTableListingComponent {
   }
 
   onEdit(vehicle: Vehicle) {
-    // TODO: відкрити форму або модалку для редагування
+    this.router.navigate(['/vehicle', vehicle.id]);
     console.log('Редагувати користувача:', vehicle);
   }
 }

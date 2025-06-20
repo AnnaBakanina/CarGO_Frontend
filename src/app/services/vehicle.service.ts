@@ -10,7 +10,9 @@ import { Vehicle } from '../models/vehicle';
 
 export class VehicleService {
   private readonly vehicleEndpoint = 'http://localhost:5269/vehicles/';
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient) {
+    console.log('HttpClient injected:', http);
+  }
 
   create(vehicle: VehicleSave): Observable<Vehicle> {
     return this.http.post<Vehicle>(this.vehicleEndpoint, vehicle);
@@ -20,8 +22,8 @@ export class VehicleService {
     return this.http.get(this.vehicleEndpoint + id); 
   }
 
-  updateVehicle (id: number, body: VehicleSave) {
-    return this.http.put(this.vehicleEndpoint + id, body);
+  updateVehicle (id: number, body: VehicleSave): Observable<Vehicle> {
+    return this.http.put<Vehicle>(this.vehicleEndpoint + id, body);
   }
 
   getAllVehicles(filter: any = {}) {
