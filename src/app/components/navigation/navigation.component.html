@@ -16,16 +16,15 @@
         <a *ngIf="auth.isAuthenticated$ | async" class="nav-link-username me-3" routerLink="/profile" routerLinkActive="inactive" (click)="closeNavbar()">Мій Профайл</a>
         <div class="d-flex flex-row align-items-center mt-3 mt-lg-0">
           <a *ngIf="!(auth.isAuthenticated$ | async)" class="btn btn-outline-light d-flex align-items-center justify-content-center me-3" routerLink="/vehicle/new" routerLinkActive="active" (click)="closeNavbar()">Додати Оголошення</a>
-          <a *ngIf="auth.isAuthenticated$ | async" (click)="login()" routerLink="/vehicle/new" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;" (click)="closeNavbar()">
+          <a *ngIf="auth.isAuthenticated$ | async" routerLink="/vehicle/new" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;" (click)="closeNavbar()">
             <i class="bi bi-plus"></i>
           </a>
         
-          <!-- Кнопка для логіну або лог-ауту -->
            <a *ngIf="!(auth.isAuthenticated$ | async)" (click)="login()" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" (click)="closeNavbar()">
             <i class="bi bi-person"></i>
           </a>
            <a *ngIf="auth.isAuthenticated$ | async" (click)="logout()" class="btn btn-outline-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" (click)="closeNavbar()">
-            <i class="bi bi-door-open"></i> <!-- Іконка для виходу -->  
+            <i class="bi bi-door-open"></i>
            </a>
         </div>
       </div>

@@ -7,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { BrandService } from '../../services/brand.service';
 import { CarTypeService } from '../../services/carType.service';
-import { Region } from '../../models/region';
 import { VehicleSave } from '../../models/vehicleSave';
 import { Vehicle } from '../../models/vehicle';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '@auth0/auth0-angular';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -61,7 +62,8 @@ export class VehicleFormComponent implements OnInit {
     private vehicleService: VehicleService,
     private toastr: ToastrService,
     private userService: UserService,
-    private photoService: PhotoService
+    private photoService: PhotoService,
+    private auth: AuthService
     ) {}
 
   ngOnInit() {
@@ -80,6 +82,13 @@ export class VehicleFormComponent implements OnInit {
     if (this.userService.isAuthenticated()) {
       this.vehicle.userId = this.userService.userDetails.id;
     }
+
+    this.auth.isAuthenticated$.pipe(take(1)).subscribe(isAuth => {
+      if (isAuth && this.userService.userDetails.id) {
+        this.vehicle.userId = this.userService.userDetails.id;
+      }
+    });
+
     this.updateProgress();
   }
 
@@ -91,13 +100,11 @@ export class VehicleFormComponent implements OnInit {
   onBrandChange() {
     var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
     this.models = selectedBrand ? selectedBrand.carModel: [];
-    // delete this.vehicle.modelId;
   }
 
   onRegionChange() {
     var selectedRegion = this.regions.find(c => c.id == this.selectedRegionId);
     this.cities = selectedRegion ? selectedRegion.city: [];
-    // delete this.vehicle.cityId;
   }
 
   resetForm() {
@@ -124,20 +131,6 @@ export class VehicleFormComponent implements OnInit {
     this.cities = [];
   }
 
-  submit() {
-    this.vehicleService.create(this.vehicle).subscribe({
-      next: (x: Vehicle) => {
-        console.log(x);
-        this.toastr.success('Оголошення доданно', 'Готово!');
-        this.resetForm();
-      },
-      error: (err:any) => {
-        console.error(err);
-        this.toastr.error('Щось пішло не так...', 'Упс!');
-      }      
-    });
-  }
-
   updateAd() {
     if (!this.createdAdId) return;
   
@@ -158,14 +151,12 @@ export class VehicleFormComponent implements OnInit {
   createAd() {
     this.vehicleService.create(this.vehicle).subscribe({
       next: (x: Vehicle) => {
-        // this.toastr.success('Оголошення створено. Тепер завантажте фото.', 'Готово!');
         console.log('Оголошення створено. Тепер завантажте фото.');
         this.createdAdId = x.id;
         this.step = 2;
       },
       error: () => {
         console.log('Не вдалося створити оголошення');
-        // this.toastr.error('Не вдалося створити оголошення', 'Помилка');
       }
     });
   }
@@ -182,7 +173,6 @@ export class VehicleFormComponent implements OnInit {
         this.createAd();
       }
     }
-    // goBack ? this.step = 1 : this.step = 2;
     this.updateProgress();
   }
   

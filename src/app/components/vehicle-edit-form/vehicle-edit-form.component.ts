@@ -164,7 +164,7 @@ export class VehicleEditFormComponent implements OnInit {
     confirmDelete() {
       this.vehicleService.delete(this.updateVehicleId).subscribe({
         next: () => {
-          this.toastr.success('Оголощення видалено', 'Успіх!');
+          this.toastr.success('Оголошення видалено', 'Успіх!');
           this.closeDeleteModal();
           this.router.navigate(['/profile']);
         },

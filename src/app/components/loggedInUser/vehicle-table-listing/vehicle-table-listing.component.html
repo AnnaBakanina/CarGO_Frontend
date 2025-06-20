@@ -1,8 +1,5 @@
 <div class="container mt-2">
 
-  <!-- <pre>{{ vehicles | json }}</pre> -->
-
-    <!-- Фільтри -->
     <div class="row mb-3">
       <div class="col-md-3">
         <input type="text" class="form-control" [(ngModel)]="filters.brand" placeholder="Фільтр за брендом">
@@ -48,8 +45,7 @@
         </tbody>
       </table>
     </div>
-  
-    <!-- Пагінація -->
+
     <nav>
       <ul class="pagination justify-content-center">
         <li class="page-item" [class.disabled]="currentPage === 1">

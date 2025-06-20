@@ -3,7 +3,6 @@ import { VehicleService } from '../../../services/vehicle.service';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user';
 import { Component, OnInit } from '@angular/core';
-// import Chart from 'chart.js/auto';
 import {
   Chart,
   CategoryScale,

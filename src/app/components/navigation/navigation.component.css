@@ -8,13 +8,13 @@
   }
 
   .nav-link-username {
-    color: white; /* Білий колір тексту */
-    text-decoration: none; /* Відключає підкреслення за замовчуванням */
-    transition: text-decoration 0.3s ease; /* Плавний перехід для підкреслення */
+    color: white;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease;
   }
   
   .nav-link-username:hover {
-    text-decoration: underline; /* Підкреслює текст при наведенні */
+    text-decoration: underline;
   }
   
   
