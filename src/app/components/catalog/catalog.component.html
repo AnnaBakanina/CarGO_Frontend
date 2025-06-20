@@ -1,110 +1,196 @@
 <div class="container mt-4">
-    <div class="row">
+  <div class="row">
 
-      <div class="col-md-3">
-        <div class="p-3 bg-light rounded shadow-sm">
-          <h5 class="text-primary">Фільтри</h5>
-          <div class="mb-3 mt-3">
-            <label class="form-label">Тип авто:</label>
-            <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="query.carTypeId">
-              <option value=""></option>
-              <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Бренд авто:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.brandId" (change)=onBrandChange()>
-              <option value=""></option>
-              <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Модель авто:</label>
-            <select id="model" name="vehicle" type="text" class="form-select" [(ngModel)]="query.modelId">
-              <option value=""></option>
-              <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="priceFrom" class="form-label">Пробіг від:</label>
-              <input type="number" class="form-control" id="carMileageFrom" [(ngModel)]="query.carMileageFrom" placeholder="Напр. 10000">
-            </div>
-            <div class="col-md-6">
-              <label for="priceTo" class="form-label">Пробіг до:</label>
-              <input type="number" class="form-control" id="carMileageTo" [(ngModel)]="query.carMileageTo" placeholder="Напр. 50000">
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="vehicle" class="form-label">Технічний стан:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.techStateId">
-              <option value=""></option>
-              <option *ngFor="let t of techState" value="{{ t.id }}">{{ t.name }}</option>
-            </select>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-6">
-              <label for="priceFrom" class="form-label">Ціна від:</label>
-              <input type="number" class="form-control" id="priceFrom" [(ngModel)]="query.priceFrom" placeholder="Напр. 10000">
-            </div>
-            <div class="col-md-6">
-              <label for="priceTo" class="form-label">Ціна до:</label>
-              <input type="number" class="form-control" id="priceTo" [(ngModel)]="query.priceTo" placeholder="Напр. 50000">
-            </div>
-          </div>          
-          <div class="mb-3">
-            <label for="vehicle" class="form-label">Регіон:</label>
-            <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.regionId" (change)=onRegionChange()>
-              <option value=""></option>
-              <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="vehicle" class="form-label">Місто:</label>
-            <select id="city" name="city" type="text" class="form-select" [(ngModel)]="query.cityId">
-              <option value=""></option>
-              <option *ngFor="let c of cities" value="{{ c.id }}">{{ c.name }}</option>
-            </select>
-          </div>
-          <button class="btn btn-primary w-100" (click)="onApplyFilters()">Фільтрувати</button>
-          <button class="btn btn-primary mt-2 w-100" (click)="onResetFilter()">Очистити</button>
+    <!-- Фільтри для десктопу -->
+    <div class="col-md-3 d-none d-md-block">
+      <div class="p-3 bg-light rounded shadow-sm">
+        <h5 class="text-primary">Фільтри</h5>
+        <div class="mb-3 mt-3">
+          <label class="form-label">Тип авто:</label>
+          <select id="carType" name="carType" type="text" class="form-select" [(ngModel)]="query.carTypeId">
+            <option value=""></option>
+            <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
+          </select>
         </div>
+        <div class="mb-3">
+          <label class="form-label">Бренд авто:</label>
+          <select id="vehicle" name="vehicle" type="text" class="form-select" [(ngModel)]="query.brandId" (change)=onBrandChange()>
+            <option value=""></option>
+            <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Модель авто:</label>
+          <select id="model" name="vehicle" type="text" class="form-select" [(ngModel)]="query.modelId">
+            <option value=""></option>
+            <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
+          </select>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="priceFrom" class="form-label">Пробіг від:</label>
+            <input type="number" class="form-control" id="carMileageFrom" [(ngModel)]="query.carMileageFrom" placeholder="10000">
+          </div>
+          <div class="col-md-6">
+            <label for="priceTo" class="form-label">Пробіг до:</label>
+            <input type="number" class="form-control" id="carMileageTo" [(ngModel)]="query.carMileageTo" placeholder="50000">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="vehicle" class="form-label">Технічний стан:</label>
+          <select id="techState" name="techState" type="text" class="form-select" [(ngModel)]="query.techStateId">
+            <option value=""></option>
+            <option *ngFor="let t of techState" value="{{ t.id }}">{{ t.name }}</option>
+          </select>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="priceFrom" class="form-label">Ціна від:</label>
+            <input type="number" class="form-control" id="priceFrom" [(ngModel)]="query.priceFrom" placeholder="10000">
+          </div>
+          <div class="col-md-6">
+            <label for="priceTo" class="form-label">Ціна до:</label>
+            <input type="number" class="form-control" id="priceTo" [(ngModel)]="query.priceTo" placeholder="50000">
+          </div>
+        </div>          
+        <div class="mb-3">
+          <label for="vehicle" class="form-label">Регіон:</label>
+          <select id="region" name="region" type="text" class="form-select" [(ngModel)]="query.regionId" (change)=onRegionChange()>
+            <option value=""></option>
+            <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="vehicle" class="form-label">Місто:</label>
+          <select id="city" name="city" type="text" class="form-select" [(ngModel)]="query.cityId">
+            <option value=""></option>
+            <option *ngFor="let c of cities" value="{{ c.id }}">{{ c.name }}</option>
+          </select>
+        </div>
+        <button class="btn btn-primary w-100" (click)="onApplyFilters()">Фільтрувати</button>
+        <button class="btn btn-primary mt-2 w-100" (click)="onResetFilter()">Очистити</button>
       </div>
-  
-      <div class="col-md-9">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="text-primary mb-0"></h5>
-          <div class="d-flex align-items-center">
-            <label for="sortSelect" class="form-label me-2 mb-0">Сортувати за:</label>
-            <select id="sortSelect" class="form-select form-select-sm" style="width: auto;" [(ngModel)]="sortOption" (change)="onSortByChange()">
-              <option value="">---</option>
-              <option value="price-asc">Ціною (зростання)</option>
-              <option value="price-desc">Ціною (спадання)</option>
-              <option value="lastUpdated-asc">Останнє оновлення (зростання)</option>
-              <option value="lastUpdated-desc">Останнє оновлення (спадання)</option>
-            </select>
-          </div>
-        </div>
-      
-        <div class="row" *ngIf="apiVehicles.length > 0">
-          <div class="col-md-4 mb-4" *ngFor="let vehicle of apiVehicles">
-            <div class="card">
-              <img [src]="vehicle.image" class="card-img-top vehicle-img" alt="Vehicle Image">
-              <div class="card-body">
-                <h5 class="card-title">{{ vehicle.brand.name }} {{ vehicle.model.name }} | {{ vehicle.carType.name }}</h5>
-                <p class="card-text">{{ vehicle.carMileage }} тис. км</p>
-                <p class="card-text">{{ vehicle.price }} $</p>
-                <button class="btn btn-outline-primary" (click)="openPopup(vehicle)">Детальніше</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <app-no-results-found *ngIf="apiVehicles?.length === 0"></app-no-results-found>
-      </div>
-
     </div>
-  </div>
-  <app-pagination [totalItems]="totalItems" [pageSize]="query.pageSize" [currentPage]="query.page" (pageChange)="onPageChange($event)"></app-pagination>
-  <app-vehicle-info-popup *ngIf="isPopupOpen" [vehicle]="selectedVehicle" (onClose)="closePopup()"></app-vehicle-info-popup>
 
-  
+    <!-- Мобільні фільтри (Collapsible) -->
+    <div class="col-12 d-md-none mb-3">
+      <button class="btn btn-outline-primary w-100 d-flex justify-content-between align-items-center" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#mobileFilters" 
+              aria-expanded="false" 
+              aria-controls="mobileFilters">
+        <span><i class="fas fa-filter me-2"></i>Фільтри</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      
+      <div class="collapse mt-2" id="mobileFilters">
+        <div class="card card-body bg-light">
+          <div class="row">
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="form-label">Тип авто:</label>
+              <select class="form-select" [(ngModel)]="query.carTypeId">
+                <option value=""></option>
+                <option *ngFor="let t of carTypes" value="{{ t.id }}">{{ t.name }}</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="form-label">Бренд авто:</label>
+              <select class="form-select" [(ngModel)]="query.brandId" (change)=onBrandChange()>
+                <option value=""></option>
+                <option *ngFor="let b of brands" value="{{ b.id }}">{{ b.name }}</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="form-label">Модель авто:</label>
+              <select class="form-select" [(ngModel)]="query.modelId">
+                <option value=""></option>
+                <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="form-label">Технічний стан:</label>
+              <select class="form-select" [(ngModel)]="query.techStateId">
+                <option value=""></option>
+                <option *ngFor="let t of techState" value="{{ t.id }}">{{ t.name }}</option>
+              </select>
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label">Пробіг від:</label>
+              <input type="number" class="form-control" [(ngModel)]="query.carMileageFrom" placeholder="10000">
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label">Пробіг до:</label>
+              <input type="number" class="form-control" [(ngModel)]="query.carMileageTo" placeholder="50000">
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label">Ціна від:</label>
+              <input type="number" class="form-control" [(ngModel)]="query.priceFrom" placeholder="10000">
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label">Ціна до:</label>
+              <input type="number" class="form-control" [(ngModel)]="query.priceTo" placeholder="50000">
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="form-label">Регіон:</label>
+              <select class="form-select" [(ngModel)]="query.regionId" (change)=onRegionChange()>
+                <option value=""></option>
+                <option *ngFor="let r of regions" value="{{ r.id }}">{{ r.name }}</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6 mb-3">
+              <label class="form-label">Місто:</label>
+              <select class="form-select" [(ngModel)]="query.cityId">
+                <option value=""></option>
+                <option *ngFor="let c of cities" value="{{ c.id }}">{{ c.name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-6 mb-2">
+              <button class="btn btn-primary w-100" (click)="onApplyFilters()">Фільтрувати</button>
+            </div>
+            <div class="col-12 col-sm-6">
+              <button class="btn btn-outline-secondary w-100" (click)="onResetFilter()">Очистити</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Основний контент -->
+    <div class="col-12 col-md-9">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="text-primary mb-0"></h5>
+        <div class="d-flex align-items-center">
+          <label for="sortSelect" class="form-label me-2 mb-0">Сортувати за:</label>
+          <select id="sortSelect" class="form-select form-select-sm" style="width: auto;" [(ngModel)]="sortOption" (change)="onSortByChange()">
+            <option value="">---</option>
+            <option value="price-asc">Ціною (зростання)</option>
+            <option value="price-desc">Ціною (спадання)</option>
+            <option value="lastUpdated-asc">Останнє оновлення (зростання)</option>
+            <option value="lastUpdated-desc">Останнє оновлення (спадання)</option>
+          </select>
+        </div>
+      </div>
+    
+      <div class="row" *ngIf="apiVehicles.length > 0">
+        <div class="col-md-4 mb-4" *ngFor="let vehicle of apiVehicles">
+          <div class="card">
+            <img [src]="vehicle.image" class="card-img-top vehicle-img" alt="Vehicle Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ vehicle.brand.name }} {{ vehicle.model.name }} | {{ vehicle.carType.name }}</h5>
+              <p class="card-text">{{ vehicle.carMileage }} тис. км</p>
+              <p class="card-text">{{ vehicle.price }} $</p>
+              <button class="btn btn-outline-primary" (click)="openPopup(vehicle)">Детальніше</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-no-results-found *ngIf="apiVehicles?.length === 0"></app-no-results-found>
+    </div>
+
+  </div>
+</div>
+<app-pagination [totalItems]="totalItems" [pageSize]="query.pageSize" [currentPage]="query.page" (pageChange)="onPageChange($event)"></app-pagination>
+<app-vehicle-info-popup *ngIf="isPopupOpen" [vehicle]="selectedVehicle" (onClose)="closePopup()"></app-vehicle-info-popup>

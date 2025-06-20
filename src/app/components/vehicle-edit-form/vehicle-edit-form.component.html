@@ -1,209 +1,279 @@
 <div class="d-flex justify-content-center mt-5 mb-5">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="w-100" style="max-width: 80%;" novalidate>
+    
+    <button type="button" class="btn-close position-absolute end-0 me-5 md-10" (click)="onCloseButton()" aria-label="Закрити"></button>
+    
+    <h3 class="mb-4 text-center">Редагування</h3>
 
-    <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="w-100" style="max-width: 80%;" novalidate>
+    <!-- Тип авто -->
+    <div class="mb-3 position-relative">
+      <label for="carTypeId" class="form-label">Тип авто:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': carTypeId?.invalid && carTypeId?.touched}">
+        <select class="form-select border-0 shadow-none px-0 ps-3" id="carTypeId" formControlName="carTypeId">
+          <option value="">Оберіть тип авто</option>
+          <option *ngFor="let type of carTypes" [value]="type.id">{{ type.name }}</option>
+        </select>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <div *ngIf="carTypeId?.invalid && carTypeId?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        Поле обов'язкове
+      </div>
+    </div>
 
-      <button type="button" class="btn-close position-absolute end-0 me-5 md-10" (click)="onCloseButton()" aria-label="Закрити"></button>
-      
-      <h3 class="mb-4 text-center">Редагування</h3>
+    <!-- Бренд авто -->
+    <div class="mb-3 position-relative">
+      <label for="brandId" class="form-label">Бренд авто:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': brandId?.invalid && brandId?.touched}">
+        <select class="form-select border-0 shadow-none px-0 ps-3" id="brandId" formControlName="brandId">
+          <option value="">Оберіть бренд</option>
+          <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+        </select>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <div *ngIf="brandId?.invalid && brandId?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        Поле обов'язкове
+      </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="carType" class="form-label">Тип авто:</label>
-        <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="carTypeId" [(ngModel)]="vehicle.carTypeId" name="carTypeId">
-              <option *ngFor="let type of carTypes" [value]="type.id">{{ type.name }}</option>
-            </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
+    <!-- Модель авто -->
+    <div class="mb-3 position-relative">
+      <label for="modelId" class="form-label">Модель авто:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': modelId?.invalid && modelId?.touched}">
+        <select class="form-select border-0 shadow-none px-0 ps-3" id="modelId" formControlName="modelId">
+          <option value="">Оберіть модель</option>
+          <option *ngFor="let model of models" [value]="model.id">{{ model.name }}</option>
+        </select>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
       </div>
+      <div *ngIf="modelId?.invalid && modelId?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        Поле обов'язкове
+      </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="carType" class="form-label">Бренд авто:</label>
-        <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="brandId" [(ngModel)]="selectedBrandId" name="brandId">
-              <option *ngFor="let type of brands" [value]="type.id">{{ type.name }}</option>
-            </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
+    <!-- Рік випуску -->
+    <div class="mb-3 position-relative">
+      <label for="yearOfRelease" class="form-label">Рік випуску:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': yearOfRelease?.invalid && yearOfRelease?.touched}">
+        <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="yearOfRelease" 
+               formControlName="yearOfRelease" (input)="onYearInput($event)"
+               placeholder="Введіть рік випуску" maxlength="4"/>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
       </div>
+      <div *ngIf="yearOfRelease?.invalid && yearOfRelease?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        <span *ngIf="yearOfRelease?.errors?.['required']">Поле обов'язкове</span>
+        <span *ngIf="yearOfRelease?.errors?.['invalidYear']">Рік має містити рівно 4 цифри</span>
+        <span *ngIf="yearOfRelease?.errors?.['yearOutOfRange']">Рік має бути між 1900 та поточним роком</span>
+      </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="carType" class="form-label">Модель авто:</label>
-        <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="modelId" [(ngModel)]="vehicle.modelId" name="modelId" (change)=onBrandChange()>
-              <option *ngFor="let type of models" [value]="type.id">{{ type.name }}</option>
-            </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
+    <!-- VIN номер -->
+    <div class="mb-3 position-relative">
+      <label for="vinNumber" class="form-label">VIN номер:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': vinNumber?.invalid && vinNumber?.touched}">
+        <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="vinNumber" 
+               formControlName="vinNumber" (input)="onVinInput($event)"
+               placeholder="Введіть VIN номер" maxlength="17"/>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
       </div>
+      <div class="mt-1">
+        <small class="text-muted">{{ vinNumber?.value?.length || 0 }}/17 символів</small>
+      </div>
+      <div *ngIf="vinNumber?.invalid && vinNumber?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        <span *ngIf="vinNumber?.errors?.['required']">Поле обов'язкове</span>
+        <span *ngIf="vinNumber?.errors?.['invalidVin']">VIN номер має містити рівно 17 символів</span>
+      </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="vinNumber" class="form-label">Рік випуску:</label>
-        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': yearOfRelease.invalid && yearOfRelease.touched}">
-          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="yearOfRelease" [(ngModel)]="vehicle.yearOfRelease" required #yearOfRelease="ngModel" name="yearOfRelease" placeholder="Введіть рік випуску"/>
-          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
-        </div>
-        <div *ngIf="yearOfRelease.invalid && yearOfRelease.touched" style="color: red; font-size: 0.875rem;">
-          Поле обов'язкове
-        </div>
+    <!-- Пробіг -->
+    <div class="mb-3 position-relative">
+      <label for="carMileage" class="form-label">Пробіг:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': carMileage?.invalid && carMileage?.touched}">
+        <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="carMileage" 
+               (input)="onMileageInput($event)" [value]="carMileage?.value || ''"
+               placeholder="Введіть пробіг"/>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
       </div>
-  
-      <div class="mb-3 position-relative">
-        <label for="vinNumber" class="form-label">VIN номер:</label>
-        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': vinNumber.invalid && vinNumber.touched}">
-          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="vinNumber" [(ngModel)]="vehicle.vinNumber" required #vinNumber="ngModel" name="vinNumber" placeholder="Введіть VIN номер"/>
-          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
-        </div>
-        <div *ngIf="vinNumber.invalid && vinNumber.touched" style="color: red; font-size: 0.875rem;">
-          Поле обов'язкове
-        </div>
+      <div *ngIf="carMileage?.invalid && carMileage?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        <span *ngIf="carMileage?.errors?.['required']">Поле обов'язкове</span>
+        <span *ngIf="carMileage?.errors?.['min']">Пробіг не може бути від'ємним</span>
       </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="vinNumber" class="form-label">Пробіг:</label>
-        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': carMileage.invalid && carMileage.touched}">
-          <input type="text" class="form-control border-0 shadow-none px-0 ps-3" id="carMileage" [(ngModel)]="vehicle.carMileage" required #carMileage="ngModel" name="carMileage" placeholder="Введіть пробіг"/>
-          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
-        </div>
-        <div *ngIf="carMileage.invalid && carMileage.touched" style="color: red; font-size: 0.875rem;">
-          Поле обов'язкове
-        </div>
+    <!-- Технічний стан -->
+    <div class="mb-3 position-relative">
+      <label for="techStateId" class="form-label">Технічний стан:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': techStateId?.invalid && techStateId?.touched}">
+        <select class="form-select border-0 shadow-none px-0 ps-3" id="techStateId" formControlName="techStateId">
+          <option value="">Оберіть технічний стан</option>
+          <option *ngFor="let state of techState" [value]="state.id">{{ state.name }}</option>
+        </select>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
       </div>
+      <div *ngIf="techStateId?.invalid && techStateId?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        Поле обов'язкове
+      </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="carType" class="form-label">Технічний стан:</label>
-        <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="techStateId" [(ngModel)]="vehicle.techStateId" name="techStateId">
-              <option *ngFor="let type of techState" [value]="type.id">{{ type.name }}</option>
-            </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
+    <!-- Опис -->
+    <div class="mb-3 position-relative">
+      <label for="description" class="form-label">Опис:</label>
+      <div class="d-flex align-items-start border-bottom" [ngClass]="{'border-danger': description?.invalid && description?.touched}">
+        <textarea class="form-control border-0 shadow-none px-0 ps-3" id="description" 
+                  formControlName="description" rows="3" 
+                  [maxlength]="descriptionMaxLength"></textarea>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
       </div>
+      <div class="mt-1 d-flex justify-content-between">
+        <small class="text-muted">Залишилось символів: {{ descriptionRemainingChars }}</small>
+        <small class="text-muted">{{ (description?.value?.length || 0) }}/{{ descriptionMaxLength }}</small>
+      </div>
+      <div *ngIf="description?.invalid && description?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        <span *ngIf="description?.errors?.['maxlength']">Максимум {{ descriptionMaxLength }} символів</span>
+      </div>
+    </div>
+    
+    <!-- Ціна -->
+    <div class="mb-3 position-relative">
+      <label for="price" class="form-label">Ціна:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': price?.invalid && price?.touched}">
+        <div class="position-relative w-100">
+          <input type="text" class="form-control border-0 shadow-none px-0 ps-3 pe-5" id="price" 
+                 (input)="onPriceInput($event)" [value]="price?.value || ''"
+                 placeholder="Введіть ціну"/>
+          <span class="position-absolute end-0 top-50 translate-middle-y me-3" style="pointer-events: none;">₴</span>
+        </div>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <div *ngIf="price?.invalid && price?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        <span *ngIf="price?.errors?.['required']">Поле обов'язкове</span>
+        <span *ngIf="price?.errors?.['min']">Ціна не може бути від'ємною</span>
+      </div>
+    </div>
+    
+    <!-- Чекбокси -->
+    <div class="mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="isAuction" formControlName="isAuction">
+        <label class="form-check-label" for="isAuction">Можливий торг</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="isTaxable" formControlName="isTaxable">
+        <label class="form-check-label" for="isTaxable">Нерозмитнений</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="isPaymentInParts" formControlName="isPaymentInParts">
+        <label class="form-check-label" for="isPaymentInParts">Можлива оплата частинами</label>
+      </div>
+    </div>
+    
+    <!-- Номер телефону -->
+    <div class="mb-3 position-relative">
+      <label for="phoneNumber" class="form-label">Номер телефону</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': phoneNumber?.invalid && phoneNumber?.touched}">
+        <input type="tel" class="form-control border-0 shadow-none px-0 ps-3" id="phoneNumber" 
+               (input)="onPhoneInput($event)" [value]="phoneNumber?.value || ''"
+               placeholder="0XX XXX XX XX" maxlength="13">
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <div *ngIf="phoneNumber?.invalid && phoneNumber?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        <span *ngIf="phoneNumber?.errors?.['required']">Поле обов'язкове</span>
+        <span *ngIf="phoneNumber?.errors?.['invalidPhone']">Введіть правильний український номер телефону</span>
+      </div>
+    </div>
+    
+    <!-- Регіон -->
+    <div class="mb-3 position-relative">
+      <label for="regionId" class="form-label">Регіон:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': regionId?.invalid && regionId?.touched}">
+        <select class="form-select border-0 shadow-none px-0 ps-3" id="regionId" formControlName="regionId">
+          <option value="">Оберіть регіон</option>
+          <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+        </select>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <div *ngIf="regionId?.invalid && regionId?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        Поле обов'язкове
+      </div>
+    </div>
+    
+    <!-- Місто -->
+    <div class="mb-3 position-relative">
+      <label for="cityId" class="form-label">Місто:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': cityId?.invalid && cityId?.touched}">
+        <select class="form-select border-0 shadow-none px-0 ps-3" id="cityId" formControlName="cityId">
+          <option value="">Оберіть місто</option>
+          <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+        </select>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
+      </div>
+      <div *ngIf="cityId?.invalid && cityId?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        Поле обов'язкове
+      </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="carDescription" class="form-label">Опис:</label>
-        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': description.invalid && description.touched}">
-          <textarea class="form-control border-0 shadow-none px-0 ps-3" id="description" [(ngModel)]="vehicle.description" required #description="ngModel" name="description" rows="3"></textarea>
-          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
-        </div>
-        <div *ngIf="description.invalid && description.touched" style="color: red; font-size: 0.875rem;">
-          Поле обов'язкове
-        </div>
+    <!-- Статус оголошення -->
+    <div class="mb-3 position-relative">
+      <label for="advertisementStatusId" class="form-label">Статус оголошення:</label>
+      <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': advertisementStatusId?.invalid && advertisementStatusId?.touched}">
+        <select class="form-select border-0 shadow-none px-0 ps-3" id="advertisementStatusId" formControlName="advertisementStatusId">
+          <option value="">Оберіть статус</option>
+          <option *ngFor="let status of adStatuses" [value]="status.id">{{ status.name }}</option>
+        </select>
+        <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
+          <i class="bi bi-pencil"></i>
+        </button>
       </div>
-      
-      <div class="mb-3 position-relative">
-        <label for="numberField" class="form-label">Ціна:</label>
-        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': price.invalid && price.touched}">
-          <input type="number" class="form-control border-0 shadow-none px-0 ps-3" id="numberField" placeholder="Введіть ціну" [(ngModel)]="vehicle.price" required #price="ngModel" name="price"/>
-          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
-        </div>
-        <div *ngIf="price.invalid && price.touched" style="color: red; font-size: 0.875rem;">
-          Поле обов'язкове
-        </div>
+      <div *ngIf="advertisementStatusId?.invalid && advertisementStatusId?.touched" class="text-danger mt-1" style="font-size: 0.875rem;">
+        Поле обов'язкове
       </div>
-      
-      <div class="mb-3">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="isAuction" value="option1" [(ngModel)]="vehicle.isAuction" name="isAuction">
-          <label class="form-check-label" for="isAuction">Можливий торг</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="isTaxable" value="option2" [(ngModel)]="vehicle.isTaxable" name="isTaxable">
-          <label class="form-check-label" for="isTaxable">Нерозмитнений</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="isPaymentInParts" value="option3" [(ngModel)]="vehicle.isPaymentInParts" name="isPaymentInParts">
-          <label class="form-check-label" for="isPaymentInParts">Можлива оплата частинами</label>
-        </div>
-      </div>
-      
-      <div class="mb-3 position-relative">
-        <label for="phoneField" class="form-label">Номер телефону</label>
-        <div class="d-flex align-items-center border-bottom" [ngClass]="{'border-danger': phoneNumber.invalid && phoneNumber.touched}">
-          <input type="tel" class="form-control border-0 shadow-none px-0 ps-3" id="phoneNumber" [(ngModel)]="vehicle.phoneNumber" required #phoneNumber="ngModel" name="phoneNumber" placeholder="Введіть номер телефону">
-          <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-            <i class="bi bi-pencil"></i>
-          </button>
-        </div>
-        <div *ngIf="phoneNumber.invalid && phoneNumber.touched" style="color: red; font-size: 0.875rem;">
-          Поле обов'язкове
-        </div>
-      </div>
-      
-      <div class="mb-3 position-relative">
-        <label for="carType" class="form-label">Регіон:</label>
-        <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="regionId" [(ngModel)]="selectedRegionId" name="regionId">
-              <option *ngFor="let type of regions" [value]="type.id">{{ type.name }}</option>
-            </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
-      </div>
-      
-      <div class="mb-3 position-relative">
-        <label for="carType" class="form-label">Місто:</label>
-        <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="cityId" [(ngModel)]="vehicle.cityId" name="cityId">
-              <option *ngFor="let type of cities" [value]="type.id">{{ type.name }}</option>
-            </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
-      </div>
+    </div>
 
-      <div class="mb-3 position-relative">
-        <label for="carType" class="form-label">Статус оголошення:</label>
-        <div class="d-flex align-items-center border-bottom">
-            <select class="form-select border-0 shadow-none px-0 ps-3" id="adStatusId" [(ngModel)]="vehicle.advertisementStatusId" name="adStatusId">
-              <option *ngFor="let status of adStatuses" [value]="status.id">{{ status.name }}</option>
-            </select>
-            <button type="button" class="btn btn-link p-0 ms-2" aria-label="Edit">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </div>
-      </div>
-  
-      <div class="text-center mt-4 px-4 d-flex justify-content-center gap-3">
-        <button class="btn btn-primary" type="submit" [disabled]="!form.touched">Зберегти зміни</button>
-        <button class="btn btn-danger" type="button" (click)="openDeleteModal()">Видалити оголошення</button>
+    <!-- Кнопки -->
+    <div class="text-center mt-4 px-4 d-flex justify-content-center gap-3">
+      <button class="btn btn-primary" type="submit" [disabled]="!canSave()">Зберегти зміни</button>
+      <button class="btn btn-danger" type="button" (click)="openDeleteModal()">Видалити оголошення</button>
 
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" #deleteModal>
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header bg-danger text-white">
-                <button type="button" class="btn-close btn-close-white" aria-label="Закрити" (click)="closeDeleteModal()"></button>
-              </div>
-              <div class="modal-body">
-                <p class="mb-0">Ви впевнені, що хочете видалити це оголошення?</p>
-              </div>
-              <div class="modal-footer text-center me-4 px-4 d-flex justify-content-center gap-3">
-                <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Відмінити</button>
-                <button type="button" class="btn btn-danger" (click)="confirmDelete()">Видалити</button>
-              </div>
+      <!-- Modal для видалення -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" #deleteModal>
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+              <button type="button" class="btn-close btn-close-white" aria-label="Закрити" (click)="closeDeleteModal()"></button>
+            </div>
+            <div class="modal-body">
+              <p class="mb-0">Ви впевнені, що хочete видалити це оголошення?</p>
+            </div>
+            <div class="modal-footer text-center me-4 px-4 d-flex justify-content-center gap-3">
+              <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Відмінити</button>
+              <button type="button" class="btn btn-danger" (click)="confirmDelete()">Видалити</button>
             </div>
           </div>
         </div>
       </div>
-    </form>
-  </div>
-  
+    </div>
+  </form>
+</div>
