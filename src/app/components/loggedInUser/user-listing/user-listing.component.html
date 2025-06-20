@@ -1,18 +1,43 @@
 <div class="list-group">
-    <div *ngFor="let vehicle of apiVehicles" class="list-group-item d-flex justify-content-between align-items-center">
-        <div>
-            <h5>{{ vehicle.brand.name }} {{ vehicle.model.name }} | {{ vehicle.carType.name }}
-                <span class="badge-status" [ngClass]="{
+    <div *ngFor="let vehicle of apiVehicles" class="list-group-item">
+        <!-- Мобільна версія -->
+        <div class="d-block d-md-none">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="flex-grow-1 me-2">
+                    <h6 class="mb-1 fw-bold">{{ vehicle.brand.name }} {{ vehicle.model.name }}</h6>
+                    <small class="text-muted d-block mb-1">{{ vehicle.carType.name }}</small>
+                </div>
+                <span class="badge-status flex-shrink-0" [ngClass]="{
                     'badge-active': vehicle.advertisementStatus.name === 'Активне',
                     'badge-inactive': vehicle.advertisementStatus.name === 'Неактивне',
                     'badge-pending text-dark': vehicle.advertisementStatus.name === 'Продано'
                 }">
                   {{ vehicle.advertisementStatus.name }}
                 </span>
-            </h5>
-            <p>{{ vehicle.description | slice:0:45 }}...</p>
+            </div>
+            <p class="mb-2 small text-muted">{{ vehicle.description | slice:0:60 }}...</p>
+            <div class="d-grid">
+                <a class="btn btn-primary btn-sm" [routerLink]="['/vehicle', vehicle.id]">
+                    <i class="bi bi-pencil me-1"></i>Редагувати
+                </a>
+            </div>
         </div>
-        <a class="btn btn-primary" [routerLink]="['/vehicle', vehicle.id]">Редагувати</a>
+
+        <!-- Десктопна версія -->
+        <div class="d-none d-md-flex justify-content-between align-items-center">
+            <div class="flex-grow-1">
+                <h5 class="mb-1">{{ vehicle.brand.name }} {{ vehicle.model.name }} | {{ vehicle.carType.name }}
+                    <span class="badge-status ms-2" [ngClass]="{
+                        'badge-active': vehicle.advertisementStatus.name === 'Активне',
+                        'badge-inactive': vehicle.advertisementStatus.name === 'Неактивне',
+                        'badge-pending text-dark': vehicle.advertisementStatus.name === 'Продано'
+                    }">
+                      {{ vehicle.advertisementStatus.name }}
+                    </span>
+                </h5>
+                <p class="mb-0 text-muted">{{ vehicle.description | slice:0:45 }}...</p>
+            </div>
+            <a class="btn btn-primary ms-3 flex-shrink-0" [routerLink]="['/vehicle', vehicle.id]">Редагувати</a>
+        </div>
     </div>
-  </div>
-  
+</div>

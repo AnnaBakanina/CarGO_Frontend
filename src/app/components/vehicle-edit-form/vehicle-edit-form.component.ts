@@ -34,12 +34,12 @@ export class VehicleEditFormComponent implements OnInit {
   editForm!: FormGroup;
 
   brands: Brand[] = [];
-  models: any = {};
-  carTypes: any = {};
-  techState: any = {};
+  carTypes: any[] = [];
+  techState: any[] = [];
   regions: Region[] = [];
-  cities: any = {};
-  adStatuses: any = {};
+  models: any[] = [];
+  cities: any[] = [];
+  adStatuses: any[] = [];
   updateVehicleId = 0;
   selectedBrandId = 0;
   selectedRegionId = 0;
@@ -61,6 +61,8 @@ export class VehicleEditFormComponent implements OnInit {
     advertisementStatusId: 1
   };
 
+  private previousUrl:string = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private brandService: BrandService,
@@ -77,6 +79,7 @@ export class VehicleEditFormComponent implements OnInit {
 
     ngOnInit(): void {
       this.updateVehicleId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+      this.previousUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/profile';
 
       const requests: {
         brands: Observable<Brand[]>,
@@ -176,12 +179,12 @@ export class VehicleEditFormComponent implements OnInit {
 
   private populateModels() {
     var selectedBrand = this.brands.find(m => m.id == this.selectedBrandId);
-    this.models = selectedBrand ? selectedBrand.carModel: [];
+    this.models = selectedBrand ? selectedBrand.carModel || []: [];
   }
 
   private populateCities() {
     var selectedRegion = this.regions.find(c => c.id == this.selectedRegionId);
-    this.cities = selectedRegion ? selectedRegion.city: [];
+    this.cities = selectedRegion ? selectedRegion.city || []: [];
   }
   
   private setVehicle(v: Vehicle) {
@@ -202,6 +205,10 @@ export class VehicleEditFormComponent implements OnInit {
     this.vehicle.cityId = v.city.id;
     this.vehicle.advertisementStatusId = v.advertisementStatus.id;
   }
+
+  onCloseButton(): void {
+    this.router.navigate([this.previousUrl]);
+  }
   
   onSubmit(form: NgForm): void {
     if (form.invalid) {
@@ -213,7 +220,6 @@ export class VehicleEditFormComponent implements OnInit {
     }
   
     const updatedVehicle: VehicleSave = {
-      // ...this.editForm.value,
       carTypeId: this.vehicle.carTypeId,
       modelId: this.vehicle.modelId,
       yearOfRelease: this.vehicle.yearOfRelease,
